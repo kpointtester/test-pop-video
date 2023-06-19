@@ -1,0 +1,500 @@
+   37  aws s3 cp s3://kpoint-build/backup/pankaj c://pankaj
+   38  aws s3 sync s3://kpoint-build/backup/pankaj c://pankaj
+   39  cd C:\Users\ktpl-0169\Documents\test_report\vegacd C:\Users\ktpl-0169\Documents\test_report\vega
+   40  cd C:\Users\ktpl-0169\Documents\test_report\vega
+   41  cd C:\\Users\\ktpl-0169\\Documents\\test_report\\vega
+   42  ls
+   43  cat cucumber_result_ACPKOMAF 
+   44  cat cucumber_result_ACPKOMAF |grep feature
+   45  cat cucumber_result_ACPKOMAF |grep feature:
+   46  cat cucumber_result_ACPKOMAF |grep Feature:
+   47  cat cucumber_result |grep Feature:
+   48  cat cucumber_result/ |grep Feature:
+   49  cat cucumber_result* |grep Feature:
+   50  cat cucumber_result* |grep Feature: >> C:\Users\ktpl-0169\Documents\test_report\veganame.txt
+   51  cat cucumber_result* |grep Feature: >> C:\\Users\\ktpl-0169\\Documents\\test_report\\veganame.txt
+   52  cat cucumber_result_ACPKOMAF 
+   53  cat cucumber_result_ACPKOMAF | grep scenarios
+   54  cat cucumber_result_ACPKOMAF | grep scenarios steps
+   55  cat cucumber_result_ACPKOMAF | grep scenarios,  steps
+   56  cat cucumber_result_ACPKOMAF | grep scenarios ,  steps
+   57  cat cucumber_result_ACPKOMAF | grep scenarios >>C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt
+   58  paste C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt
+   59  paste C:\\Users\\ktpl-0169\\Documents\\test_report\\veganame.txt C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt
+   60  paste C:\\Users\\ktpl-0169\\Documents\\test_report\\veganame.txt C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt
+   61  paste C:\\Users\\ktpl-0169\\Documents\\test_report\\veganame.txt C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt  | column -s $'\t' -t 
+   62  cat cucumber_result_* | grep scenarios >>C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt
+   63  paste C:\\Users\\ktpl-0169\\Documents\\test_report\\veganame.txt C:\\Users\\ktpl-0169\\Documents\\test_report\\vegaresult.txt  | column -s $'\t' -t 
+   64  cd C:\\Users\\ktpl-0169\\Documents\\test_report\
+   65  cd C:\\Users\\ktpl-0169\\Documents\\test_report
+   66  ls
+   67  cd orca/
+   68  ls 
+   69  cat cucumber_result_AGMQXPSU | grep scenerios
+   70  cat cucumber_result_AGMQXPSU | grep scenerio
+   71  cat cucumber_result_AGMQXPSU | grep scenarios
+   72  cat cucumber_result* | grep scenarios
+   73  cat cucumber_result* | grep freaure
+   74  cat cucumber_result* | grep feaure
+   75  cat cucumber_result* | grep feature
+   76  cat cucumber_result_AGMQXPSU
+   77  cat cucumber_result* | grep steps
+   78  cat cucumber_result_AGMQXPSU
+   79  cat cucumber_result_AGMQXPSU | grep passed
+   80  cat cucumber_result* | grep passed
+   81  cat cucumber_result* | grep passed | wc -l
+   82  cd ..
+   83  cd vega
+   84  cat cucumber_result* | grep passed | wc -l
+   85  cat cucumber_result* | grep scenarios | wc -l
+   86  cat cucumber_result* | grep failed | wc -l
+   87  cat cucumber_result* | grep failed 
+   88  cd ..
+   89  orca
+   90  cd orca/
+   91  cat cucumber_result* | grep failed 
+   92  cat cucumber_result* | grep passed
+   93  locate pages
+   94  find pages
+   95  cd code
+   96  cd codes
+   97  cd M130/features/pages/
+   98  py vega_token.php 
+   99  php vega_token.php 
+  100  py vega_token.py
+  101  C:\Users\ktpl-0169\AppData\Local\Programs\Python\Python311\python.exe vega_token.py
+  102  C:\\Users\\ktpl-0169\\AppData\\Local\\Programs\\Python\\Python311\\python.exe vega_token.py
+  103  ffmpeg
+  104  ll
+  105  pwd
+  106  cd ..
+  107  ll
+  108  cd ktplc-10094.KPOINT
+  109  ll
+  110  du -sh *
+  111  ll
+  112  df -h
+  113  du -sh *
+  114  df -h * 
+  115  df -h 
+  116  cd 
+  117  df -h 
+  118  cd ..
+  119  df -h 
+  120  ll
+  121  ls
+  122  du -sh *
+  123  du -sh * | grep G
+  124  ls
+  125  ll
+  126  cd test/
+  127  ll
+  128  ll test/
+  129  ll
+  130  cd ktplc-10094.KPOINT/
+  131  ll
+  132  ls
+  133  cd My\ Documents/
+  134  ll
+  135  cd ..
+  136  rm -rf My\ Documents/
+  137  rm -rf Do*
+  138  ll
+  139  du -sh * | grep M
+  140  locate iso
+  141  locate pankaj
+  142  ll
+  143  find pankaj
+  144  find iso
+  145  find win
+  146  adb shell pm list package | grep uiautomator
+  147  adb shell pm list package | grep uiautomator
+  148  adb shell pm list package | grep uiautomator
+  149  adb shell pm list instrumentation
+  150  adb shell pm list instrumentation
+  151  adb shell pm list instrumentation
+  152  adb shell pm list instrumentation
+  153  adb shell pm list instrumentation
+  154  adb shell pm list instrumentation
+  155  adb shell pm list instrumentation
+  156  adb shell pm list package | grep uiautomator
+  157  adb shell pm list package
+  158  adb install apk_path
+  159  adb install uiautomator2.server
+  160  adb install pm
+  161  adb shell pm list package
+  162  adb install io.appium.uiautomator2.server
+  163  adb install io.appium.uiautomator2.apk
+  164  Performing Streamed Install
+  165  echo JAVA_HOME 
+  166  echo %JAVA_HOME% 
+  167  scoop install allure
+  168  string cause =[[_class:org.jenkinsci.plugins.workflow.support.steps.build.BuildUpstreamCause, shortDescription:Started by upstream project "Pipeline_pankaj" build number 5, upstreamBuild:5, upstreamProject:Pipeline_pankaj, upstreamUrl:job/Pipeline_pankaj/]]
+  169  cause =[[_class:org.jenkinsci.plugins.workflow.support.steps.build.BuildUpstreamCause, shortDescription:Started by upstream project "Pipeline_pankaj" build number 5, upstreamBuild:5, upstreamProject:Pipeline_pankaj, upstreamUrl:job/Pipeline_pankaj/]]
+  170  x =[[_class:org.jenkinsci.plugins.workflow.support.steps.build.BuildUpstreamCause, shortDescription:Started by upstream project "Pipeline_pankaj" build number 5, upstreamBuild:5, upstreamProject:Pipeline_pankaj, upstreamUrl:job/Pipeline_pankaj/]]
+  171  ls
+  172  cd vm_data/
+  173  ll
+  174  vi test.txt
+  175  cat test.txt
+  176  cat test.txt | grep user
+  177  cat test.txt | grep -i upstream
+  178  cat test.txt | 
+  179  echo "$text" | cut -d , -f 4 |cut -d : -f 2
+  180  echo test.txt | cut -d , -f 4 |cut -d : -f 2
+  181  $cause =[[_class:org.jenkinsci.plugins.workflow.support.steps.build.BuildUpstreamCause, shortDescription:Started by upstream project "Pipeline_pankaj" build number 5, upstreamBuild:5, upstreamProject:Pipeline_pankaj, upstreamUrl:job/Pipeline_pankaj/]]
+  182  echo test.txt | cut -d , -f 4 |cut -d : -f 2
+  183  echo test.txt | cut -d , -f 4 |cut -d : -f 2
+  184  echo "$text" | cut -d , -f 4 |cut -d : -f 2
+  185  echo "$text.txt" | cut -d , -f 4 |cut -d : -f 2
+  186  cat text.txt | cut -d , -f 4 |cut -d : -f 2
+  187  cat test.txt | cut -d , -f 4 |cut -d : -f 2
+  188  $cause =[[_class:org.jenkinsci.plugins.workflow.support.steps.build.BuildUpstreamCause, shortDescription:Started by upstream project "Pipeline_pankaj" build number 5, upstreamBuild:5, upstreamProject:Pipeline_pankaj, upstreamUrl:job/Pipeline_pankaj/]]
+  189  ls
+  190  cd vm_data/
+  191  ls
+  192  cat test.txt | cut -d , -f 4 |cut -d : -f 2
+  193  vi test.txt 
+  194  cat test.txt | cut -d , -f 4 |cut -d : -f 2
+  195  vi test.txt 
+  196  cat test.txt | cut -d , -f 4 |cut -d : -f 2
+  197  printf example.com | gau
+  198  echo %JAVA_HOME%
+  199  echo %ANDROID_HOME%
+  200  echo %path%
+  201  cd C:\Users\ktpl-0169\codes\Ft_M133
+  202  ll
+  203  cd codes\Ft_M133
+  204  cd codes/Ft_M133
+  205  ll
+  206  cd features/
+  207  ll
+  208  ll
+  209  cd vega/
+  210  ll
+  211  cd ..
+  212  cd ..
+  213  ll
+  214  cd domain_migrated_data/vegaautomation.zencite.com/data/
+  215  cat recording_artifact.sql 
+  216  cp recording_artifact.sql recording_artifact1.sql
+  217   
+  218  cat recording_artifact.sql | grep vismark
+  219  cat recording_artifact.sql | grep -i vismark
+  220  cat recording_artifact.sql | split )
+  221  ls
+  222  cd Downloads/
+  223  #qpdf --password=thepassword --decrypt input.pdf output.pdf
+  224  qpdf --password=thepassword --decrypt bank.pdf output.pdf
+  225  ls 
+  226  cd Downloads/
+  227  ls
+  228  vi Untitled\ discover\ search.csv 
+  229  sort -u Untitled\ discover\ search.csv -o test.csv
+  230  cat test.csv | wc -l
+  231  cat test.csv 
+  232  mkdir test 
+  233  cd test/
+  234  vim prat.txt
+  235  vim sukh.txt
+  236  vim diff prat.txt sukh.txt 
+  237  vimdiff prat.txt sukh.txt 
+  238  git branches
+  239  git --help
+  240  git branch
+  241  git branch list
+  242  git diff main master
+  243  git diff master main
+  244  git diff master main --name-only
+  245  git fetch
+  246  git checkout main
+  247  git checkout master
+  248  git diff main..master
+  249  git branch -r
+  250  git diff origin/main..origin/master
+  251  git diff origin/master..origin/main
+  252  git log origin/master..origin/main
+  253  git log origin/main..origin/master 
+  254  git log origin/main
+  255  git log origin/master 
+  256  git diff origin/main..origin/master 
+  257  git diff origin/main..origin/master 
+  258  git log origin/master 
+  259  git log origin/main 
+  260  git branch -r
+  261  ll
+  262  git add .
+  263  git status
+  264  git branch -u master
+  265  git init
+  266  git clone https://git-codecommit.ap-south-1.amazonaws.com/v1/repos/RepoApp
+  267  git branch -r
+  268  cd RepoApp/
+  269  ll
+  270  git pull 
+  271  ll
+  272  rm -rf Screenshots/login.png 
+  273  git add .
+  274  git status
+  275  git commit -m "delete screenshot"
+  276  git push
+  277  git branch -r
+  278  git log origin/HEAD
+  279  cd C:\Windows\System32\bash.exe
+  280  C:\Windows\System32\bash.exe
+  281  cd C:\Windows\System32\bash.exe
+  282  cd C:\Users\ktpl-0169\codes\Ft_M133
+  283  cd codes/Ft_M133/
+  284  ll
+  285  ll
+  286  vim pipeline_status.sh
+  287  vim pipeline_status.sh
+  288  vim pipeline_status.sh
+  289  vim pipeline_status.sh
+  290  ll
+  291  vi local_jenkins_ft
+  292  vi local_jenkins_ft
+  293  vi codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql 
+  294  svn up
+  295  vi codes/Ft_M133/
+  296  cd codes/Ft_M133/
+  297  svn up
+  298  svn add codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql
+  299  svn add domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql
+  300  svn commit domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "update categroies section"
+  301  svn commit domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "KP-1952 review by:radhika comment:update categroies section"
+  302  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "KP-1952 review by:radhika comment:update categroies section"
+  303  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "KP-1952 review by:radhika comment:update categroies section"
+  304  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "KP-1952 review by:radhika comment:update categroies section"
+  305  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "KP-1952 review by:radhika comment:update categroies section"
+  306  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "bug: KP-1952
+  307  reviewed by: radhika
+  308  comment: update categories section"
+  309  svn ci domain_migrated_data/vegaautomation.zencite.com/data/org_config.sql -m "bug: KP-1952
+  310  svn diff
+  311  svn diff features/pages/base_page.rb
+  312  vim features/pages/base_page.rb
+  313  svn diff features/pages/base_page.rb
+  314  vim features/pages/base_page.rb
+  315  svn diff features/pages/base_page.rb
+  316  ls
+  317  cd codes/redirection_test/
+  318  vim redirect.html
+  319  vim codes/Ft_M133/features/vega/vega_yt_and_vimeo_import.feature 
+  320  cd ..
+  321  ls
+  322  cd ktpl-0169/
+  323  cd codes/
+  324  ls
+  325  cd pop_up_video/
+  326  ls
+  327  vim video_in_pop.html
+  328  vim video_in_pop.html
+  329  vim video_in_pop.html
+  330  vim video_in_pop.html
+  331  vim video_in_pop.html
+  332  ls
+  333  echo "# test-pop-video" >> README.md
+  334  git init
+  335  git add README.md
+  336  git commit -m "first commit"
+  337  git branch -M main
+  338  git remote add origin https://github.com/kpointtester/test-pop-video.git
+  339  git push -u origin main
+  340  git remote add origin https://github.com/kpointtester/test-pop-video.git
+  341  git push
+  342  git push -u main
+  343  git push -u origin main
+  344  git config --global user.name "Your Name"
+  345  git config --global user.name
+  346  git push -u origin main
+  347  git add .
+  348  git status
+  349  git push
+  350  git commit -m "check in files"
+  351  git push
+  352  cp video_in_pop.html video-in-pop.html 
+  353  ll
+  354  vim video-in-pop.html 
+  355  vim video-in-pop.html 
+  356  vim video-in-pop.html 
+  357  git add .
+  358  git status
+  359  git commit -m "change domain name "
+  360  git push
+  361  git pull
+  362  vim video-in-pop.html 
+  363  git status
+  364  git add .
+  365  git commit -m "change domain name "
+  366  git push 
+  367  vim video-in-pop.html 
+  368  vim video-in-pop.html 
+  369  git add .
+  370  git commit -m "change domain as pankaj.zencite.com"
+  371  git push
+  372  vim video-in-pop.html 
+  373  git add .
+  374  git commit -m "review by mehak"
+  375  git push
+  376  vim video-in-pop.html 
+  377  git add .
+  378  git commit -m "add 2 videos"
+  379  git push
+  380  ls
+  381  cp video-in-pop.html test-video.html
+  382  vim test-video.html 
+  383  git add .
+  384  git commit -m "add 2 videos"
+  385  git push
+  386  vim video-in-pop.html 
+  387  git add .
+  388  git commit -m "changes videos"
+  389  git push
+  390  cd codes/Ft_M133/
+  391  ls
+  392  vim Jenkinsfile-domain-migration 
+  393  cat codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/user.sql | grep @
+  394  cat codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/user.sql | grep @ | wc -l
+  395  #cp codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/user.sql /
+  396  pwd
+  397  cp codes/Ft_M133/domain_migrated_data/vegaautomation.zencite.com/data/user.sql /c/Users/ktpl-0169/Desktop/
+  398  vim /c/Users/ktpl-0169/Desktop
+  399  mv Desktop/user.sql Desktop/user.txt
+  400  grep -oE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}' input.txt | wc -l
+  401  grep -oE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}' user.txt | wc -l
+  402  cd Desktop/
+  403  grep -oE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}' user.txt | wc -l
+  404  ls
+  405  rm -rf user.txt
+  406  vim
+  407  locate pop
+  408  vim codes/pop_up_video/video-in-pop.html 
+  409  pwd
+  410  vim codes/pop_up_video/video-in-pop.html 
+  411  vim codes/pop_up_video/video-in-pop.html 
+  412  vim codes/pop_up_video/video-in-pop.html 
+  413  #<div class="row button-container">
+  414            <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+  415                    <button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-0fdcf7a4-77cd-4e2b-8f7b-d61908d7a2da" data-vx-playersize=”small” data-vx-backdrop=”true” data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false"}' data-vx-samesite=true data-vx-playerref="kpointPlayer1">small-brackdrop true</button>
+  416            </div>
+  417            <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+  418                    <button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-94949cf9-937c-4051-ac38-9eed0f0a1e0f" data-vx-playersize=”large” data-vx-backdrop=”true” data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false"}' data-vx-samesite=true data-vx-playerref="kpointPlayer1">large-brackdrop true</button>
+  419            </div>
+  420            <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+  421                    <button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-0bb198b4-b0a6-48c2-aac2-b2a342511736" data-vx-playersize=”small” data-vx-backdrop=”false” data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false"}' data-vx-samesite=true data-vx-playerref="kpointPlayer1">small-brackdrop false</button>
+  422            </div>
+  423          <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+  424                    <button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-a3247a99-349d-48bd-9e7d-cff5249860f9" data-vx-playersize=”small” data-vx-backdrop=”false” data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false"}' data-vx-samesite=true data-vx-playerref="kpointPlayer1">large-brackdrop false</button>
+  425          </div>
+  426            <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+  427  cd codes/pop_up_video/
+  428  ls
+  429  vim video-in-pop.html
+  430  vim video-in-pop.html
+  431  ll
+  432  vim video-in-pop.html
+  433  vim video-in-pop.html
+  434  vim video-in-pop.html
+  435  git add .
+  436  git status
+  437  git commit -m "add backdrop"
+  438  git logs
+  439  git log
+  440  ls
+  441  git add player-popup-vx.js
+  442  git status
+  443  git push
+  444  ls
+  445  vim video-in-pop.html
+  446  vim video-in-pop.html
+  447  git add .
+  448  git commit -m "add backdrop"
+  449  git push
+  450  vim video-in-pop.html
+  451  vim video-in-pop.html
+  452  vim video-in-pop.html
+  453  vim video-in-pop.html
+  454  vim video-in-pop.html
+  455  vim video-in-pop.html
+  456  vim video-in-pop.html
+  457  vim video-in-pop.html
+  458  vim video-in-pop.html
+  459  git add .
+  460  git commit -m "push"
+  461  git push
+  462  vim video-in-pop.html
+  463  git add .
+  464  git commit -m "push"
+  465  git push
+  466  vim video-in-pop.html
+  467  cd Downloads/
+  468  ls
+  469  ls | grep pref
+  470  ls | grep pre
+  471  ls | grep per
+  472  vi performance-test4.zencite.com.orca.har
+  473  cd ..
+  474  histroty >> history.txt
+  475  histrory >> history.txt
+  476  history >> history.txt
+  477  ls
+  478  vim history.txt 
+  479  rm -rf history.txt 
+  480  ls
+  481  cd codes/Ft_M133/
+  482  ls 
+  483  vi screenshots/FAILED_Create_video_by_s3_uploading_tost_get_generated_or_not.png 
+  484  feh --version
+  485  cd ..
+  486  cd pop_up_video/video-in-pop.html 
+  487  vi pop_up_video/video-in-pop.html 
+  488  vi pop_up_video/video-in-pop.html 
+  489  vi pop_up_video/video-in-pop.html 
+  490  cd codes/pop_up_video/
+  491  git add .
+  492  git status 
+  493  git commit -m "add div in next line"
+  494  git push
+  495  ls
+  496  vim video-in-pop.html 
+  497  git add .
+  498  git status
+  499  git commit -m "add title in page"
+  500  git push
+  501  cd codes/
+  502  cd Ft_M133/
+  503  cd domain_migrated_data/vegaautomation.zencite.com/data/
+  504  ls
+  505  vim artifact_property.sql
+  506  vim test.txt
+  507  pwd
+  508  cd /c/Users/ktpl-0169/codes/pop_up_video/
+  509  ls
+  510  vim embedsearch.html
+  511  vim embedsearch.html
+  512  git add .
+  513  git statius
+  514  git status
+  515  git commit -m "add new file for embed search"
+  516  git push
+  517  ls
+  518  vim embedsearch.html
+  519  git add .
+  520  git commit -m "push chages"
+  521  git status
+  522  vim embedsearch.html
+  523  git add .
+  524  git status 
+  525  git commit -m "chnage domain name for embedsearch"
+  526  git push
+  527  vim embedsearch.html
+  528  ls
+  529  vim video-in-pop.html
+  530  vim embedsearch.html
+  531  vim embedsearch.html
+  532  git add .
+  533  git commit -m "chane scripts path"
+  534  git push
+  535  vim embedsearch.html
+  536  history >> history.txt
