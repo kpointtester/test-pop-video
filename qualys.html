@@ -1,65 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head> </head>
 
-  <body>
-    <div
-      class="kp-searchbar"
-      data-search-host="showcase-qa.zencite.com"
-      data-iframe-container="#search-results-container"
-      style="display: flex;
+<head>
+  <div class="navbar-container" id="header-sticky-primary">
+    <div class="bg-white navbar-light" data-sticky="top">
+      <div class="menu-container" data-username="salo.chox3aa414dd7215031" data-user-role="poweruser">
+        <nav class="navbar navbar-expand-lg" style="padding:0.25rem 1.25rem">
+          <div class="d-flex"><button class="mcmopen d-block d-lg-none btn btn-outline-primary h-100 mr-2"
+              style="margin-top:1rem;border-color:transparent" type="button"><i
+                class="fad fa-bars mcmopen"></i></button>
+            <div id="mcmenu">
+              <div class="mcmenu-submenu center-pane nano">
+                <div class="nano-content"><a class="mcmlink mcmhome" href="/web/"> <i
+                      class="mr-4 far fa-home"></i>Home</a>
+                  <div class="mcmenu-divider"> </div>
+                  <div class="mcmenu-divider"></div>
+                </div>
+              </div>
+            </div><a class="navbar-brand" href="/web/"><img id="kpoint-logo" alt="KPOINT" height="46px"
+                max-width="200px"
+                src="https://qualys.kpoint.com/media/data.ap-southeast-1.kpoint/qualys.kpoint.com/qualys.kpoint.com/logos/v1687253700000/logo.png"></a></a>
+          </div>
+          <div class="mobile-login-profile-container d-block d-lg-none">
+            <div class="row">
+              <div class="col-4 p-0" style="top:-3px"><a>
+                  <h4 class="nav-link py-1"><i class="fad fa-search cursor-pointer" onclick="openMobileSearch()"></i>
+                  </h4>
+                </a></div>
+              <div class="col-4 p-0" style="top:-3px"><a href="/web/create/" id="createMobileButton">
+                  <h4 class="nav-link py-1"><i class="fad fa-plus cursor-pointer"></i></h4>
+                </a></div>
+              <div class="col-4 p-0 pl-2"><a class="dropdown-toggle nav-mobile-link p-0 mr-1 d-flex align-items-center"
+                  id="dropdown01" href="#profile-page" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                  <div class="avatar avatar-xs kp-avatar" alt="Saloni Choudhury" data-name="Saloni Choudhury"
+                    data-avatar="true">
+                    <div class="d-flex justify-content-center"
+                      style="background-color: rgb(39, 174, 96); font-weight: 500; color: rgb(255, 255, 255); width: inherit; height: inherit; border-radius: 50%;">
+                      <span class="h-100 w-100 text-center" style="margin-top: 0.05rem;">S</span></div>
+                  </div><span class="badge badge-danger m-1 position-absolute totalcount"
+                    style="width: 0.5rem;height: 0.5rem;left: 2.6rem;top: -0.3rem;position:absolute !important;">
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div><button class="d-none d-block-lg navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#vegaMainMenu" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation"><i class="fad fa-bars"></i></button>
+        </nav>
+      </div><!-- end of container-->
+    </div>
+  </div>
+</head>
+
+<body>
+
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe src='https://demos.kpoint.com/web/videos/gcc-978cc1f5-f6f2-4e04-b155-52cab57af49a/nv4/embedded'
+      allowFullScreen webkitallowFullScreen mozallowFullScreen width='640' height='360' rel='nofollow'
+      style='border: 0px;'
+      data-video-params='{"search":"false","toc":"false","like":"false", "autoplay":"true"}'></iframe>
+  </div>
+  <!-- <img src="security.jpg" alt="security picture" style="width:100%"> -->
+  <div class="kp-search" data-search-host="showcase-qa.zencite.com" data-details-continer=".kp-search-container"
+    data-iframe-container="#iframeContainer" style="display: flex;
       justify-content: center;
       padding-top: 1rem;
-      padding-bottom: 1rem;"
-    ></div>
-    
-    <div class="client-conainer">
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        impedit at? Sint illum neque vitae, tempora, laborum, ducimus deleniti
-        quibusdam veritatis officia eaque explicabo in totam soluta quaerat
-        aspernatur! Suscipit.
-      </p>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        impedit at? Sint illum neque vitae, tempora, laborum, ducimus deleniti
-        quibusdam veritatis officia eaque explicabo in totam soluta quaerat
-        aspernatur! Suscipit.
-      </p>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        impedit at? Sint illum neque vitae, tempora, laborum, ducimus deleniti
-        quibusdam veritatis officia eaque explicabo in totam soluta quaerat
-        aspernatur! Suscipit.
-      </p>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        impedit at? Sint illum neque vitae, tempora, laborum, ducimus deleniti
-        quibusdam veritatis officia eaque explicabo in totam soluta quaerat
-        aspernatur! Suscipit.
-      </p>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-        impedit at? Sint illum neque vitae, tempora, laborum, ducimus deleniti
-        quibusdam veritatis officia eaque explicabo in totam soluta quaerat
-        aspernatur! Suscipit.
-      </p>
+      padding-bottom: 1rem;"></div>
+
+
+
+  <div class="client-conainer" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-a3247a99-349d-48bd-9e7d-cff5249860f9" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false"}' data-vx-samesite=true data-vx-playerref="kpointPlayer1" style="cursor: pointer;">
+    <div>
+      <img src="security.jpg" alt="lock picture" style="width:100%">
+
     </div>
-    <div id="iframeContainer" style="display: none"></div>
+  </div>
+  <div id="iframeContainer" style="display: none"></div>
 
-    <script src="https://assets.zencite.com/orca/media/embed/kp-search-embed.js"></script>
 
-    <!-- clint side script -->
-    <script>
-      var container = document.querySelector(".kp-search");
-      var clientInfoContainer = document.querySelector(".client-conainer");
-      container.addEventListener("kpoint-search-result-shown", function (e) {
-        clientInfoContainer.style.display = "none";
-      });
+  <!-- Footer -->
+  <footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <!-- Section: Links  -->
+      <section class="">
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Company name
+              </h6>
+              <p>
+                Here you can use rows and columns to organize your footer content. Lorem ipsum
+                dolor sit amet, consectetur adipisicing elit.
+              </p>
+            </div>
+            <!-- Grid column -->
 
-      container.addEventListener("kpoint-search-result-cleared", function (e) {
-        clientInfoContainer.style.display = "block";
-      });
-    </script>
-  </body>
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Products
+              </h6>
+              <p>
+                <a href="#!" class="text-reset">Angular</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">React</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Vue</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Laravel</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Useful links
+              </h6>
+              <p>
+                <a href="#!" class="text-reset">Pricing</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Settings</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Orders</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Help</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+              <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
+              <p>
+                <i class="fas fa-envelope me-3 text-secondary"></i>
+                info@example.com
+              </p>
+              <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
+              <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+        </div>
+      </section>
+      <!-- Section: Links  -->
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+  <script src="https://assets.zencite.com/orca/media/embed/kp-search-embed.js"></script>
+  <script type="module" src="https://showcase-qa.zencite.com/assets/orca/media/embed/play-inline-vx.js"></script>
+
+
+  <!-- clint side script -->
+  <script>
+    var container = document.querySelector(".kp-search");
+    var clientInfoContainer = document.querySelector(".client-conainer");
+    container.addEventListener("kpoint-search-result-shown", function (e) {
+      clientInfoContainer.style.display = "none";
+    });
+
+    container.addEventListener("kpoint-search-result-cleared", function (e) {
+      clientInfoContainer.style.display = "block";
+    });
+  </script>
+</body>
+
 </html>
