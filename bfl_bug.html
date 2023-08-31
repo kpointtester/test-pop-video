@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script async src="https://assets.zencite.com/orca/media/embed/play-inline-vx.js"></script>
+  <style>
+	.button-container {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+
+	.fancy-button {
+	  width: 150px;
+      height: 130px;
+	  background-color: #900C3F;
+	  color: #fff;
+	  padding: 10px 20px;
+	  border: none;
+	  border-radius: 5px;
+	  margin-right: 10px;
+	  font-size: 16px;
+	  font-weight: bold;
+	  text-transform: uppercase;
+	  cursor: pointer;
+	  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	  transition: background-color 0.3s ease;
+	}
+
+	.fancy-button:hover {
+	  background-color: #581845;
+	}
+
+	.fancy-button:last-child {
+	  margin-right: 0;
+	}</style>
+</head>
+<title>Pop-up video</title>
+<body>
+	<h1>empty </h1>
+	<div class="row button-container">
+		<div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+		  <button class="fancy-button" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}' data-vx-playerref="kpointPlayer1">samsite false not preload</button>
+	
+		  <button class="fancy-button" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}' data-vx-samesite="false" data-vx-playerref="kpointPlayer2">samesite false not preload</button>
+
+		  <button class="fancy-button" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}'  data-vx-samesite="true" data-vx-playerref="kpointPlayer3"> not samesite not preload  </button>
+		</div>
+		</div>
+		
+		<h1>with preload none</h1>
+
+		<div class="row button-container">
+                <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+                  <button class="fancy-button preload-none" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}' data-vx-samesite="false" data-vx-playerref="kpointPlayer4">samsite false not preload</button>
+
+                  <button class="fancy-button preload-none" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}' data-vx-samesite="true" data-vx-playerref="kpointPlayer5">samesite false not preload</button>
+
+                  <button class="fancy-button preload-none" data-vx-host="demos.zencite.com" data-vx-videoid="gcc-c707f704-51b0-478e-9e96-a974066bc14b" data-vx-playersize="medium" data-vx-backdrop="true" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"5000"}'  data-vx-playerref="kpointPlayer6"> not samesite not preload  </button>
+                </div>
+                </div>  
+
+</body>
+</html>
