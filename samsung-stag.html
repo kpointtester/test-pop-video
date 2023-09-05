@@ -1,0 +1,715 @@
+<div data-video-host="front.zencite.com" data-kvideo-id="gcc-b3f1a421-0302-4596-bc23-6c9d2d048d35"
+    style="width: max(300px, 30%)" data-ar="9:16" class="kpoint-embedded-video" data-video-params='{ 
+          "autoplay": true,  "resume": false,  "search": false,  "like": false,  
+          "add-widgets": "utils,markup,fontloader"}' data-widgets-config='{"markup": {
+                "list": [
+                {
+                    "start_time": 9,
+                    "end_time": 10,
+                    "template": "#samsung-products",
+                    "z-index":"1002",
+                    "callback":"template-1-callback",
+                    "action":"pause"
+                    
+                }
+                ]
+            },            
+            "fontloader": {
+                "list": [
+                  {
+                    "name": "SAMSUNG Print Regular",
+                    "url": "https://t3-cms.zencite.com/solutions/content/static/Fonts/SAMSUNG/samsung_new_font.css"
+                  },
+                  {
+                    "name": "Open Sans",
+                    "google": {
+                      "styles": [
+                        "400"
+                      ]
+                    }
+                  }
+                ]
+              }
+            
+            
+            }'></div>
+
+<div id="samsung-products" style="display: none">
+    <div class="outer-container">
+        <div class="close-btn cursor-pointer kpw-action-button cursor-pointer kpw-track" data-track-id="closebutton"
+            data-track-type="BW" data-track-name="closebutton" data-index="1" data-track-widgetname="actionButton">
+            <i class="far fa-times"></i>
+        </div>
+        <input type="text" class="textbox" id="name" step="any" placeholder="Enter your name here" />
+        <div class="content">
+            <div class="samsung-header-container">
+                <!-- <div class="row custom-line-height">
+            <input type="text" class="textbox" id="name" step="any" placeholder="Enter your name here" />
+          </div> -->
+                <div class="intro">
+                    Select products now for the best deals at the Samsung Experience Zone
+                </div>
+            </div>
+            <div class="row custom-line-height">
+                <div class="product-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="label-for-textbox">Smartphone & Tablets</div>
+                <input type="checkbox" class="myCheckbox" id="smartphoneTabletsCheckbox" />
+
+                <!-- <input
+                  type="number"
+                  class="textbox"
+                  placeholder="0"
+                  min="0"
+                  id="smartphoneTablets"
+                  step="any"
+                  /> -->
+            </div>
+            <div class="row custom-line-height">
+                <div class="product-icon"><i class="fas fa-laptop"></i></div>
+                <div class="label-for-textbox">Laptops</div>
+                <input type="checkbox" class="myCheckbox" id="laptopsCheckbox" />
+                <!-- <input
+                type="number"
+                class="textbox"
+                placeholder="0"
+                min="0"
+                id="laptop"
+                step="any"
+              /> -->
+            </div>
+            <div class="row custom-line-height">
+                <div class="product-icon"><i class="fas fa-shield-check"></i></div>
+                <div class="label-for-textbox">
+                    <p>Knox</p>
+                    <p class="other-line">(Security Solutions)</p>
+                </div>
+                <input type="checkbox" class="myCheckbox" id="knoxCheckbox" />
+                <!-- <input
+                type="number"
+                class="textbox"
+                placeholder="0"
+                min="0"
+                id="knox"
+                step="any"
+              /> -->
+            </div>
+            <div class="row custom-line-height">
+                <div class="product-icon"><i class="fas fa-camera-alt"></i></div>
+                <div class="label-for-textbox">Consumer Electronics</div>
+                <input type="checkbox" class="myCheckbox" id="consumerElectronicsCheckbox" />
+
+                <!-- <input
+                type="number"
+                class="textbox"
+                placeholder="0"
+                min="0"
+                id="consumerElectronics"
+                step="any"
+              /> -->
+            </div>
+            <div class="row custom-line-height">
+                <div class="product-icon"><i class="fas fa-tv"></i></div>
+                <div class="label-for-textbox">Commercial Displays</div>
+                <input type="checkbox" class="myCheckbox" id="commercialDisplaysCheckbox" />
+            </div>
+        </div>
+        <div class="label-for-others-textbox">Others</div>
+        <input type="text" class="others-textbox" id="others" step="any" placeholder="If other, please specify" />
+        <div class="submit-btn-divider"></div>
+        <!-- <div class="submit-btn-container"> -->
+        <div class="submit-btn kpw-action-button cursor-pointer kpw-track submit-btn-disabled"
+            data-track-id="productSubmit" data-track-type="BW" data-track-name="productSubmit" data-index="2"
+            data-track-widgetname="actionButton" disabled>Submit</div>
+        <!-- </div> -->
+        <div class="end-line">We have a gift with your name on it at the Samsung Experience Zone</div>
+    </div>
+</div>
+
+<!-- <link rel="stylesheet" type="text/css" href="samsung.css"> -->
+<style>
+    /* @import url("https://fonts.cdnfonts.com/css/samsungone"); */
+    /* @font-face {
+    font-family: "SAMSUNG";
+    src: url("https://t3-cms.zencite.com/solutions/content/static/Fonts/SAMSUNG/SamsungOne-700.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  } */
+
+
+    .samsung-header-container {
+        width: 100%;
+        /* height: 100%; */
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        flex-direction: column;
+        /* padding: calc(15 * var(--pw)); */
+    }
+
+    .samsung-header {
+        display: flex;
+        height: auto;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-bottom: calc(2 * var(--pw));
+        /* align-items: center; */
+        font-size: calc(6.2 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        /* flex: 14; */
+    }
+
+    .intro {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        height: auto;
+        width: 100%;
+        color: #707070;
+        /* align-items: center; */
+        font-size: calc(3.2 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        /* flex: 14; */
+        margin-top: calc(5 * var(--pw));
+        /* margin-top: 1rem; */
+        margin-left: calc(0.4 * var(--pw));
+    }
+
+    .end-line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        width: auto;
+        color: #707070;
+        /* align-items: center; */
+        font-size: calc(3.2 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+    }
+
+    .outer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        flex-direction: column;
+        padding-left: calc(15 * var(--pw)) !important;
+        padding-right: calc(15 * var(--pw)) !important;
+        padding-top: calc(15 * var(--pw)) !important;
+        padding-bottom: calc(5 * var(--pw)) !important;
+        pointer-events: visible;
+    }
+
+
+    [type=checkbox]:checked,
+    [type=checkbox]:not(:checked) {
+        position: absolute;
+        left: calc(75.5 * var(--pw)) !important;
+        visibility: visible !important;
+    }
+
+    .thank-you-outer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #4387f7;
+        flex-direction: column;
+        padding: calc(15 * var(--pw));
+        pointer-events: visible;
+    }
+
+    .thank-you-line {
+        /* position: absolute; */
+        /* top:calc(40 * var(--pw)); */
+        padding-top: calc(50 * var(--pw));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: auto;
+        color: #ffffff;
+        /* align-items: center; */
+        font-size: calc(10 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        /* flex: 8; */
+    }
+
+    .gift-icon {
+        color: #fff;
+        /* position: absolute; */
+        /* top:calc(100 * var(--pw)); */
+        padding-top: calc(30 * var(--pw));
+        width: auto;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: calc(30 * var(--pw));
+        /* flex: 4; */
+    }
+
+    .thank-you-end-line {
+        padding-left: calc(10 * var(--pw));
+        padding-right: calc(10 * var(--pw));
+        padding-top: calc(10 * var(--pw));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-size: calc(4 * var(--pw));
+        text-align: center;
+        font-family: "SAMSUNG Print Regular";
+    }
+
+    .close-btn {
+        position: absolute;
+        color: #707070;
+        top: 0;
+        right: 0;
+        align-self: flex-end;
+        padding: calc(8 * var(--pw));
+    }
+
+    .content {
+        width: auto;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        /* align-items: center; */
+        flex-direction: column;
+        font-family: "SAMSUNG Print Regular";
+    }
+
+    .row {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex-direction: row;
+        padding: calc(4 * var(--pw));
+    }
+
+    .product-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: calc(4 * var(--pw));
+        height: calc(4 * var(--pw));
+        /* background-color: #ccc; */
+        padding-right: calc(2 * var(--pw));
+        border-radius: 50%;
+        font-size: calc(6 * var(--pw));
+        /* margin-right: calc(1 * var(--pw)); */
+        /* flex: 1; */
+    }
+
+    .product-icon {
+        padding-left: calc(5.44 * var(--pw));
+    }
+
+    .label-for-textbox {
+        display: flex;
+        height: calc(4 * var(--pw));
+        color: black;
+        /* width: calc(10 * var(--pw)); */
+        justify-content: left;
+        align-items: center;
+        padding-left: calc(4 * var(--pw));
+        font-size: calc(4 * var(--pw));
+        /* flex: 12; */
+    }
+
+    .label-for-others-textbox {
+        display: flex;
+        height: calc(3 * var(--pw));
+        width: 100%;
+        justify-content: left;
+        align-items: center;
+        padding-top: calc(7 * var(--pw));
+        padding-bottom: calc(3 * var(--pw));
+        font-size: calc(4 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        /* flex: 12; */
+    }
+
+    .textbox {
+        width: 100%;
+        height: auto;
+        color: #707070;
+        padding: calc(2 * var(--pw));
+        border: calc(0.1 * var(--pw)) solid #ccc;
+        text-align: left;
+        border-radius: calc(2 * var(--pw));
+        font-size: calc(2 * var(--pw));
+        /* flex: 3; */
+    }
+
+    .others-textbox {
+        width: 100%;
+        height: calc(30 * var(--pw));
+        color: #707070;
+        padding: calc(2 * var(--pw));
+        border: calc(0.1 * var(--pw)) solid #ccc;
+        text-align: left;
+        border-radius: calc(2 * var(--pw));
+        font-size: calc(2 * var(--pw));
+    }
+
+    .textbox::placeholder {
+        font-family: "SAMSUNG Print Regular";
+        font-size: calc(4 * var(--pw));
+        text-align: left;
+    }
+
+    .others-textbox::placeholder {
+        position: absolute;
+        padding: calc(2 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        font-size: calc(4 * var(--pw));
+        vertical-align: top;
+        top: 0;
+        left: 0;
+        text-align: left;
+    }
+
+    .textbox:focus::placeholder {
+        color: transparent;
+    }
+
+    .others-textbox:focus::placeholder {
+        color: transparent;
+    }
+
+    .custom-line-height {
+        line-height: 1.2;
+        /* Adjust this value to change the line spacing */
+    }
+
+    .submit-btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: calc(4 * var(--pw));
+    }
+
+    .submit-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: calc(5 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        padding: calc(2 * var(--pw));
+        width: calc(69 * var(--pw));
+        height: calc(13 * var(--pw));
+        color: #fff;
+        border: none;
+        border-radius: calc(8 * var(--pw));
+        cursor: pointer;
+    }
+
+    .submit-btn-disabled {
+        background-color: grey;
+    }
+
+    * {
+        font-family: "SAMSUNG Print Regular";
+    }
+
+    .submit-btn-enabled {
+        background-color: #000;
+    }
+
+    .add-products-btn {
+        position: absolute;
+        top: calc(4.3 * var(--pw));
+        right: calc(3.4 * var(--pw));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: calc(4 * var(--pw));
+        font-family: "SAMSUNG Print Regular";
+        padding: calc(2 * var(--pw));
+        gap: 0.5ch;
+        width: calc(30 * var(--pw));
+        background-color: #000000;
+        color: #fff;
+        border: none;
+        border-radius: calc(8 * var(--pw));
+        cursor: pointer;
+        pointer-events: visible;
+    }
+
+    .submit-btn-divider {
+        width: calc(100 * var(--pw));
+        height: calc(0.2 * var(--pw));
+        background-color: #707070;
+        margin: calc(3.5 * var(--pw)) 0;
+        opacity: 0.4;
+    }
+
+    /* checkbox */
+
+    /* .checkbox-container {
+        margin-left: auto;
+    } */
+
+    input[type="checkbox"] {
+        display: flex;
+        align-items: center;
+        /* Align vertically in the center */
+        border: 1px solid #000000;
+        border-radius: 2px;
+        background: none;
+        cursor: pointer;
+        margin: 0;
+        /* Remove margin to avoid spacing issues */
+        height: calc(5 * var(--pw));
+        margin-left: auto;
+        /* Push the checkbox to the right end */
+        padding-left: calc(5 * var(--pw));
+        /* Use padding-left instead of padding-right */
+        width: calc(5 * var(--pw));
+        /* -webkit-appearance: none; */
+    }
+
+
+
+    input[type="checkbox"]:hover {
+        opacity: 1;
+    }
+
+    /* input[type="checkbox"]:checked {
+        background-color: #000;
+        opacity: 1;
+    } */
+
+    /* input[type="checkbox"]:before {
+        content: "";
+        position: absolute;
+        right: 50%;
+        top: 50%;
+        width: 4px;
+        height: 10px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        margin: -1px -1px 0 -1px;
+        transform: rotate(45deg) translate(-50%, -50%);
+        z-index: 2;
+    } */
+
+    /*  */
+    .line {
+        font-size: calc(5 * var(--pw));
+        /* Default font size for all lines */
+    }
+
+    .other-line {
+        position: absolute;
+        height: auto;
+        width: auto;
+        display: flex;
+        font-size: calc(3 * var(--pw));
+        padding-top: calc(5 * var(--pw));
+        color: #707070;
+    }
+
+    /* CSS for the transition effect */
+    /* CSS animation for blown-up effect */
+    @keyframes blownUp {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* Apply the animation to the outer container */
+    .outer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        flex-direction: column;
+        padding: calc(15 * var(--pw));
+        animation: blownUp 0.5s ease-in-out;
+        transform-origin: center;
+    }
+
+    /* 
+ */
+
+    .name-input-container {
+        position: relative;
+    }
+
+
+
+
+
+
+
+    /*  */
+</style>
+<script>
+    window["template-1-callback"] = {
+        onRender: (self) => {
+            console.log("Rendered template", self);
+
+            console.log("opening outer container");
+            const outerContainer = $kPointQuery(".outer-container", self.container);
+
+            // First, make sure it's hidden and at its initial state
+            outerContainer.removeClass("d-none blownUp");
+
+            // Use a setTimeout to delay adding the blownUp class for the animation
+            setTimeout(() => {
+                outerContainer.addClass("blownUp");
+            }, 10); // A very short delay to ensure proper animation
+
+            // Function to handle the close button click
+            const handleCloseButton = () => {
+                console.log("close clicked");
+                const outerContainer = $kPointQuery(".outer-container", self.container);
+
+                // Remove the blownUp class to trigger the disappearance animation
+                outerContainer.removeClass("blownUp");
+                setTimeout(() => {
+                    outerContainer.addClass("d-none");
+                }, 500); // Adjust the duration to match your animation duration
+
+                self.player.seekTo(11 * 1000);
+            };
+
+            // ...
+
+            // Function to handle the opening of the outer container
+            // const openOuterContainer = () => {
+            //     console.log("opening outer container");
+            //     const outerContainer = $kPointQuery(".outer-container", self.container);
+
+            //     // First, make sure it's hidden and at its initial state
+            //     outerContainer.removeClass("d-none blownUp");
+
+            //     // Use a setTimeout to delay adding the blownUp class for the animation
+            //     setTimeout(() => {
+            //         outerContainer.addClass("blownUp");
+            //     }, 10); // A very short delay to ensure proper animation
+            // };
+
+            // Attach the click event handler to the close button
+            $kPointQuery(".close-btn", self.container).on("click", handleCloseButton);
+
+            // ...
+
+            // In your code, wherever you want to open the outer container, call openOuterContainer()
+
+
+            // const handleCloseButton = () => {
+            //     console.log("close clicked");
+            //     $kPointQuery(".outer-container", self.container).addClass("d-none");
+            //     self.player.seekTo(11*1000);
+            //   };
+
+            // Function to check if any input field is filled
+            const isAnyFieldFilled = () => {
+
+                const data = {
+                    name: $kPointQuery("#name", self.container).val(),
+                    SmartphoneTablets: $kPointQuery("#smartphoneTabletsCheckbox", self.container).prop(
+                        "checked"),
+                    laptops: $kPointQuery("#laptopsCheckbox", self.container).prop("checked"),
+                    knox: $kPointQuery("#knoxCheckbox", self.container).prop("checked"),
+                    consumerElectronics: $kPointQuery("#consumerElectronicsCheckbox", self.container)
+                        .prop("checked"),
+                    commercialDisplaysCheckbox: $kPointQuery("#commercialDisplaysCheckbox", self
+                            .container)
+                        .prop("checked"),
+                    others: $kPointQuery("#others", self.container).val(),
+                };
+                return (
+                    data.name.trim() !== "" &&
+                    (data.SmartphoneTablets ||
+                        data.laptops ||
+                        data.knox ||
+                        data.consumerElectronics ||
+                        data.commercialDisplaysCheckbox ||
+                        data.others.trim() !== "")
+                );
+            };
+
+            // Function to update the submit button state
+            const updateSubmitButton = () => {
+                const submitBtn = $kPointQuery(".submit-btn", self.container);
+                if (isAnyFieldFilled()) {
+                    submitBtn.attr("data-type", "seek");
+                    submitBtn.prop("disabled", false);
+                    submitBtn.addClass("submit-btn-enabled");
+                } else {
+                    submitBtn.removeAttr("data-type");
+                    submitBtn.prop("disabled", true);
+                    submitBtn.removeClass("submit-btn-enabled");
+                }
+            };
+
+            // Function to handle submit button click
+            const handleSubmitClick = (event) => {
+                event.preventDefault();
+                console.log("submit clicked");
+                if (isAnyFieldFilled()) {
+                    var data = {
+                        Name: $kPointQuery("#name", self.container).val(),
+                        Smartphone_Tablets: $kPointQuery("#smartphoneTabletsCheckbox", self.container)
+                            .prop("checked"),
+                        Laptops: $kPointQuery("#laptopsCheckbox", self.container).prop("checked"),
+                        Knox: $kPointQuery("#knoxCheckbox", self.container).prop("checked"),
+                        Consumer_Electronics: $kPointQuery("#consumerElectronicsCheckbox", self
+                                .container)
+                            .prop("checked"),
+                        Commercial_Displays: $kPointQuery("#commercialDisplaysCheckbox", self
+                                .container)
+                            .prop("checked"),
+                        Others: $kPointQuery("#others", self.container).val(),
+                    };
+                    const track_data = {
+                        name: "customform",
+                        data: JSON.stringify(data),
+                    };
+                    console.log(self);
+                    self.controller.tracker.track({
+                        track_data: track_data,
+                    });
+                    $kPointQuery(".outer-container", self.container).addClass("d-none");
+                    self.player.seekTo(12 * 1000);
+                } else {
+                    console.log("Please fill out all the required fields before submitting.");
+                }
+
+            };
+
+            // Attach the click event handler to the submit button
+            $kPointQuery(".submit-btn", self.container).on("click", handleSubmitClick);
+
+            // Initial setup of the submit button
+            updateSubmitButton();
+
+            // Listen for changes in input fields and update the submit button accordingly
+            $kPointQuery(
+                "#name, #smartphoneTabletsCheckbox, #laptopsCheckbox, #knoxCheckbox, #consumerElectronicsCheckbox, #commercialDisplaysCheckbox, #others",
+                self.container
+            ).on("input change", updateSubmitButton);
+
+            $kPointQuery(".close-btn", self.container).on("click", handleCloseButton);
+        },
+    };
+</script>
+<script type="text/javascript" src="https://t3-cms.zencite.com/orca/media/embed/videofront-vega.js"></script>
+<!-- <script src="samsungWidget.js"></script>
+        <script src="samsungView.js"></script>
