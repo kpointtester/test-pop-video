@@ -1,0 +1,26 @@
+<head>
+<script type='text/javascript' src='https://assets.zencite.com/orca/media/embed/player-silk.js'></script>
+</head>
+<div id="player-container" style='width:640px; height:360px'>
+</div>
+<script>
+  window.onload = function() {
+	setTimeout(() => {
+	
+      var player = kPoint.Player(document.getElementById("player-container"), {
+        "kvideoId": "gcc-6403273f-c695-41a4-86ef-7d7d0c2c105e",
+        "videoHost": "showcase-qa.zencite.com",
+        "params": {"autoplay":"false", "xt": "Y2xpZW50X2lkPWNpMjI3NTJkYTExYjc0NDNkYzgyYTE1YzNmY2UyYjM3NTEmdXNlcl9lbWFpbD1qb3NoaV90b2tlbi5jb20mdXNlcl9uYW1lPWpvc2hpX3Rva2VuJmNoYWxsZW5nZT0xNjk1ODk2MTI1JnhhdXRoX3Rva2VuPW1JRFJpZThxT3ZmMEg2UUI3T1NQN3c"},
+
+      });
+	  player.addEventListener(player.events.fullscreenenter , function() {
+         console.log("test yuoppppppppppppppp");
+	  });
+
+	},3000);
+}
+</script>
+
+<!-- player.addEventListener(player.events.onStateChange, function(data) {
+         console.log( data);
+	  }); -->
