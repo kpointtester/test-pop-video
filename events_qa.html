@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!--script async src="https://cdnrakeshvm.zencite.com/web/play-inline-vx.js"></script-->
+  <script async src="https://assets.zencite.com/orca/media/embed/play-inline-vx.js"></script>
+  <style>
+	.button-container {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+
+	.fancy-button {
+	  width: 150px;
+      height: 130px;
+	  background-color: #900C3F;
+	  color: #fff;
+	  padding: 10px 20px;
+	  border: none;
+	  border-radius: 5px;
+	  margin-right: 10px;
+	  font-size: 16px;
+	  font-weight: bold;
+	  text-transform: uppercase;
+	  cursor: pointer;
+	  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	  transition: background-color 0.3s ease;
+	}
+
+	.fancy-button:hover {
+	  background-color: #581845;
+	}
+
+	.fancy-button:last-child {
+	  margin-right: 0;
+	}</style>
+</head>
+<body>
+	<div class="row button-container">
+	  <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+		<button class="fancy-button" id="newButton" data-vx-host="showcase-qa.zencite.com" data-vx-packageid="181nunsdxydbe" data-vx-thumbnailpath="https://showcase-qa.zencite.com/media/data.ap-southeast-1.zencite/showcase.kpoint.com/showcase-qa.zencite.com/kapsule/gcc-4a8756f5-6369-4988-8200-15148a1e8c99/v8/i/16x9-full.jpg" data-vx-videoid="gcc-b8e1dba6-3e9a-4035-8af4-7dea0e04acd5" data-vx-samesite="true" data-vx-playerref="kpointPlayer1">Customer Support Automation</button>
+	  </div>
+	</div>
+	<script>
+		function removeModal(){
+			$ = $kPointQuery;
+			$("#kpointPlayer1").remove();
+			$("#newButton").remove();
+			
+			$(".video-container").append('<button class="fancy-button" id="newButton" data-vx-host="showcase-qa.zencite.com" data-vx-packageid="181nunsdxydbe" data-vx-thumbnailpath="https://showcase-qa.zencite.com/media/data.ap-southeast-1.zencite/showcase.kpoint.com/showcase-qa.zencite.com/kapsule/gcc-4a8756f5-6369-4988-8200-15148a1e8c99/v8/i/16x9-full.jpg" data-vx-videoid="gcc-b8e1dba6-3e9a-4035-8af4-7dea0e04acd5" data-vx-samesite="true" data-vx-playerref="kpointPlayer1">Customer Support Automation</button>');
+			delete window["kpointPlayer1"];
+		}
+		function addScript(){
+			$ = $kPointQuery;
+			var head = document.getElementsByTagName("head")[0];
+			
+			var script = document.createElement('script');
+			script.src = "https://assets.zencite.com/orca/media/embed/play-inline-vx.js";//_getBasePath(host, samesite, "js") + "/js/silk.js";
+			head.appendChild(script);
+
+		}
+		document.addEventListener("on-video-popup-state-change", function(data){
+			console.log(data);
+			if(data.detail.state === "close"){
+				removeModal();
+				addScript();
+			}
+		});
+	</script>
+</body>
+</html>
