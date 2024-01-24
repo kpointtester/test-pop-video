@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type='text/javascript' src='https://showcase-qa.zencite.com/assets/orca/media/embed/player-silk.js'></script>
+  <script type='text/javascript' src="https://showcase-qa.zencite.com/assets/orca/media/embed/kp-search-embed.js"></script>
+  <script type='text/javascript' src="https://showcase-qa.zencite.com/assets/orca/media/embed/play-inline-vx.js"></script>
+  <style>
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fancy-button {
+  width: 150px;
+      height: 130px;
+  background-color: #900C3F;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.fancy-button:hover {
+  background-color: #581845;
+}
+
+.fancy-button:last-child {
+  margin-right: 0;
+}</style>
+  </head>
+  <body>
+  <h3>Normal embedding with player-silk.js</h3>
+  <div data-video-host='showcase-qa.zencite.com' data-kvideo-id='gcc-a3247a99-349d-48bd-9e7d-cff5249860f9' data-samesite=true style='width:70%' ></div>
+  <br>
+  <h3>Search SDK</h3>
+  <div class="kp-searchbar" data-search-host="showcase-qa.zencite.com" data-order-params="{&quot;order_by&quot;:&quot;time_start&quot;,&quot;order_type&quot;:&quot;desc&quot;}" data-div-container="#kp-search-results-container" style="display: flex; justify-content: center; padding-top: 1rem;padding-bottom: 1rem;"></div>
+  <div id="kp-search-results-container" style="display: none"></div>
+  <h3>Popup SDK</h3>
+  <div class="row button-container">
+  <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+<button class="fancy-button" data-vx-thumbnailpath="https://showcase-qa.zencite.com/media/data.ap-southeast-1.zencite/showcase.kpoint.com/showcase-qa.zencite.com/kapsule/gcc-a3247a99-349d-48bd-9e7d-cff5249860f9/v23/i/16x9-full.jpg" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-a3dfc332-7164-435a-9706-8b33bd5c61e0" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"20000"}' data-vx-samesite="true" data-vx-playerref="kpointPlayer3">Learning and innovation through videos</button>
+  </div>
+  <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+<button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-thumbnailpath="https://showcase-qa.zencite.com/media/data.ap-southeast-1.zencite/showcase.kpoint.com/showcase-qa.zencite.com/kapsule/gcc-4a8756f5-6369-4988-8200-15148a1e8c99/v8/i/16x9-full.jpg" data-vx-videoid="gcc-a3247a99-349d-48bd-9e7d-cff5249860f9" data-vx-offset="5000" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show",  "search":"false","toc":"false","offset":"2000","add-widgets":"text"}' data-vx-widgetsconfig='{"text":{"title":"abc"}}' data-vx-samesite="true" data-vx-playerref="kpointPlayer1">Customer Support Automation</button>
+  </div>
+  <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+<button class="fancy-button" data-vx-host="showcase-qa.zencite.com" data-vx-videoid="gcc-4a8756f5-6369-4988-8200-15148a1e8c99" data-vx-offset="5000" data-vx-params='{"showPlayIconOnMobile": true, "audiocontrols": "show", "search":"false","toc":"false","offset":"2000"}' data-vx-samesite="true" data-vx-playerref="kpointPlayer2">Effective Marketing With kPoint</button>
+  </div>
+</div>
+  </body>
+</html>
