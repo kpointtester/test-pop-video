@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!--script async src="https://cdnrakeshvm.zencite.com/web/play-inline-vx.js"></script-->
+  <script async src="https://t3-cms.zencite.com/orca/media/embed/play-inline-vx.js"></script>
+  <style>
+	.button-container {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+
+	.fancy-button {
+	  width: 150px;
+      height: 130px;
+	  background-color: #900C3F;
+	  color: #fff;
+	  padding: 10px 20px;
+	  border: none;
+	  border-radius: 5px;
+	  margin-right: 10px;
+	  font-size: 16px;
+	  font-weight: bold;
+	  text-transform: uppercase;
+	  cursor: pointer;
+	  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	  transition: background-color 0.3s ease;
+	}
+
+	.fancy-button:hover {
+	  background-color: #581845;
+	}
+
+	.fancy-button:last-child {
+	  margin-right: 0;
+	}</style>
+</head>
+<body>
+	<div class="row button-container">
+	  <div class="video-container col-lg-4 col-sm-6 col-md-6 py-4 px-4">
+		<button class="fancy-button" id="newButton" data-vx-host="front.zencite.com" data-vx-packageid="8mpmbohkqtg" data-vx-host="front.zencite.com" data-vx-packageid="8mpmbohkqtg" 
+																			      data-vx-thumbnailpath="https://images3.alphacoders.com/191/19177.jpg" 
+			data-vx-videoid="gcc-bcf0b2d2-917b-4cef-9c21-9fc5205e283c" data-vx-samesite="true" data-vx-playerref="kpointPlayer1">Customer Support Automation</button>
+	  </div>
+	</div>
+	<script>
+		function removeModal(){
+			$ = $kPointQuery;
+			$("#kpointPlayer1").remove();
+			$("#newButton").remove();
+			
+			$(".video-container").append('<button class="fancy-button" id="newButton" data-vx-host="front.zencite.com" data-vx-packageid="8mpmbohkqtg" data-vx-thumbnailpath="https://front.zencite.com/media/dev-t3-data.ap-southeast-1.zencite/front.zencite.com/front.zencite.com/logos/v1697468340000/logo.jpg" data-vx-videoid="gcc-bcf0b2d2-917b-4cef-9c21-9fc5205e283c" data-vx-samesite="true" data-vx-playerref="kpointPlayer1">Customer Support Automation- Pankaj </button>');
+			delete window["kpointPlayer1"];
+		}
+		function addScript(){
+			$ = $kPointQuery;
+			var head = document.getElementsByTagName("head")[0];
+			
+			var script = document.createElement('script');
+			script.src = "https://t3-cms.zencite.com/orca/media/embed/play-inline-vx.js";//_getBasePath(host, samesite, "js") + "/js/silk.js";
+			head.appendChild(script);
+
+		}
+//		document.addEventListener("player-popup-ready", function(data){
+			console.log(data);
+					//setTimeout(function(){ 
+					//		const kpointModal = document.getElementById("kpointPlayer1");
+                                        //kpointModal.style.setProperty('display', 'flex', 'important');
+					//		},2000);
+//			if(data.detail.state === "close"){
+	//				removeModal();
+	//			addScript();
+		//	}
+		});
+	</script>
+</body>
+</html>

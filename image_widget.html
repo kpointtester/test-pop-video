@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link
+      rel="preload"
+      as="image"
+      href="https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg"
+    /> -->
+  </head>
+  <body>
+    <div
+      class="kpoint-embedded-video"
+      data-video-host="showcase-qa.zencite.com"
+      data-samesite="false"
+      data-kvideo-id="gcc-d7b80229-b5eb-416e-93c1-815ffcb418c6"
+      style="height: 100%; width: calc(100vh * 16 / 9); max-width: 100%"
+      data-ar="16:9"
+      data-video-params='{
+"resume": false,
+"search": false,
+"like": false,
+"add-widgets": "utils,kpw_image,markup",
+"trk_tracking_id": "2217uzfepajewe",
+"playerSkinType": "sleek",
+"autoplay": true,
+"muted":"true"
+}'
+      data-widgets-config='{
+        "markup":{
+          "list":[{
+            "start_time":1,
+            "end_time":10,
+            "template":"#aditya_markup_template"
+          }]
+        },
+    "kpw_image": {
+        "list":[
+        {
+            "src":"https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+            "track":{
+                "id":"nature1",
+                "name":"nature1",
+                "group":"images"
+            },
+            "z-index":20
+        },
+        {
+            "start_time":"35000ms",
+            "end_time":50,
+            "src":"https://images.pexels.com/photos/1846336/pexels-photo-1846336.jpeg"
+        }
+        ]
+    }
+      }'
+    ></div>
+
+    <div id="aditya_markup_template" style="display: none">
+      <div
+        class="kpw-action-button"
+        data-type="call_widgets"
+        data-action="openImage"
+        data-widgets="kpw_image"
+        data-custom-image-id="nature1"
+        style="color: red"
+      >
+        Open Image
+      </div>
+    </div>
+    <script
+      type="text/javascript"
+      src="https://showcase-qa.zencite.com/assets/orca/media/embed/videofront-vega.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<head>
+<script type='text/javascript' src='https://t3-cms.zencite.com/orca/media/embed/player-silk.js'></script>
+</head>
+<div id="player-container" style='width:640px; height:360px'></div>
+<script>
+  window.onload = function() {
+	setTimeout(() => {
+	
+      var player1 = kPoint.Player(document.getElementById("player-container"), {
+        "kvideoId": "gcc-b7d31c07-726e-46f6-89e1-c77b54790f24",
+        "videoHost": "front.zencite.com",
+        "params": {"autoplay":"false"},
+
+      });
+	  player1.addEventListener(player1.events.audioTracksLoaded , function(time) {
+         console.log("player1 yuoppppppppppppppp"+time.audioTracks);
+	  });
+	},3000);
+}
+</script>
+
+<!-- player.addEventListener(player.events.onStateChange, function(data) {
+         console.log( data);
+	  }); -->
