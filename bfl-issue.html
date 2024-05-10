@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async type="text/javascript" src="https://assets.kpoint.com/orca/media/embed/videofront-vega.js?hs=1"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="kpoint_player">
+        <div data-video-host='demos.kpoint.com' data-video-params='{}' data-kvideo-id='gcc-8bf821d6-16bc-4e95-90b3-226c837615a1' class='float-host' style='width:60%;' data-player="v0"></div>
+    </div>
+    <button class="btn btn-1" data-videoid="gcc-5252454c-06b0-497b-aaa4-7e7312a27e0c" data-playerref="v1">Video 1</button>
+    <button class="btn btn-2" data-videoid="gcc-8ae287be-489b-4eb3-b384-1e56af2a6752" data-playerref="v2">video 2</button>
+    <button class="btn btn-3" data-videoid="gcc-f5573b4e-0267-4cf3-a29e-26889fa1501a" data-playerref="v3">video 3</button>
+    <button class="btn btn-4" data-videoid="gcc-97a74ef1-35b0-40d7-a535-28bce3add347" data-playerref="v4">video 4</button>
+    <div style="height: 1000px;"></div>
+    <script>
+        setTimeout(()=>{
+            $ = $kPointQuery;
+            $(".btn").off("click").on("click",(e)=>{
+                var videoId = e.target.dataset.videoid;
+                var videoRef = e.target.dataset.playerref;
+                var embedCode = `<div data-init-dynamic-internal data-video-host='demos.kpoint.com' data-video-params='{}' data-kvideo-id='${videoId}' class='float-host' style='width:60%;' data-player="${videoRef}"></div>`;
+                console.log(videoRef," ",videoId);
+                $(".kpoint_player").empty();
+                $(".kpoint_player").append(embedCode);
+            });
+        },3000);
+        // var my_script = document.createElement('script');
+        // my_script.setAttribute('src','https://assets.zencite.in/orca/media/embed/videofront-vega.js');
+        // document.head.appendChild(my_script);
+    </script>
+</body>
+</html>
