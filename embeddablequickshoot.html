@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Page</title>
+    <style>
+      body {
+        background-color: #e6f2ff;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .assessment {
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .kpoint-recording-controls {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        margin: 20px 0;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+      #startRecording {
+        background-color: #4CAF50;
+        color: white;
+      }
+      #stopRecording {
+        background-color: #f44336;
+        color: white;
+      }
+      #submitRecording {
+        background-color: #008CBA;
+        color: white;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      #submissionMessage {
+        text-align: center;
+        color: #4CAF50;
+        font-weight: bold;
+      }
+    </style>
+    <script async type="text/javascript" src="https://assets.kpoint.com/orca/media/embed/quickshootEmbed.js?1"></script>
+    <script>
+      function createRigelInstance() {
+        window.rigelscreen = new Rigel({
+          "terms": null,
+          "is_vertical_recording_supported": false,
+          "host": "learning-bdoindia.kpoint.com",
+          "embed": true,
+          //"screenCaptureElement": "monitor", // this can be browser or window or monitor
+          "kcid" : "cifc4bcf83f9814cf6ac944840beedb690",
+          "token" : "0LIcaotSGRTJMs5eosGM2WAFBqN6SqahcbsQY5IfCawck2PKzPDhM+7Jtf9nGm5YNyCjJ5sLqGSBjOARQ3u+vgz0rDauuuH7nGiKatGEacBO6Tpvge6TB+xbB5EHd5l507BnQZWBB2B29CiWM6uazqMng89fa9Ny72gSsrR8S6i6CQMBDSEtYhghD1CK/eq48p2cmY7hjFnmbCROkjQiLWFSWfHkwP1Ni+oaSn+lHEx3IRAy49Vemq5Ui/mJL0qfwE1Sgc1yprIdidQwZeD/gTN60pZfJtNQw/v7ydmFXS/aUC17li+xPUE5ZtGFZgvt9Bgm/byPua+LtSlkLzpGqvk8sKubsmvpYCvYl7Yzit0bSY9XFCKAFV1XPNUME5KNOcyU7qPGOEs46yWA8rz7p0Vim0qkTblbUFFROHO3iA8="
+        });
+      }
+      function onDocumentReady(callback) {
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", callback);
+        } else {
+          callback();
+        }
+      }
+
+      function addEventListenerForRigelScriptLoading(){
+        document.addEventListener("rigelScriptLoaded",() => {
+          console.log("**************** Rigel script loaded *********************");
+          createRigelInstance();
+        });
+      }
+
+      onDocumentReady(function() {
+        addEventListenerForRigelScriptLoading();
+      });
+    </script>
+</head>
+<body>
+  <div data-host="learning-bdoindia.kpoint.com">
+    <div class="container">
+      <div class="header">
+          <h1>Assessment Page</h1>
+          <p>Please complete the assessment below:</p>
+      </div>
+      <div class="assessment">
+          <h2>Question 1</h2>
+          <p>What is the capital of France?</p>
+          <input type="text" name="question1" id="question1" placeholder="Your answer here">
+      </div>
+      <div class="assessment">
+          <h2>Question 2</h2>
+          <p>What is 2 + 2?</p>
+          <input type="text" name="question2" id="question2" placeholder="Your answer here">
+      </div>
+      <div class="kpoint-recording-controls">
+        <button id="startRecording">Start Screen Recording</button>
+        <button id="stopRecording">Stop Screen Recording</button>
+        <button id="submitRecording">Submit Screen Recording</button>
+      </div>
+      <p id="submissionMessage" style="display:none;">Recording has been submitted.</p>
+    </div>
+  </div>
+  <script>
+      const startBtn = document.getElementById('startRecording');
+    const stopBtn = document.getElementById('stopRecording');
+    const submitBtn = document.getElementById('submitRecording');
+    const submissionMessage = document.getElementById('submissionMessage');
+    async function startScreenRecording() {
+        try {
+            window.rigelscreen.startScreenRecorder();
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            submitBtn.disabled = true;
+        } catch(err){
+            console.log("Errorrrrrrrrr in start recording => ",err); 
+        }
+      }
+
+      async function stopScreenRecording() {
+        try {
+            window.rigelscreen.stopScreenRecorder(()=>{console.log("******************** Recording stoppedddd")});
+            stopBtn.disabled = true;
+            startBtn.disabled = true;
+            submitBtn.disabled = false;
+        } catch(err){
+            console.log("Errorrrrrrrrr in stop recording => ",err); 
+        }
+      }
+
+      async function submitScreenRecording() {
+        const recordingName = prompt("Please enter the name for your recording:");
+        if (recordingName) {
+          try { 
+              window.rigelscreen.submitRecording(`${recordingName}Screen`);
+              startBtn.disabled = true;
+              stopBtn.disabled = true;
+              submitBtn.disabled = true;
+              submissionMessage.style.display = 'block';
+          } catch(err){
+              console.log("Errorrrrrrrrr in submit recording => ",err); 
+          }
+            console.log(`Submitted screen recording with the name: ${recordingName}`);
+            // Add logic to submit the recording with the given name
+        } else {
+            console.log("No name entered. Recording not submitted.");
+        }
+      }
+      startBtn.addEventListener('click', startScreenRecording);
+      stopBtn.addEventListener('click', stopScreenRecording);
+      submitBtn.addEventListener('click', submitScreenRecording);
+  </script>
+</body>
+</html>
