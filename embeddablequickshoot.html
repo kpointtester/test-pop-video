@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://kit.fontawesome.com/f2f3dae670.css" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessment Page</title>
     <style>
-
       .kpoint-recording-controls {
         padding: 10px;
   position: fixed; /* Position the buttons absolutely */
@@ -24,13 +22,15 @@
   display: flex;
   justify-content: flex-end;
 }
-html, body{
+  
+  html, body{
   margin: 0px!important;
   scrollbar-width: none!important;
   overflow: auto!important;
 }
-.kpoint-recording-controls button {
-  position: relative;
+
+  .kpoint-recording-controls button {
+      position: relative;
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
     /* Padding for size */
@@ -46,16 +46,17 @@ html, body{
     width: 45px;
     transition: background-color 0.3s ease; /* Smooth hover effect */
     margin: 0 10px;
-}
-
-/* Style for the disabled buttons */
-.kpoint-recording-controls button:disabled {
-  background-color: #cccccc; /* Gray background for disabled buttons */
-  cursor: not-allowed; /* Change cursor to indicate disabled */
-  color: #666666!important; /* Darker text color */
-  border: none; /* Ensure no border */
-}
-.kpoint-recording-controls button:disabled .fa-primary {
+  }
+  
+  /* Style for the disabled buttons */
+  .kpoint-recording-controls button:disabled {
+    background-color: #cccccc; /* Gray background for disabled buttons */
+    cursor: not-allowed; /* Change cursor to indicate disabled */
+    color: #666666; /* Darker text color */
+    border: none; /* Ensure no border */
+  }
+  
+  .kpoint-recording-controls button:disabled .fa-primary {
   fill: #999999; /* Gray fill for primary paths */
 }
 
@@ -64,142 +65,150 @@ html, body{
   opacity: 0.5; /* Optional: Reduced opacity for a "disabled" look */
 }
 
-/* Prevent hover effect on disabled buttons */
-.kpoint-recording-controls button:hover:disabled {
-  background-color: #cccccc; /* Keep gray color on hover when disabled */
-}
 
-.kpoint-recording-controls button:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
-
-.kpoint-recording-controls button:active {
-  background-color: #3e8e41; /* Even darker green when clicked */
-}
-
-#submissionMessage {
-  display: none; /* Initially hidden */
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-  padding: 15px; /* Padding for spacing */
-  border-radius: 5px; /* Rounded corners */
-  text-align: center; /* Centered text */
-  font-size: 18px; /* Font size */
-  position: fixed; /* Fixed positioning */
-  top: 20px; /* Distance from the top */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Center adjustment */
-  z-index: 1000; /* Make sure it appears above other elements */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
-
-/* Additional class to show the message */
-.show {
-  display: block; /* Show the message */
-  opacity: 1; /* Fully opaque */
-  transform: translateX(-50%) translateY(0); /* Reset translate */
-}
-
-
-/* Hero Section */
-.hero-section {
-  position: relative;
-  text-align: center;
-  color: white;
-}
-
-.hero-image {
-  width: 100%;
-  height: auto;
-  /* border-radius: 10px; */
-}
-
-.hero-text {
-  position: absolute;
-  background: linear-gradient(90deg,#404040,#272727,#1f1f1f);
-  padding: 5% 2%; /* Use percentage for padding */
-  border: 2px solid white;
-  border-radius: 20px;
-  height: auto; /* Change to auto to fit content */
-  width: 80%; /* Use percentage for width */
-  max-width: 700px; /* Set a maximum width */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  font-family: "Roboto", sans-serif;
+  /* Prevent hover effect on disabled buttons */
+  .kpoint-recording-controls button:hover:disabled {
+    background-color: #cccccc; /* Keep gray color on hover when disabled */
+  }
+  
+  .kpoint-recording-controls button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .kpoint-recording-controls button:active {
+    background-color: #3e8e41; /* Even darker green when clicked */
+  }
+  
+  #submissionMessage {
+    display: none; /* Initially hidden */
+    background-color: #4caf50; /* Green background */
+    color: white; /* White text */
+    padding: 15px; /* Padding for spacing */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Centered text */
+    font-size: 18px; /* Font size */
+    position: fixed; /* Fixed positioning */
+    top: 20px; /* Distance from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center adjustment */
+    z-index: 1000; /* Make sure it appears above other elements */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Additional class to show the message */
+  .show {
+    display: block; /* Show the message */
+    opacity: 1; /* Fully opaque */
+    transform: translateX(-50%) translateY(0); /* Reset translate */
+  }
+  
+  
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: auto;
+    /* border-radius: 10px; */
+  }
+  
+  .hero-text {
+    position: absolute;
+    background: linear-gradient(90deg,#404040,#272727,#1f1f1f);
+    padding: 5% 2%; /* Use percentage for padding */
+    border: 2px solid white;
+    border-radius: 20px;
+    height: auto; /* Change to auto to fit content */
+    width: 80%; /* Use percentage for width */
+    max-width: 700px; /* Set a maximum width */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
-}
-
-/* Optional: Adjust styles for smaller screens */
-@media (max-width: 600px) {
-  .hero-text {
-    padding: 10%; /* Increase padding for smaller screens */
-    width: 90%; /* Make width larger for smaller screens */
-    border-radius: 10px; /* Reduce border radius for smaller screens */
   }
-}
-
-
-.hero-text h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-
-.hero-text p {
-  font-size: 1.5rem;
-}
-
-/* Tooltip Styling */
-.tooltip {
-  visibility: hidden;
-  width: 70px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  padding: 5px 10px;
-  position: absolute;
-  z-index: 1;
-  top: 120%; /* Position the tooltip below the button */
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 15px;
-}
-
-.tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: 100%; /* Arrow should be at the top of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent; /* Arrow color */
-}
-
-.kpoint-recording-controls button:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-    </style>
+  
+  /* Optional: Adjust styles for smaller screens */
+  @media (max-width: 600px) {
+    .hero-text {
+      padding: 10%; /* Increase padding for smaller screens */
+      width: 90%; /* Make width larger for smaller screens */
+      border-radius: 10px; /* Reduce border radius for smaller screens */
+    }
+  }
+  
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero-text p {
+    font-size: 1.5rem;
+  }
+  
+  /* Tooltip Styling */
+  .tooltip {
+    visibility: hidden;
+    width: 70px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 5px;
+    position: absolute;
+    font-size: 15px;
+    z-index: 1;
+    top: 120%; /* Position the tooltip below the button */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 15px;
+  }
+  
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 100%; /* Arrow should be at the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent; /* Arrow color */
+  }
+  
+  .kpoint-recording-controls button:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+      </style>
     <script async type="text/javascript" src="https://assets.zencite.in/orca/media/embed/quickshootEmbed.js?1"></script>
     <script>
       function createRigelInstance() {
-        window.rigelscreen = new Rigel({
+        console.log("Inside create rigel instance function");
+        window.rigelcamera = new Rigel({
           "terms": null,
+          "type" : "video",
           "is_vertical_recording_supported": false,
           "host": "showcase-qa.zencite.in",
           "embed": true,
-          //"screenCaptureElement": "monitor", // this can be browser or window or monitor
-          "kcid" : "ciacabb27b59ad412fbbdbd5dd59ee576e",
+          "kcid": "ciacabb27b59ad412fbbdbd5dd59ee576e",
           "token" : "sDA3yJtmVkb1wKa5RZtOkfj0EVWn84s15zvwdjTBwjj8uy1z3ATEnmVTjKlvPKkpDxX10lSifrPJVbz0f8azWDUZMTuouTngAnvVX/VVWg3+ZiP/h5B7jBJJlVSoNutowd51fI29UTElzNDH/grgOfP+lJ12RS1PzIz4HAoTiLdHn8vjyHfxY15OgFzth97iCeJ1cdGkYhHHfPzC8pf70LzRl1AGyriitJY9KcakH7zIuSlWQq2PSbfXuLilRSLtXtnuFDj1xUPH71NUsCR7PBS+b0FUyV1rGiyC0AL/9BaDJXE4x9J0LdCyoJOUcf+u6bKHj/eKqPfDZZKtsF0jbwY2BUarvEMUj4XvNPIvFshA2ZjT02v/y16rLmyMnDu+V2ac4boTD9s7xVsUFL66L9tFOyE15900f37JFP5iRUs="
-        });
+                  })
+            .catch((err) => {
+                console.error("Error initializing camera recorder: " + err.message);
+                  });
+
+          }, 1000);
       }
       function onDocumentReady(callback) {
         if (document.readyState === "loading") {
@@ -223,30 +232,34 @@ html, body{
 </head>
 <body>
   <div data-host="showcase-qa.zencite.in">
-    <div class="hero-section">
-        <img src="hero-bg.jpg" alt="Assessment Banner" class="hero-image">
-        <div class="hero-text">
-            <h1>Welcome to Screen Recorder</h1>
-            <p>
-                Screen recording lets you capture everything happening on your screen.</p>
-        </div>
-    </div>
     <div class="container">
+        <div class="hero-section">
+            <img src="hero-bg.jpg" alt="Assessment Banner" class="hero-image">
+            <div class="hero-text">
+                <h1>Welcome to Screen Recorder</h1>
+                <p>
+                    Screen recording lets you capture everything happening on your screen.</p>
+            </div>
+        </div>
       <div class="kpoint-recording-controls">
-        <button id="startRecording" style="background-color: #f8f9fa;color: #DE5045;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="128" height="128" preserveAspectRatio="xMidYMid meet">
-          <path class="fa-secondary" opacity=".4" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 424c-97.1 0-176-79-176-176S158.9 80 256 80s176 79 176 176-78.9 176-176 176z" fill="#DE5045"/>
-          <path class="fa-primary" d="M256 432c-97.1 0-176-79-176-176S158.9 80 256 80s176 79 176 176-78.9 176-176 176z" fill="#DE5045"/>
-        </svg> <span class="tooltip">Start Recording</span></button>
-        <button id="stopRecording" style="background-color: #f8f9fa; color: black;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <button id="startRecording"style="background-color:#f8f9fa;color:#DE5045;z-index: 100;"><?xml version="1.0" encoding="UTF-8"?>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="128" height="128" preserveAspectRatio="xMidYMid meet">
+            <path class="fa-secondary" opacity=".4" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 424c-97.1 0-176-79-176-176S158.9 80 256 80s176 79 176 176-78.9 176-176 176z" fill="#DE5045"/>
+            <path class="fa-primary" d="M256 432c-97.1 0-176-79-176-176S158.9 80 256 80s176 79 176 176-78.9 176-176 176z" fill="#DE5045"/>
+          </svg>          
+          <span class="tooltip">Start Camera Recording</span></button>
+        <button id="stopRecording" style="background-color: #f8f9fa;color: black;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
           <path class="fa-secondary" opacity=".4" d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V80a48 48 0 0 0 -48-48zm-16 352a32 32 0 0 1 -32 32H96a32 32 0 0 1 -32-32V128a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32z" fill="#343434"/>
           <path class="fa-primary" d="M64 384V128a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1 -32 32H96a32 32 0 0 1 -32-32z" fill="#343434"/>
-        </svg><span class="tooltip">Stop Recording</span></button>
+        </svg>
+        <span class="tooltip">Stop Camera Recording</span></button>
         <button id="submitRecording" style="background-color: #009bff;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="128" height="128" preserveAspectRatio="xMidYMid meet">
           <path class="fa-secondary" opacity=".4" d="M488 351.9H352v8a56 56 0 0 1 -56 56h-80a56 56 0 0 1 -56-56v-8H24a23.9 23.9 0 0 0 -24 24v112a23.9 23.9 0 0 0 24 24h464a23.9 23.9 0 0 0 24-24v-112a23.9 23.9 0 0 0 -24-24zm-120 132a20 20 0 1 1 20-20 20.1 20.1 0 0 1 -20 20zm64 0a20 20 0 1 1 20-20 20.1 20.1 0 0 1 -20 20z" fill="#FFFFFF"/>
           <path class="fa-primary" d="M192 359.9v-168h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.6a19.4 19.4 0 0 1 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168a23.9 23.9 0 0 1 -24 24h-80a23.9 23.9 0 0 1 -24-24z" fill="#FFFFFF"/>
-        </svg><span class="tooltip">Submit Recording</span></button>
+        </svg>
+        <span class="tooltip">Submit Camera Recording</span></button>
       </div>
-      <p id="submissionMessage" class="show" style="display:none;">Recording has been submitted.</p>
+      <p id="submissionMessage" style="display:none;">Recording has been submitted.</p>
     </div>
   </div>
   <script>
@@ -256,7 +269,7 @@ html, body{
     const submissionMessage = document.getElementById('submissionMessage');
     async function startScreenRecording() {
         try {
-            window.rigelscreen.startScreenRecorder();
+            window.rigelcamera.startCameraRecorder();
             startBtn.disabled = true;
             stopBtn.disabled = false;
             submitBtn.disabled = true;
@@ -267,7 +280,7 @@ html, body{
 
       async function stopScreenRecording() {
         try {
-            window.rigelscreen.stopScreenRecorder(()=>{console.log("******************** Recording stoppedddd")});
+            window.rigelcamera.stopCameraRecorder(()=>{console.log("******************** Recording stoppedddd")});
             stopBtn.disabled = true;
             startBtn.disabled = true;
             submitBtn.disabled = false;
@@ -280,7 +293,7 @@ html, body{
         const recordingName = prompt("Please enter the name for your recording:");
         if (recordingName) {
           try { 
-              window.rigelscreen.submitRecording(`${recordingName}Screen`);
+              window.rigelcamera.submitRecording(`${recordingName}Camera`);
               startBtn.disabled = true;
               stopBtn.disabled = true;
               submitBtn.disabled = true;
