@@ -1,92 +1,112 @@
-- name: Generate enhanced index.html
-  run: |
-    files=$(ls tests/*.html 2>/dev/null | sort)
-    count=$(echo "$files" | wc -l)
+name: Generate Index Page
 
-    cat <<EOF > index.html
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Embed Test Suite</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          background: #f5f7fa;
-          margin: 0;
-          padding: 20px;
-        }
-        h1 {
-          margin-bottom: 5px;
-        }
-        .subtitle {
-          color: #666;
-          margin-bottom: 20px;
-        }
-        input {
-          width: 100%;
-          max-width: 400px;
-          padding: 10px;
-          margin-bottom: 20px;
-          font-size: 14px;
-        }
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 15px;
-        }
-        .card {
-          background: #fff;
-          padding: 15px;
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-        .card a {
-          text-decoration: none;
-          color: #007bff;
-          font-weight: bold;
-          word-break: break-word;
-        }
-        .card small {
-          display: block;
-          margin-top: 5px;
-          color: #888;
-        }
-      </style>
-      <script>
-        function filterTests() {
-          const input = document.getElementById('search').value.toLowerCase();
-          document.querySelectorAll('.card').forEach(card => {
-            card.style.display = card.dataset.name.includes(input) ? '' : 'none';
-          });
-        }
-      </script>
-    </head>
-    <body>
-      <h1>Embed Test Suite</h1>
-      <div class="subtitle">Total test pages: $count</div>
+on:
+  push:
+    branches:
+      - main
 
-      <input
-        id="search"
-        type="text"
-        placeholder="Search test pages..."
-        onkeyup="filterTests()"
-      />
+permissions:
+  contents: write
 
-      <div class="grid">
-    EOF
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
 
-    for file in $files; do
-      name=$(basename "$file")
-      echo "<div class=\"card\" data-name=\"${name,,}\">" >> index.html
-      echo "<a href=\"$file\" target=\"_blank\">$name</a>" >> index.html
-      echo "<small>$file</small>" >> index.html
-      echo "</div>" >> index.html
-    done
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    cat <<EOF >> index.html
-      </div>
-    </body>
-    </html>
-    EOF
+      - name: Generate enhanced index.html
+        run: |
+          files=$(ls tests/*.html 2>/dev/null | sort || true)
+          count=$(echo "$files" | wc -w)
+
+          cat <<EOF > index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Embed Test Suite</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background: #f5f7fa;
+                margin: 0;
+                padding: 20px;
+              }
+              h1 { margin-bottom: 5px; }
+              .subtitle { color: #666; margin-bottom: 20px; }
+              input {
+                width: 100%;
+                max-width: 400px;
+                padding: 10px;
+                margin-bottom: 20px;
+              }
+              .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+              }
+              .card {
+                background: #fff;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+              }
+              .card a {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+                word-break: break-word;
+              }
+              .card small {
+                display: block;
+                margin-top: 5px;
+                color: #888;
+              }
+            </style>
+            <script>
+              function filterTests() {
+                const input = document.getElementById('search').value.toLowerCase();
+                document.querySelectorAll('.card').forEach(card => {
+                  card.style.display = card.dataset.name.includes(input) ? '' : 'none';
+                });
+              }
+            </script>
+          </head>
+          <body>
+            <h1>Embed Test Suite</h1>
+            <div class="subtitle">Total test pages: $count</div>
+
+            <input
+              id="search"
+              type="text"
+              placeholder="Search test pages..."
+              onkeyup="filterTests()"
+            />
+
+            <div class="grid">
+          EOF
+
+          for file in $files; do
+            name=$(basename "$file")
+            echo "<div class=\"card\" data-name=\"${name,,}\">" >> index.html
+            echo "<a href=\"$file\" target=\"_blank\">$name</a>" >> index.html
+            echo "<small>$file</small>" >> index.html
+            echo "</div>" >> index.html
+          done
+
+          cat <<EOF >> index.html
+            </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Commit and push index.html by pankaj joshi
+        run: |
+          git config user.name "pankaj joshi"
+          git config user.email "pankajjoshi-1005@github.com"
+          git add index.html
+          git commit -m "Auto-update index.html" || echo "No changes"
+          git push
