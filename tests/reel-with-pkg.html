@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VXPlayer in Container Mode</title>
+    <script type='text/javascript' src='https://vega-automation.zencite.in/assets/orca/media/embed/player-silk.js'></script>
+    <style>
+      .video-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .video-box {
+      flex: 1 1 calc(25% - 20px); /* 4 in a row with space */
+      min-width: 250px;
+    }
+
+    .video-box > div {
+      width: 100%;
+    }
+
+    h3 {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    #your-container {
+        --container-height: 500px;
+        height: var(--container-height);
+        width: calc(var(--container-height) / 1.777777777777778);
+        position: relative;
+    }
+
+    #your-container [data-vx-type=reels]{
+        height: 100%;
+        width: 100%;
+    }
+
+    #your-container #vx-player {
+        height: var(--container-height);
+        width: calc(var(--container-height) / 1.777777777777778);
+        position: relative;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        #your-container,
+        #your-container #vx-player {
+          --container-height: 170.77777777778vw;
+    }
+
+    #your-container [data-vx-type=reels] {
+          --vx-video-height: 100% !important;
+          --vx-video-width: 100% !important;
+          --vx-player-overlay-height: 100% !important;
+          --vx-player-overlay-width: 100% !important;
+    }
+
+    #vx-player.vx-player-slider {
+          position: inherit !important;
+          background: transparent !important;
+          width: 100% !important;
+          height: 100% !important;
+          --vx-video-height: 100% !important;
+          --vx-video-width: 100% !important;
+          --vx-player-overlay-height: 100% !important;
+          --vx-player-overlay-width: 100% !important;
+        }
+     }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+    <div class="video-box">
+      <h3>Normal embedding with player-silk.js</h3>
+      <div id="inline-video1"
+            data-video-host="vega-automation.zencite.in"
+            data-kvideo-id="gcc-d4b998fc-362f-4c06-9792-34f626cd1db9"
+            data-package-id="4355winuflfiup"
+            data-samesite=true
+            style="width:70%">
+    </div>
+    <br>
+    <h3>Reels with no protocol</h3>
+    <div id="your-container">
+      <div
+        id="kpoint-reels"
+        data-vx-host="vega-automation.zencite.in"
+        data-vx-type="reels"
+        data-package-id="4355winuflfiup"
+        data-vx-params='{
+        "videoIds" : [
+          "gcc-d4b998fc-362f-4c06-9792-34f626cd1db9"
+        ]
+      }'
+      ></div>
+    </div>
+
+    <script src="//vega-automation.zencite.in/assets/orca/media/embed/player-vx.js"></script>
+  </body>
+</html>

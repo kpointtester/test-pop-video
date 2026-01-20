@@ -1,0 +1,34 @@
+name: Generate Index Page
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate index.html
+        run: |
+          echo "<!DOCTYPE html>" > index.html
+          echo "<html><head><title>Embed Test Index</title></head><body>" >> index.html
+          echo "<h1>Embed Test Pages</h1><ul>" >> index.html
+
+          for file in tests/*.html; do
+            name=$(basename "$file")
+            echo "<li><a href=\"$file\">$name</a></li>" >> index.html
+          done
+
+          echo "</ul></body></html>" >> index.html
+
+      - name: Commit index.html
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add index.html
+          git commit -m "Auto-update index.html" || echo "No changes"
+          git push
