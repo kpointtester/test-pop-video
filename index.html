@@ -1,40 +1,212 @@
 <!DOCTYPE html>
-<html><head><title>Embed Test Index</title></head><body>
-<h1>Embed Test Pages</h1><ul>
-<li><a href="tests/2voweltest.html">2voweltest.html</a></li>
-<li><a href="tests/bfl-issue.html">bfl-issue.html</a></li>
-<li><a href="tests/bfl_bug.html">bfl_bug.html</a></li>
-<li><a href="tests/bfl_swiper.html">bfl_swiper.html</a></li>
-<li><a href="tests/burger_button.html">burger_button.html</a></li>
-<li><a href="tests/demo-pipplayer.html">demo-pipplayer.html</a></li>
-<li><a href="tests/embeddablequickshoot.html">embeddablequickshoot.html</a></li>
-<li><a href="tests/error-page.html">error-page.html</a></li>
-<li><a href="tests/events_prod.html">events_prod.html</a></li>
-<li><a href="tests/events_qa.html">events_qa.html</a></li>
-<li><a href="tests/events_qa1.html">events_qa1.html</a></li>
-<li><a href="tests/events_stag.html">events_stag.html</a></li>
-<li><a href="tests/image_widget.html">image_widget.html</a></li>
-<li><a href="tests/interactivity-in-pop.html">interactivity-in-pop.html</a></li>
-<li><a href="tests/pip-normal.html">pip-normal.html</a></li>
-<li><a href="tests/pip-player-front.html">pip-player-front.html</a></li>
-<li><a href="tests/pip-player-latest.html">pip-player-latest.html</a></li>
-<li><a href="tests/pip-player-prod.html">pip-player-prod.html</a></li>
-<li><a href="tests/pip.html">pip.html</a></li>
-<li><a href="tests/pop-with-pkg.html">pop-with-pkg.html</a></li>
-<li><a href="tests/prachi-pop-test.html">prachi-pop-test.html</a></li>
-<li><a href="tests/prod-qualys-pop.html">prod-qualys-pop.html</a></li>
-<li><a href="tests/prod-single-pop.html">prod-single-pop.html</a></li>
-<li><a href="tests/qualys-issue.html">qualys-issue.html</a></li>
-<li><a href="tests/qualys-qa.html">qualys-qa.html</a></li>
-<li><a href="tests/reel-with-pkg.html">reel-with-pkg.html</a></li>
-<li><a href="tests/reels.html">reels.html</a></li>
-<li><a href="tests/samsung-prod.html">samsung-prod.html</a></li>
-<li><a href="tests/single-pop.html">single-pop.html</a></li>
-<li><a href="tests/stag-qualys-issue.html">stag-qualys-issue.html</a></li>
-<li><a href="tests/stag-single-pop.html">stag-single-pop.html</a></li>
-<li><a href="tests/stag-video-in-pop.html">stag-video-in-pop.html</a></li>
-<li><a href="tests/test_balic.html">test_balic.html</a></li>
-<li><a href="tests/testforvowel.html">testforvowel.html</a></li>
-<li><a href="tests/video-in-pop.html">video-in-pop.html</a></li>
-<li><a href="tests/voweltest.html">voweltest.html</a></li>
-</ul></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embed Test Suite</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { margin-bottom: 5px; }
+    .subtitle { color: #666; margin-bottom: 20px; }
+    input {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .card a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      word-break: break-word;
+    }
+    .card small {
+      display: block;
+      margin-top: 5px;
+      color: #888;
+    }
+  </style>
+  <script>
+    function filterTests() {
+      const input = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.display = card.dataset.name.includes(input) ? '' : 'none';
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>Embed Test Suite</h1>
+  <div class="subtitle">Total test pages: 36</div>
+
+  <input
+    id="search"
+    type="text"
+    placeholder="Search test pages..."
+    onkeyup="filterTests()"
+  />
+
+  <div class="grid">
+<div class="card" data-name="2voweltest.html">
+<a href="tests/2voweltest.html" target="_blank">2voweltest.html</a>
+<small>tests/2voweltest.html</small>
+</div>
+<div class="card" data-name="bfl-issue.html">
+<a href="tests/bfl-issue.html" target="_blank">bfl-issue.html</a>
+<small>tests/bfl-issue.html</small>
+</div>
+<div class="card" data-name="bfl_bug.html">
+<a href="tests/bfl_bug.html" target="_blank">bfl_bug.html</a>
+<small>tests/bfl_bug.html</small>
+</div>
+<div class="card" data-name="bfl_swiper.html">
+<a href="tests/bfl_swiper.html" target="_blank">bfl_swiper.html</a>
+<small>tests/bfl_swiper.html</small>
+</div>
+<div class="card" data-name="burger_button.html">
+<a href="tests/burger_button.html" target="_blank">burger_button.html</a>
+<small>tests/burger_button.html</small>
+</div>
+<div class="card" data-name="demo-pipplayer.html">
+<a href="tests/demo-pipplayer.html" target="_blank">demo-pipplayer.html</a>
+<small>tests/demo-pipplayer.html</small>
+</div>
+<div class="card" data-name="embeddablequickshoot.html">
+<a href="tests/embeddablequickshoot.html" target="_blank">embeddablequickshoot.html</a>
+<small>tests/embeddablequickshoot.html</small>
+</div>
+<div class="card" data-name="error-page.html">
+<a href="tests/error-page.html" target="_blank">error-page.html</a>
+<small>tests/error-page.html</small>
+</div>
+<div class="card" data-name="events_prod.html">
+<a href="tests/events_prod.html" target="_blank">events_prod.html</a>
+<small>tests/events_prod.html</small>
+</div>
+<div class="card" data-name="events_qa.html">
+<a href="tests/events_qa.html" target="_blank">events_qa.html</a>
+<small>tests/events_qa.html</small>
+</div>
+<div class="card" data-name="events_qa1.html">
+<a href="tests/events_qa1.html" target="_blank">events_qa1.html</a>
+<small>tests/events_qa1.html</small>
+</div>
+<div class="card" data-name="events_stag.html">
+<a href="tests/events_stag.html" target="_blank">events_stag.html</a>
+<small>tests/events_stag.html</small>
+</div>
+<div class="card" data-name="image_widget.html">
+<a href="tests/image_widget.html" target="_blank">image_widget.html</a>
+<small>tests/image_widget.html</small>
+</div>
+<div class="card" data-name="interactivity-in-pop.html">
+<a href="tests/interactivity-in-pop.html" target="_blank">interactivity-in-pop.html</a>
+<small>tests/interactivity-in-pop.html</small>
+</div>
+<div class="card" data-name="pip-normal.html">
+<a href="tests/pip-normal.html" target="_blank">pip-normal.html</a>
+<small>tests/pip-normal.html</small>
+</div>
+<div class="card" data-name="pip-player-front.html">
+<a href="tests/pip-player-front.html" target="_blank">pip-player-front.html</a>
+<small>tests/pip-player-front.html</small>
+</div>
+<div class="card" data-name="pip-player-latest.html">
+<a href="tests/pip-player-latest.html" target="_blank">pip-player-latest.html</a>
+<small>tests/pip-player-latest.html</small>
+</div>
+<div class="card" data-name="pip-player-prod.html">
+<a href="tests/pip-player-prod.html" target="_blank">pip-player-prod.html</a>
+<small>tests/pip-player-prod.html</small>
+</div>
+<div class="card" data-name="pip.html">
+<a href="tests/pip.html" target="_blank">pip.html</a>
+<small>tests/pip.html</small>
+</div>
+<div class="card" data-name="pop-with-pkg.html">
+<a href="tests/pop-with-pkg.html" target="_blank">pop-with-pkg.html</a>
+<small>tests/pop-with-pkg.html</small>
+</div>
+<div class="card" data-name="prachi-pop-test.html">
+<a href="tests/prachi-pop-test.html" target="_blank">prachi-pop-test.html</a>
+<small>tests/prachi-pop-test.html</small>
+</div>
+<div class="card" data-name="prod-qualys-pop.html">
+<a href="tests/prod-qualys-pop.html" target="_blank">prod-qualys-pop.html</a>
+<small>tests/prod-qualys-pop.html</small>
+</div>
+<div class="card" data-name="prod-single-pop.html">
+<a href="tests/prod-single-pop.html" target="_blank">prod-single-pop.html</a>
+<small>tests/prod-single-pop.html</small>
+</div>
+<div class="card" data-name="qualys-issue.html">
+<a href="tests/qualys-issue.html" target="_blank">qualys-issue.html</a>
+<small>tests/qualys-issue.html</small>
+</div>
+<div class="card" data-name="qualys-qa.html">
+<a href="tests/qualys-qa.html" target="_blank">qualys-qa.html</a>
+<small>tests/qualys-qa.html</small>
+</div>
+<div class="card" data-name="reel-with-pkg.html">
+<a href="tests/reel-with-pkg.html" target="_blank">reel-with-pkg.html</a>
+<small>tests/reel-with-pkg.html</small>
+</div>
+<div class="card" data-name="reels.html">
+<a href="tests/reels.html" target="_blank">reels.html</a>
+<small>tests/reels.html</small>
+</div>
+<div class="card" data-name="samsung-prod.html">
+<a href="tests/samsung-prod.html" target="_blank">samsung-prod.html</a>
+<small>tests/samsung-prod.html</small>
+</div>
+<div class="card" data-name="single-pop.html">
+<a href="tests/single-pop.html" target="_blank">single-pop.html</a>
+<small>tests/single-pop.html</small>
+</div>
+<div class="card" data-name="stag-qualys-issue.html">
+<a href="tests/stag-qualys-issue.html" target="_blank">stag-qualys-issue.html</a>
+<small>tests/stag-qualys-issue.html</small>
+</div>
+<div class="card" data-name="stag-single-pop.html">
+<a href="tests/stag-single-pop.html" target="_blank">stag-single-pop.html</a>
+<small>tests/stag-single-pop.html</small>
+</div>
+<div class="card" data-name="stag-video-in-pop.html">
+<a href="tests/stag-video-in-pop.html" target="_blank">stag-video-in-pop.html</a>
+<small>tests/stag-video-in-pop.html</small>
+</div>
+<div class="card" data-name="test_balic.html">
+<a href="tests/test_balic.html" target="_blank">test_balic.html</a>
+<small>tests/test_balic.html</small>
+</div>
+<div class="card" data-name="testforvowel.html">
+<a href="tests/testforvowel.html" target="_blank">testforvowel.html</a>
+<small>tests/testforvowel.html</small>
+</div>
+<div class="card" data-name="video-in-pop.html">
+<a href="tests/video-in-pop.html" target="_blank">video-in-pop.html</a>
+<small>tests/video-in-pop.html</small>
+</div>
+<div class="card" data-name="voweltest.html">
+<a href="tests/voweltest.html" target="_blank">voweltest.html</a>
+<small>tests/voweltest.html</small>
+</div>
+  </div>
+</body>
+</html>
