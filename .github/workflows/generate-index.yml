@@ -99,6 +99,15 @@ jobs:
 
           cat <<EOF >> index.html
             </div>
+
+            <div class="tailer">
+              <p style="position: fixed; bottom: 0; width:100%; text-align: center; background:#ffffff; padding:10px 0; box-shadow: 0 -2px 6px rgba(0,0,0,0.05);">
+                Any help/information please connect to 
+                <a href="https://wa.me/+918570961005?text=Hello%20Pankaj,">WHATSAPP</a>
+                or 
+                <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=pankaj.joshi@KPOINT.com&Subject=Need%20Help,&body=HI%20Pankaj,">EMAIL</a>
+              </p> 
+            </div>
           </body>
           </html>
           EOF
