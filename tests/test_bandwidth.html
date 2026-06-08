@@ -52,6 +52,11 @@
 <h1>kPoint Player — Init Bandwidth Test</h1>
 
 <div class="config-bar">
+  <label>Skin:</label>
+  <select id="skinSelect">
+    <option value="silk">Silk</option>
+    <option value="bitsy">Bitsy</option>
+  </select>
   <label>Init bandwidth:</label>
   <select id="bwSelect">
     <option value="">— none (ABR default) —</option>
@@ -72,7 +77,7 @@
     Runtime setBandwidth
     <span id="liveQ" class="live-q tag tag-grey">— p</span>
   </h3>
-  <p>Player is autoplaying (muted). Set a new bandwidth cap — quality changes within ~4 s.</p>
+  <p>Player is autoplaying (muted) using <b id="skinLabel"></b>. Set a new bandwidth cap — quality changes within ~4 s.</p>
   <div class="bw-buttons">
     <button class="bw-btn sec" onclick="checkQ()">Check Quality Now</button>
     <button class="bw-btn" onclick="setBW(500)">500 → 240p</button>
@@ -92,43 +97,52 @@ function getParam(name) {
 }
 
 function loadPlayer() {
-  var bw = document.getElementById('bwSelect').value;
-  var url = window.location.pathname + (bw ? '?bw=' + bw : '');
-  window.location.href = url;
+  var bw   = document.getElementById('bwSelect').value;
+  var skin = document.getElementById('skinSelect').value;
+  var params = '?type=' + skin + (bw ? '&bw=' + bw : '');
+  window.location.href = window.location.pathname + params;
 }
 
-// ── On page load: read ?bw= and inject the embed ──────────────────
-var initBW = getParam('bw');
+// ── On page load: read ?bw= and ?type= then inject the embed ──────
+var initBW   = getParam('bw');
+var initSkin = getParam('type') || 'silk';
 
-// Sync dropdown to current URL param
-if (initBW) {
-  document.getElementById('bwSelect').value = initBW;
-  document.getElementById('activeBadge').innerHTML =
-    '<span class="tag tag-blue">bw=' + initBW + '</span>';
-} else {
-  document.getElementById('activeBadge').innerHTML =
-    '<span class="tag tag-grey">ABR default</span>';
-}
+// Sync dropdowns to current URL params
+document.getElementById('skinSelect').value = initSkin;
+if (initBW) document.getElementById('bwSelect').value = initBW;
+
+// Active badge
+var badgeParts = [];
+badgeParts.push('<span class="tag tag-blue">' + initSkin + '</span>');
+if (initBW) badgeParts.push('<span class="tag tag-blue">bw=' + initBW + '</span>');
+else        badgeParts.push('<span class="tag tag-grey">ABR default</span>');
+document.getElementById('activeBadge').innerHTML = badgeParts.join(' ');
 
 // Build video-params JSON
 var videoParams = { autoplay: true, muted: true };
 if (initBW) videoParams.bandwidth = initBW;
+
+// Script URL depends on skin
+var scriptUrl = initSkin === 'bitsy'
+  ? 'https://assets.zencite.in/orca/media/embed/player-bitsy.js'
+  : 'https://assets.zencite.in/orca/media/embed/player-silk.js';
 
 // Inject embed div
 var wrap = document.getElementById('player-wrap');
 var embedDiv = document.createElement('div');
 embedDiv.setAttribute('data-video-host', 'vega-automation.zencite.in');
 embedDiv.setAttribute('data-kvideo-id', 'gcc-d45fc638-ca82-4801-8378-20c3d94e4f20');
-embedDiv.setAttribute('data-player-type', 'silk');
+embedDiv.setAttribute('data-player-type', initSkin);
 embedDiv.setAttribute('data-video-params', JSON.stringify(videoParams));
 embedDiv.style.width = '100%';
 wrap.appendChild(embedDiv);
 
-// Load silk.js dynamically
+// Load player script dynamically
 var s = document.createElement('script');
 s.type = 'text/javascript';
-s.src = 'https://assets.zencite.in/orca/media/embed/player-silk.js';
+s.src = scriptUrl;
 s.onload = function() {
+  document.getElementById('skinLabel').textContent = initSkin;
   document.getElementById('runtime-controls').style.display = 'block';
   startPoller();
 };
