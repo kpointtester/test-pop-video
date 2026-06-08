@@ -1,52 +1,150 @@
 <!DOCTYPE html>
 <html>
-<head><title>Bandwidth Test</title></head>
+<head>
+<title>Bandwidth Test</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h2 { margin: 20px 0 6px; }
+  hr { margin: 24px 0; }
+  .controls { margin-top: 24px; padding: 14px; background: #f0f0f0; border-radius: 6px; }
+  .controls h3 { margin: 0 0 10px; }
+  .bw-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .bw-btn {
+    padding: 7px 14px; border: none; border-radius: 4px;
+    background: #1a3c6e; color: #fff; cursor: pointer; font-size: 13px;
+  }
+  .bw-btn:hover { background: #2a5cb8; }
+  .bw-btn.check { background: #555; }
+  .bw-btn.clear { background: #888; font-size: 12px; }
+  #results {
+    font-family: monospace; font-size: 12px;
+    background: #fff; border: 1px solid #ccc; border-radius: 4px;
+    padding: 8px; max-height: 260px; overflow-y: auto;
+    margin-top: 10px; min-height: 40px;
+  }
+  .live-quality {
+    display: inline-block; padding: 4px 12px;
+    background: #1a8c2e; color: #fff; border-radius: 4px;
+    font-weight: bold; font-size: 14px; margin-left: 10px; min-width: 60px;
+  }
+  .q-zero { background: #888; }
+</style>
+</head>
 <body>
-<h2>Test: bandwidth=8000 (should pick highest res)</h2>
+
+<h2>Test 1: bandwidth=8000 → init at highest res (480p for this video, no 1080p available)</h2>
 <div id="embed1"
   data-video-host="vega-automation.zencite.in"
   data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
   data-player-type="silk"
-  data-video-params='{"bandwidth": "8000"}'
+  data-video-params='{"bandwidth": "8000", "autoplay": true, "muted": true}'
   style="width:700px">
 </div>
 <script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
 
 <hr>
-<h2>Test: bandwidth=500 (should pick 240p)</h2>
+<h2>Test 2: bandwidth=500 → init at 240p</h2>
 <div id="embed2"
   data-video-host="vega-automation.zencite.in"
   data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
   data-player-type="silk"
   data-video-params='{"bandwidth": "500"}'
-  style="width:700px; margin-top: 20px">
+  style="width:700px; margin-top: 6px">
 </div>
 <script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
 
-<div style="margin-top:20px; padding:10px; background:#f0f0f0">
-  <h3>Runtime setBandwidth test (uses kPlayer1)</h3>
-  <button onclick="checkQ()">Check Quality kPlayer1</button>
-  <button onclick="setBW(500)">setBandwidth(500)</button>
-  <button onclick="setBW(8000)">setBandwidth(8000)</button>
-  <div id="results" style="font-family:monospace; margin-top:10px"></div>
+<hr>
+
+<div class="controls">
+  <h3>
+    Runtime setBandwidth test — kPlayer1
+    <span id="liveQ" class="live-quality q-zero">— p</span>
+  </h3>
+  <p style="margin:0 0 10px;font-size:12px;color:#555">
+    Video 1 autoplays (muted). Set a bandwidth cap and the HLS quality will change within ~4 s.
+  </p>
+
+  <div class="bw-buttons">
+    <button class="bw-btn check" onclick="checkQ()">Check Quality Now</button>
+    <button class="bw-btn" onclick="setBW(500)">setBandwidth(500) → 240p</button>
+    <button class="bw-btn" onclick="setBW(1000)">setBandwidth(1000) → 360p</button>
+    <button class="bw-btn" onclick="setBW(2000)">setBandwidth(2000) → 480p</button>
+    <button class="bw-btn" onclick="setBW(4000)">setBandwidth(4000) → 720p</button>
+    <button class="bw-btn" onclick="setBW(8000)">setBandwidth(8000) → highest</button>
+    <button class="bw-btn clear" onclick="clearLog()">Clear log</button>
+  </div>
+
+  <div id="results"></div>
 </div>
+
 <script>
-function checkQ() {
+var pollTimer = null;
+
+function log(msg) {
   var r = document.getElementById('results');
-  try { r.innerHTML += '[' + new Date().toLocaleTimeString() + '] quality = ' + kPlayer1.getPlaybackQuality() + '<br>'; }
-  catch(e) { r.innerHTML += 'Error: ' + e.message + '<br>'; }
+  r.innerHTML += '[' + new Date().toLocaleTimeString() + '] ' + msg + '<br>';
+  r.scrollTop = r.scrollHeight;
 }
+
+function updateLiveQ(q) {
+  var el = document.getElementById('liveQ');
+  if (q > 0) {
+    el.textContent = q + 'p';
+    el.className = 'live-quality';
+  } else {
+    el.textContent = '— p';
+    el.className = 'live-quality q-zero';
+  }
+}
+
+function checkQ() {
+  try {
+    var q = kPlayer1.getPlaybackQuality();
+    log('quality = <b>' + (q > 0 ? q + 'p' : '0 (not playing yet)') + '</b>');
+    updateLiveQ(q);
+  } catch(e) {
+    log('Error: ' + e.message);
+  }
+}
+
 function setBW(bw) {
-  var r = document.getElementById('results');
   try {
     kPlayer1.setBandwidth(bw);
-    r.innerHTML += '[' + new Date().toLocaleTimeString() + '] setBandwidth(' + bw + ') called<br>';
-    setTimeout(function() {
-      try { r.innerHTML += '[' + new Date().toLocaleTimeString() + '] quality after ' + bw + ' = ' + kPlayer1.getPlaybackQuality() + '<br>'; }
-      catch(e) { r.innerHTML += 'checkQ err: ' + e.message + '<br>'; }
-    }, 4000);
-  } catch(e) { r.innerHTML += 'setBW err: ' + e.message + '<br>'; }
+    log('setBandwidth(' + bw + ') called — waiting for quality change...');
+    // Poll every second for 8 s to catch the quality switch
+    var checks = 0;
+    var interval = setInterval(function() {
+      checks++;
+      try {
+        var q = kPlayer1.getPlaybackQuality();
+        updateLiveQ(q);
+        log('quality = ' + (q > 0 ? '<b>' + q + 'p</b>' : '0'));
+      } catch(e) {}
+      if (checks >= 8) clearInterval(interval);
+    }, 1000);
+  } catch(e) {
+    log('setBandwidth error: ' + e.message);
+  }
 }
+
+function clearLog() {
+  document.getElementById('results').innerHTML = '';
+}
+
+// Live quality poller — updates the badge every 2 s once playing
+function startPoller() {
+  if (pollTimer) return;
+  pollTimer = setInterval(function() {
+    try {
+      var q = kPlayer1.getPlaybackQuality();
+      updateLiveQ(q);
+    } catch(e) {}
+  }, 2000);
+}
+
+// Start polling after 3 s (give silk.js time to inject the player)
+setTimeout(startPoller, 3000);
 </script>
+
 </body>
 </html>
