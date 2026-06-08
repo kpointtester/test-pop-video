@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head><title>Bandwidth Test - Autoplay</title></head>
+<body>
+
+<h2>BW=8000 → expect res=1080 (highest available = 480p for this video)</h2>
+<div id="p1"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "8000", "autoplay": true, "muted": true}'
+  style="width:640px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="q1">Quality: checking...</p>
+
+<hr>
+<h2>BW=500 → expect res=240</h2>
+<div id="p2"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "500", "autoplay": true, "muted": true}'
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="q2">Quality: checking...</p>
+
+<hr>
+<h2>BW=1000 → expect res=360</h2>
+<div id="p3"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "1000", "autoplay": true, "muted": true}'
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="q3">Quality: checking...</p>
+
+<hr>
+<h2>BW=2000 → expect res=480</h2>
+<div id="p4"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "2000", "autoplay": true, "muted": true}'
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="q4">Quality: checking...</p>
+
+<hr>
+<h2>NO bandwidth → expect ABR default</h2>
+<div id="p5"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"autoplay": true, "muted": true}'
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="q5">Quality: checking...</p>
+
+<div style="position:fixed;bottom:10px;right:10px;background:#fff;padding:10px;border:1px solid #ccc;font-family:monospace;font-size:12px;max-height:200px;overflow:auto" id="log">
+  <b>Quality Log</b><br>
+</div>
+
+<script>
+var log = document.getElementById('log');
+function poll() {
+  var players = ['kPlayer1','kPlayer2','kPlayer3','kPlayer4','kPlayer5'];
+  var msg = '';
+  players.forEach(function(p, i) {
+    try {
+      if (typeof window[p] !== 'undefined') {
+        var q = window[p].getPlaybackQuality();
+        msg += p + ': ' + q + 'p<br>';
+        var el = document.getElementById('q' + (i+1));
+        if (el && q > 0) el.textContent = 'Quality: ' + q + 'p';
+      }
+    } catch(e) {}
+  });
+  if (msg) log.innerHTML = '<b>Quality Log</b><br>' + msg;
+  setTimeout(poll, 2000);
+}
+setTimeout(poll, 3000);
+</script>
+
+</body>
+</html>

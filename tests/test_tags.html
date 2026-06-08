@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head><title>Tag Embed Test</title></head>
+<body>
+
+<h2>Test 1: tags="bfdl,bfl,Partners" (exact match - should load video gcc-d45fc638...)</h2>
+<div id="t1"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-tags="bfdl,bfl,Partners"
+  data-player-type="silk"
+  data-samesite="true"
+  style="width:640px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r1">Loading...</p>
+
+<hr>
+<h2>Test 2: tags="Partners,bfl,bfdl" (different order, should match same video)</h2>
+<div id="t2"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-tags="Partners,bfl,bfdl"
+  data-player-type="silk"
+  data-samesite="true"
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r2">Loading...</p>
+
+<hr>
+<h2>Test 3: tags="BFDL,BFL,PARTNERS" (uppercase - case insensitive match)</h2>
+<div id="t3"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-tags="BFDL,BFL,PARTNERS"
+  data-player-type="silk"
+  data-samesite="true"
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r3">Loading...</p>
+
+<hr>
+<h2>Test 4: tags="bfdl" ONLY (no video should match - gcc-d45fc638 has 3 tags)</h2>
+<div id="t4"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-tags="bfdl"
+  data-player-type="silk"
+  data-samesite="true"
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r4">Should stay blank (no exact match for single "bfdl" tag)</p>
+
+<hr>
+<h2>Test 5: data-kvideo-id wins over data-kvideo-tags</h2>
+<div id="t5"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-kvideo-tags="bfdl"
+  data-player-type="silk"
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r5">Should load video by ID (tag flow ignored)</p>
+
+<hr>
+<h2>Test 6: Empty tags - should skip XHR</h2>
+<div id="t6"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-tags="  ,  ,  "
+  data-player-type="silk"
+  style="width:640px; margin-top:20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<p id="r6">Should stay blank (empty/whitespace tags)</p>
+
+<div style="position:fixed;top:10px;right:10px;background:#fff;padding:10px;border:2px solid #333;font-family:monospace;font-size:11px;max-height:400px;overflow:auto;width:400px" id="log">
+<b>XHR + Player Log</b><br>
+</div>
+
+<script>
+// Intercept XHR to log search calls
+var origOpen = XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open = function(method, url) {
+  if (url && url.indexOf('search') >= 0) {
+    var log = document.getElementById('log');
+    var self = this;
+    this.addEventListener('load', function() {
+      try {
+        var data = JSON.parse(self.responseText);
+        var total = data.totalcount || (data.list ? data.list.length : '?');
+        log.innerHTML += '<br>XHR: ' + url.split('?')[1].substring(0,60) + '<br>  -> total=' + total + '<br>';
+      } catch(e) {
+        log.innerHTML += '<br>XHR: ' + url.split('?')[1].substring(0,60) + ' -> err<br>';
+      }
+    });
+  }
+  origOpen.apply(this, arguments);
+};
+
+// Poll iframes to check which video loaded
+setTimeout(function() {
+  var iframes = document.querySelectorAll('iframe[id^="video-"]');
+  var log = document.getElementById('log');
+  log.innerHTML += '<br><b>Iframes loaded (' + iframes.length + '):</b><br>';
+  iframes.forEach(function(f, i) {
+    var vidId = f.id.replace('video-','');
+    log.innerHTML += '  [' + (i+1) + '] id=' + vidId.substring(0,30) + '<br>';
+  });
+}, 5000);
+</script>
+</body>
+</html>

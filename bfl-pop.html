@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stage - Reels Inside Popup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #start {
+        background-color: goldenrod;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        width: fit-content;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="start">Launch reels experience</div>
+    <div id="vxplayer-container"></div>
+    <script>
+      function initializeVXPlayer() {
+        const container = document.querySelector("#vxplayer-container");
+        const vxPlayer = window.VXPlayer(container, {
+          hostname: "demos.kpoint.com",
+          type: "reels",
+          autoScroll: true,
+          comment:true,
+          share:true,
+          videoIds: [
+            "gcc-eb666d9a-720c-4bf8-b05a-1ee261d41810",
+            "gcc-ebd5ea4c-1d5f-451e-9e26-814a0296e332",
+            "gcc-d6026723-5ea9-4a89-a825-6aaba31c93e2",
+            "gcc-cf3d9330-5517-4627-9da1-16374a35cd35",
+          ],
+          mode: "popup",
+        });
+
+        window.vx = vxPlayer;
+      }
+
+      if (window.VXPlayer) {
+        initializeVXPlayer();
+      } else {
+        document.addEventListener("vxplayerready", function () {
+          initializeVXPlayer();
+        });
+      }
+    </script>
+    <script>
+      document.getElementById("start").addEventListener("click", function () {
+        vx.jumpTo("gcc-cf3d9330-5517-4627-9da1-16374a35cd35");
+      });
+    </script>
+      <script src="https://assets.kpoint.com/orca/media/embed/player-vx.js"></script>
+        <!-- <script src="http://localhost:7777/dist/vxplayer/index.umd.js"></script> -->
+  </body>
+</html>

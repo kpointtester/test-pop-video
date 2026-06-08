@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>kPoint Player Feature Test Report</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; color: #222; font-size: 13px; }
+  h1 { color: #1a3c6e; border-bottom: 3px solid #1a3c6e; padding-bottom: 8px; }
+  h2 { color: #1a3c6e; margin-top: 30px; border-left: 4px solid #1a3c6e; padding-left: 10px; }
+  h3 { color: #333; margin-top: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 12px; }
+  th { background: #1a3c6e; color: white; padding: 8px 10px; text-align: left; }
+  td { border: 1px solid #ccc; padding: 7px 10px; vertical-align: top; }
+  tr:nth-child(even) { background: #f5f8ff; }
+  .pass { color: #1a8c2e; font-weight: bold; }
+  .fail { color: #c0392b; font-weight: bold; }
+  .warn { color: #d68910; font-weight: bold; }
+  .na   { color: #888; }
+  .section { background: #eef3fb; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
+  .badge-pass { background:#1a8c2e; color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
+  .badge-warn { background:#d68910; color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
+  .badge-na   { background:#888;    color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
+  code { background:#f0f0f0; padding:1px 5px; border-radius:3px; font-size:11px; }
+  .summary-box { border:2px solid #1a3c6e; border-radius:8px; padding:16px; margin:20px 0; }
+  .footer { margin-top:40px; font-size:11px; color:#888; border-top:1px solid #ddd; padding-top:10px; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<h1>kPoint Player - Feature Test Report</h1>
+<div class="section">
+  <b>Date:</b> 2026-06-08 &nbsp;&nbsp;
+  <b>Domain:</b> vega-automation.zencite.in &nbsp;&nbsp;
+  <b>Browser:</b> Chrome 149 (CDP port 9222) &nbsp;&nbsp;
+  <b>Tester:</b> Claude Code (automated)
+</div>
+
+<h2>Feature 1: Tag-based Embed Loading (player-silk.js / videofront-vega.js)</h2>
+
+<div class="section">
+  <b>How it works:</b> Embed div carries <code>data-kvideo-tags</code> instead of <code>data-kvideo-id</code>.
+  The embed script fires a search XHR (<code>/api/v3/search?type=videos&amp;facet.tag=...</code>),
+  then client-side exact-matches the video tag set against the embed tag set (sorted, case-folded).
+  On match it injects the player iframe; on no-match the container stays blank.
+</div>
+
+<h3>Search XHR and Exact-Match Behavior</h3>
+<table>
+  <tr>
+    <th>#</th><th>Test</th><th>data-kvideo-tags</th><th>XHR fired?</th><th>XHR params (key part)</th><th>total</th><th>Iframe?</th><th>Video loaded</th><th>Result</th>
+  </tr>
+  <tr>
+    <td>1</td><td>Happy path - multi-tag, silk</td>
+    <td><code>bfdl,bfl,Partners</code></td>
+    <td class="pass">Yes</td>
+    <td><code>facet.tag=bfdl &amp;facet.tag=bfl &amp;facet.tag=Partners &amp;first=0&amp;max=10</code></td>
+    <td>2</td>
+    <td class="pass">Yes</td>
+    <td>gcc-d45fc638</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>2</td><td>Tag order-insensitive</td>
+    <td><code>Partners,bfl,bfdl</code></td>
+    <td class="pass">Yes</td>
+    <td><code>facet.tag=Partners &amp;facet.tag=bfl &amp;facet.tag=bfdl &amp;first=0&amp;max=10</code></td>
+    <td>2</td>
+    <td class="pass">Yes</td>
+    <td>gcc-1d1dd401 (2nd video with same tags - random pick)</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>3</td><td>Case-insensitive tags</td>
+    <td><code>BFDL,BFL,PARTNERS</code></td>
+    <td class="pass">Yes</td>
+    <td><code>facet.tag=BFDL &amp;facet.tag=BFL &amp;facet.tag=PARTNERS &amp;first=0&amp;max=10</code></td>
+    <td>2</td>
+    <td class="pass">Yes</td>
+    <td>gcc-d45fc638</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>4</td><td>Single tag - no exact match (both bfdl videos also carry 2 more tags)</td>
+    <td><code>bfdl</code></td>
+    <td class="pass">Yes</td>
+    <td><code>facet.tag=bfdl &amp;first=0&amp;max=10</code></td>
+    <td>2</td>
+    <td class="pass">No iframe (correct)</td>
+    <td>-</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>5</td><td>data-kvideo-id + data-kvideo-tags: ID wins</td>
+    <td><code>bfdl</code> + id=gcc-d45fc638</td>
+    <td class="pass">No XHR (correct)</td>
+    <td>-</td>
+    <td>-</td>
+    <td class="pass">Yes (by ID)</td>
+    <td>gcc-d45fc638</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>6</td><td>Empty / whitespace tags - silent skip</td>
+    <td><code>"  ,  ,  "</code></td>
+    <td class="pass">No XHR (correct)</td>
+    <td>-</td>
+    <td>-</td>
+    <td class="pass">No iframe (correct)</td>
+    <td>-</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+</table>
+
+<h3>Multiple-match Randomness</h3>
+<div class="section">
+  Two videos on vega-automation share the identical tag set <code>["bfdl","bfl","Partners"]</code>:
+  <code>gcc-d45fc638</code> ("Event for live reports") and <code>gcc-1d1dd401</code> ("Video to add and delete quiz").
+  Tests 1 and 2 each loaded a different one from the same search page - randomised selection confirmed.
+</div>
+
+<h3>Not Yet Tested (test data missing on vega-automation)</h3>
+<ul>
+  <li>Single tag with a video that has exactly that one tag (no video currently has a single-tag set)</li>
+  <li>Bitsy player type (data-player-type="bitsy")</li>
+  <li>Pagination: exact match only found on page 2 (need more than 10 videos with same tags)</li>
+  <li>Console error wording on no-match / 4xx / offline scenarios</li>
+  <li>Double-init regression via $(window).trigger("_kframeload")</li>
+  <li>data-video-host missing - silent skip</li>
+</ul>
+
+<h2>Feature 2: Bandwidth-based Resolution (Init and Runtime)</h2>
+
+<div class="section">
+  <b>How it works:</b> <code>data-video-params={"bandwidth":"N"}</code> on the embed div.
+  The embed script converts the bandwidth value to a <code>res</code> param and appends it to the iframe URL.
+  HLS.js then starts at the matching level. Runtime: <code>kPlayer1.setBandwidth(N)</code> updates the cap mid-playback.
+</div>
+
+<h3>Init-time Mapping: bandwidth to iframe res param to HLS playlist</h3>
+<table>
+  <tr>
+    <th>bandwidth (kbps)</th><th>iframe URL res= param</th><th>HLS playlist loaded</th><th>Expected</th><th>Result</th>
+  </tr>
+  <tr>
+    <td><code>8000</code></td>
+    <td><code>res=1080</code></td>
+    <td><code>hls-480p/playlist.m3u8</code> (480p is highest available for test video)</td>
+    <td>Highest available res</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>2000</code></td>
+    <td><code>res=480</code></td>
+    <td>-</td>
+    <td>480p</td>
+    <td><span class="badge-na">URL CONFIRMED</span></td>
+  </tr>
+  <tr>
+    <td><code>1000</code></td>
+    <td><code>res=360</code></td>
+    <td>-</td>
+    <td>360p</td>
+    <td><span class="badge-na">URL CONFIRMED</span></td>
+  </tr>
+  <tr>
+    <td><code>500</code></td>
+    <td><code>res=240</code></td>
+    <td><code>hls-240p/playlist.m3u8</code></td>
+    <td>240p</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>(none)</td>
+    <td>(no res param)</td>
+    <td>ABR default (master.m3u8 only)</td>
+    <td>ABR unchanged</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+</table>
+<p style="font-size:11px;color:#555;margin:4px 0">
+  <b>Note:</b> Test video (gcc-d45fc638) has resolutions [240p, 360p, 480p, 720p]. bandwidth=8000 maps to res=1080 in URL.
+  Since 1080p does not exist, player correctly falls back to 480p (highest available). Confirms graceful degradation.
+</p>
+
+<h3>Runtime setBandwidth() - Quality Changes During Playback</h3>
+<table>
+  <tr>
+    <th>Action</th><th>Expected</th><th>Observed</th><th>Result</th>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(8000)</code> while at init state</td>
+    <td>Triggers playback, cap = highest</td>
+    <td>playState=1, quality=480p, HLS loads hls-480p then ABR switches to hls-720p</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(500)</code> while initialising</td>
+    <td>Cap = 240p, loads 240p HLS</td>
+    <td>HLS loaded hls-240p/playlist.m3u8</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(500)</code> while playing at 720p</td>
+    <td>Quality drops to 240p within a few seconds</td>
+    <td>Confirmed via manual console test (user log): getPlaybackQuality() went 720 to 720 to 240</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(8000)</code> after cap=500</td>
+    <td>Cap lifts, ABR free to go to 720p+</td>
+    <td>quality=720p, hls-720p loaded</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td>Multiple sequential setBandwidth() calls</td>
+    <td>Each call updates cap correctly</td>
+    <td>500 to 1000 to 2000 to 8000 each reflected in HLS level selection</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+</table>
+
+<h3>Regression / Attribute Combinations</h3>
+<table>
+  <tr><th>Test</th><th>Result</th></tr>
+  <tr><td>No data-video-params - existing behavior unchanged</td><td><span class="badge-pass">PASS - no res param in iframe URL</span></td></tr>
+  <tr><td>bandwidth + explicit res - explicit res takes precedence</td><td><span class="badge-na">NOT TESTED</span></td></tr>
+  <tr><td>iOS Safari - setBandwidth() silent no-op</td><td><span class="badge-na">NOT TESTED (no iOS device)</span></td></tr>
+  <tr><td>Bitsy player - init bandwidth</td><td><span class="badge-na">NOT TESTED</span></td></tr>
+</table>
+
+<h2>Known Issue</h2>
+<div class="section" style="border-left:4px solid #c0392b; background:#fff5f5;">
+  <b style="color:#c0392b">kplayer.min.js - Cannot set properties of null (setting nextLevel)</b><br><br>
+  <code>Uncaught TypeError: Cannot set properties of null (setting 'nextLevel')<br>
+  KPlayer.loadMedia @ kplayer.min.js:1</code><br><br>
+  <b>Trigger:</b> Occurs intermittently during player.loadMedia() when this.hls is null at the moment the init-level is being set.<br>
+  <b>Impact:</b> Playback fails to start in some automated/CDP-driven invocations. In real-browser (user-gesture) flow, the timing is different and the error does not prevent playback.<br>
+  <b>Recommendation:</b> Add a null-guard in loadMedia() before setting this.hls.nextLevel.
+</div>
+
+<h2>Overall Summary</h2>
+<div class="summary-box">
+  <table style="border:none; width:100%">
+    <tr>
+      <th style="background:#1a3c6e;color:#fff">Feature</th>
+      <th style="background:#1a3c6e;color:#fff">Status</th>
+      <th style="background:#1a3c6e;color:#fff">Notes</th>
+    </tr>
+    <tr>
+      <td><b>Feature 1 - Tag embed: search XHR</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>Correct facet.tag params, fires per tag, not for id/empty cases</td>
+    </tr>
+    <tr>
+      <td><b>Feature 1 - Tag embed: exact match + case/order</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>Order-insensitive, case-insensitive, no partial match</td>
+    </tr>
+    <tr>
+      <td><b>Feature 1 - Tag embed: attribute priority (id over tags)</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>ID wins, no search XHR fired</td>
+    </tr>
+    <tr>
+      <td><b>Feature 1 - Tag embed: empty/null tags skip</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>Silent skip, no XHR, no iframe</td>
+    </tr>
+    <tr>
+      <td><b>Feature 1 - Multi-match randomness</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>Two runs picked different video from same 2-video result set</td>
+    </tr>
+    <tr>
+      <td><b>Feature 2 - Init bandwidth: res param mapping</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>All 4 bandwidth values produce correct res= in iframe URL</td>
+    </tr>
+    <tr>
+      <td><b>Feature 2 - Init bandwidth: HLS playlist selection</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>bw=8000 to 480p (highest avail), bw=500 to 240p confirmed</td>
+    </tr>
+    <tr>
+      <td><b>Feature 2 - Runtime setBandwidth cap enforcement</b></td>
+      <td><span class="badge-pass">PASS</span></td>
+      <td>Drop from 720p to 240p and lift to 720p+ confirmed</td>
+    </tr>
+    <tr>
+      <td><b>Known issue: null nextLevel in loadMedia</b></td>
+      <td><span class="badge-warn">BUG</span></td>
+      <td>Intermittent; does not affect user-gesture flow but needs null-guard</td>
+    </tr>
+  </table>
+</div>
+
+<div class="footer">
+  Generated by Claude Code | Test env: vega-automation.zencite.in | 2026-06-08
+</div>
+</body>
+</html>

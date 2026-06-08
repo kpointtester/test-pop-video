@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head><title>Bandwidth Test</title></head>
+<body>
+<h2>Test: bandwidth=8000 (should pick highest res)</h2>
+<div id="embed1"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "8000"}'
+  style="width:700px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+
+<hr>
+<h2>Test: bandwidth=500 (should pick 240p)</h2>
+<div id="embed2"
+  data-video-host="vega-automation.zencite.in"
+  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
+  data-player-type="silk"
+  data-video-params='{"bandwidth": "500"}'
+  style="width:700px; margin-top: 20px">
+</div>
+<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+
+<div style="margin-top:20px; padding:10px; background:#f0f0f0">
+  <h3>Runtime setBandwidth test (uses kPlayer1)</h3>
+  <button onclick="checkQ()">Check Quality kPlayer1</button>
+  <button onclick="setBW(500)">setBandwidth(500)</button>
+  <button onclick="setBW(8000)">setBandwidth(8000)</button>
+  <div id="results" style="font-family:monospace; margin-top:10px"></div>
+</div>
+<script>
+function checkQ() {
+  var r = document.getElementById('results');
+  try { r.innerHTML += '[' + new Date().toLocaleTimeString() + '] quality = ' + kPlayer1.getPlaybackQuality() + '<br>'; }
+  catch(e) { r.innerHTML += 'Error: ' + e.message + '<br>'; }
+}
+function setBW(bw) {
+  var r = document.getElementById('results');
+  try {
+    kPlayer1.setBandwidth(bw);
+    r.innerHTML += '[' + new Date().toLocaleTimeString() + '] setBandwidth(' + bw + ') called<br>';
+    setTimeout(function() {
+      try { r.innerHTML += '[' + new Date().toLocaleTimeString() + '] quality after ' + bw + ' = ' + kPlayer1.getPlaybackQuality() + '<br>'; }
+      catch(e) { r.innerHTML += 'checkQ err: ' + e.message + '<br>'; }
+    }, 4000);
+  } catch(e) { r.innerHTML += 'setBW err: ' + e.message + '<br>'; }
+}
+</script>
+</body>
+</html>

@@ -11,26 +11,41 @@
         margin: 5px;
       }
     </style>
-    <script async type="text/javascript" src="https://assets.zencite.com/orca/media/embed/quickshootEmbed.js?1"></script>
+    <script>
+      // Read config from URL query params: ?host=...&kcid=...&token=...
+      const _params = new URLSearchParams(window.location.search);
+      const _host  = _params.get("host")  || "showcase-qa.zencite.com";
+      const _kcid  = _params.get("kcid")  || "";
+      const _token = _params.get("token") || "";
+
+      // Dynamically load the embed script from the resolved host
+      (function() {
+        const s = document.createElement("script");
+        s.async = true;
+        s.type  = "text/javascript";
+        s.src   = "https://assets.zencite.com/orca/media/embed/quickshootEmbed.js?1";
+        document.head.appendChild(s);
+      })();
+    </script>
     <script>
       function createRigelInstance() {
         window.rigelscreen = new Rigel({
           "terms": null,
           "is_vertical_recording_supported": false,
-          "host": "showcase-qa.zencite.com",
+          "host": _host,
           "embed": true,
           // "screenCaptureElement": "monitor", // this can be browser or window or monitor
-          "kcid" : "ciacabb27b59ad412fbbdbd5dd59ee576e",
-          "token" : "sDA3yJtmVkb1wKa5RZtOkfj0EVWn84s15zvwdjTBwjjV6vyk/dJHK5DN5iqjNKyFmuk+8BUAHP1xZe7LvPwWOtlVWhO50eORlcVxYdZzzf97ZUqePUCG+Yn9HThrj8QMoDtFLXaJ87SvxNWbmNwYMVTLW+kGGZm4iQ8HRKIp4xC3kpWzG1LcXrylHOqc5hzxZ+iD5b2rjh6lKJigmPMVqxkV/h2hUobDOEsl5IO+v8XON8F9lEJurIdaoz+074e/jbpbPmfF8wQ9nrUyweE5YB9Noe6PC1e8MMe2+XMxSmCgCdgBtdekUO13eV6d7Nit0MZ2J6sbofabpxXne+/exCyuWIgWdoKRbfeJmHVR3Vw="
+          "kcid" : _kcid,
+          "token": _token
         });
         window.rigelcamera = new Rigel({
           "terms": null,
           "type" : "video",
           "is_vertical_recording_supported": false,
-          "host": "showcase-qa.zencite.com",
+          "host": _host,
           "embed": true,
-          "kcid": "ciacabb27b59ad412fbbdbd5dd59ee576e",
-          "token" : "sDA3yJtmVkb1wKa5RZtOkfj0EVWn84s15zvwdjTBwjjV6vyk/dJHK5DN5iqjNKyFmuk+8BUAHP1xZe7LvPwWOtlVWhO50eORlcVxYdZzzf97ZUqePUCG+Yn9HThrj8QMoDtFLXaJ87SvxNWbmNwYMVTLW+kGGZm4iQ8HRKIp4xC3kpWzG1LcXrylHOqc5hzxZ+iD5b2rjh6lKJigmPMVqxkV/h2hUobDOEsl5IO+v8XON8F9lEJurIdaoz+074e/jbpbPmfF8wQ9nrUyweE5YB9Noe6PC1e8MMe2+XMxSmCgCdgBtdekUO13eV6d7Nit0MZ2J6sbofabpxXne+/exCyuWIgWdoKRbfeJmHVR3Vw="
+          "kcid" : _kcid,
+          "token": _token
         });
           setTimeout(() => {
             window.rigelcamera.initCameraRecorder()
@@ -58,12 +73,14 @@
       }
 
       onDocumentReady(function() {
+        // Sync data-host attribute with the runtime value
+        document.getElementById("rigel-root").setAttribute("data-host", _host);
         addEventListenerForRigelScriptLoading();
       });
     </script>
 </head>
 <body>
-  <div data-host="showcase-qa.zencite.com">
+  <div id="rigel-root" data-host="showcase-qa.zencite.com">
     <div class="container">
       <div class="header">
           <h1>Assessment Page</h1>
@@ -111,7 +128,7 @@
       async function stopScreenRecording() {
         try{
             window.rigelcamera.stopCameraRecorder(()=>{
-                console.log("******************** Camera Recording stoppedddd");
+                console.log("******************** Camera Recording stoppedddd");@
                 stopBtn.disabled = true;
                 startBtn.disabled = true;
                 submitCameraBtn.disabled = false;

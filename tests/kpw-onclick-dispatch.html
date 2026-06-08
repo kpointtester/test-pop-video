@@ -2,26 +2,63 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>package - popup</title>
+		<title>Reels - Swiper CSS Disabled Example</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<style>
-			#start {
-				background-color: goldenrod;
-				padding: 1rem;
-				border-radius: 0.5rem;
-				width: fit-content;
-				cursor: pointer;
+			body {
+				margin: 0;
+				padding: 20px;
+				font-family: Arial, sans-serif;
+				background: #f5f5f5;
+			}
+			h1 {
+				font-size: 1.2rem;
+				color: #333;
+			}
+			p {
+				color: #666;
+				font-size: 0.9rem;
+			}
+			.examples {
+				display: flex;
+				gap: 40px;
+				flex-wrap: wrap;
+			}
+			.example-block {
+				flex: 1;
+				min-width: 300px;
+			}
+			.example-block h2 {
+				font-size: 1rem;
+				color: #555;
+			}
+			code {
+				background: #e8e8e8;
+				padding: 2px 6px;
+				border-radius: 3px;
+				font-size: 0.85rem;
 			}
 		</style>
 	</head>
 
 	<body>
-		<div id="start">Launch reels experience</div>
-		<div id="vxplayer-container"></div>
+		<h1>Swiper CSS Disabled - Reels Example</h1>
+		<p>
+			This demo loads the player with <code>swiperCss=false</code> so Swiper JS is loaded but its CSS is not.
+			This is useful when you provide your own Swiper styles or want to avoid style conflicts.
+		</p>
+
+		<div class="examples">
+			<div class="example-block">
+				<h2>Player (swiperCss=false)</h2>
+				<div id="vxplayer-container"></div>
+			</div>
+		</div>
+
 		<script>
       const getVideoConfig = (videoId) => {
-       switch (videoId) {
-          case 'gcc-0b2a6071-4fa5-41c6-a602-550bdd9b507b':
+        switch (videoId) {
+         case 'gcc-0b2a6071-4fa5-41c6-a602-550bdd9b507b':
             return {
               packageId: 'pankaj',
               state:"DRAFT"
@@ -38,20 +75,14 @@
           hostname: 'showcase-qa.zencite.in',
           type: 'reels',
           autoScroll: true,
-           videoIds: [
+          videoIds: [
 			      'gcc-21d5711a-8dd3-49e8-b6c0-010d178ae607',
            	'gcc-0b2a6071-4fa5-41c6-a602-550bdd9b507b',
           ],
-          mode: 'popup',
-          // like: true,
-          // comment: true,
-          // share: true,
-          // kcid: "cie83e5480f9624ac0ad36356689209654",
-          // token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3NTEyNzk3MTQsImV4cCI6MTc4MjgxNTcxNCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.QZ5-jUXbbB5j-hGHjLBiGMazLMnRz-35nM_dfHXy4RE"
+          mode: 'page',
         });
 
         window.vx = vxPlayer;
-
         vx.getVideoConfig = getVideoConfig;
       }
 
@@ -64,17 +95,12 @@
       }
     </script>
 		<script>
-			document.getElementById("start").addEventListener("click", function () {
-				vx.jumpTo("gcc-0b2a6071-4fa5-41c6-a602-550bdd9b507b");
-			});
-		</script>
-    <script>
 			document.addEventListener('kpw-onclick-button', function (e) {
 				console.log('[kpw-onclick-button]', e.detail);
 			});
     </script>
-		<!-- <script src="../dist/vxplayer/index.umd.js"></script> -->
-		<!-- <script src="http://localhost:8005/cdn/player-vx.js"></script> -->
+		<!-- Load with swiperCss=false: Swiper JS loads but Swiper CSS does not -->
 		<script src="https://t3-cms.zencite.in/orca/media/embed/player-vx.js"></script>
+		  <!-- <script src="/dist/vxplayer/index.umd.js"></script> -->
 	</body>
 </html>
