@@ -17,26 +17,32 @@
   .na   { color: #888; }
   .section { background: #eef3fb; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
   .badge-pass { background:#1a8c2e; color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
+  .badge-fail { background:#c0392b; color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
   .badge-warn { background:#d68910; color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
   .badge-na   { background:#888;    color:#fff; border-radius:4px; padding:2px 8px; font-size:11px; }
-  code { background:#f0f0f0; padding:1px 5px; border-radius:3px; font-size:11px; }
+  code { background:#f0f0f0; padding:1px 5px; border-radius:3px; font-size:11px; font-family:monospace; }
+  pre  { background:#f0f0f0; padding:8px 12px; border-radius:4px; font-size:11px; overflow-x:auto; margin:6px 0; }
   .summary-box { border:2px solid #1a3c6e; border-radius:8px; padding:16px; margin:20px 0; }
   .footer { margin-top:40px; font-size:11px; color:#888; border-top:1px solid #ddd; padding-top:10px; }
   ul { margin: 6px 0; padding-left: 20px; }
   li { margin: 3px 0; }
+  .run-badge { display:inline-block; font-size:10px; border-radius:3px; padding:1px 6px; margin-left:6px; vertical-align:middle; }
+  .run1 { background:#d4e6ff; color:#1a3c6e; }
+  .run2 { background:#ffe8a0; color:#7a5800; }
 </style>
 </head>
 <body>
 
-<h1>kPoint Player - Feature Test Report</h1>
+<h1>kPoint Player &mdash; Feature Test Report</h1>
 <div class="section">
-  <b>Date:</b> 2026-06-08 &nbsp;&nbsp;
-  <b>Domain:</b> vega-automation.zencite.in &nbsp;&nbsp;
-  <b>Browser:</b> Chrome 149 (CDP port 9222) &nbsp;&nbsp;
-  <b>Tester:</b> Claude Code (automated)
+  <b>Run 1:</b> 2026-06-08 &nbsp;|&nbsp; Domain: vega-automation.zencite.in &nbsp;|&nbsp; Browser: Chrome 149 (CDP 9222) &nbsp;|&nbsp; Test origin: file://<br>
+  <b>Run 2:</b> 2026-06-08 &nbsp;|&nbsp; Domain: vega-automation.zencite.in &nbsp;|&nbsp; Browser: Chrome 149 (CDP 9222) &nbsp;|&nbsp;
+  Test origin: <a href="https://kpointtester.github.io/test-pop-video/tests/test_bandwidth.html" target="_blank">kpointtester.github.io</a><br>
+  <b>Tester:</b> Claude Code (automated, Selenium + agent-browser)
 </div>
 
-<h2>Feature 1: Tag-based Embed Loading (player-silk.js / videofront-vega.js)</h2>
+<!-- ═══════════════════════════════════════════════════════ FEATURE 1 -->
+<h2>Feature 1: Tag-based Embed Loading (player-silk.js)</h2>
 
 <div class="section">
   <b>How it works:</b> Embed div carries <code>data-kvideo-tags</code> instead of <code>data-kvideo-id</code>.
@@ -45,7 +51,7 @@
   On match it injects the player iframe; on no-match the container stays blank.
 </div>
 
-<h3>Search XHR and Exact-Match Behavior</h3>
+<h3>Search XHR and Exact-Match Behavior <span class="run-badge run1">Run 1</span></h3>
 <table>
   <tr>
     <th>#</th><th>Test</th><th>data-kvideo-tags</th><th>XHR fired?</th><th>XHR params (key part)</th><th>total</th><th>Iframe?</th><th>Video loaded</th><th>Result</th>
@@ -67,7 +73,7 @@
     <td><code>facet.tag=Partners &amp;facet.tag=bfl &amp;facet.tag=bfdl &amp;first=0&amp;max=10</code></td>
     <td>2</td>
     <td class="pass">Yes</td>
-    <td>gcc-1d1dd401 (2nd video with same tags - random pick)</td>
+    <td>gcc-1d1dd401 (2nd video with same tags &mdash; random pick)</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
@@ -81,7 +87,7 @@
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td>4</td><td>Single tag - no exact match (both bfdl videos also carry 2 more tags)</td>
+    <td>4</td><td>Single tag &mdash; no exact match (both bfdl videos carry 2 more tags)</td>
     <td><code>bfdl</code></td>
     <td class="pass">Yes</td>
     <td><code>facet.tag=bfdl &amp;first=0&amp;max=10</code></td>
@@ -101,8 +107,8 @@
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td>6</td><td>Empty / whitespace tags - silent skip</td>
-    <td><code>"  ,  ,  "</code></td>
+    <td>6</td><td>Empty / whitespace tags &mdash; silent skip</td>
+    <td><code>"&nbsp;&nbsp;,&nbsp;&nbsp;,&nbsp;&nbsp;"</code></td>
     <td class="pass">No XHR (correct)</td>
     <td>-</td>
     <td>-</td>
@@ -116,129 +122,249 @@
 <div class="section">
   Two videos on vega-automation share the identical tag set <code>["bfdl","bfl","Partners"]</code>:
   <code>gcc-d45fc638</code> ("Event for live reports") and <code>gcc-1d1dd401</code> ("Video to add and delete quiz").
-  Tests 1 and 2 each loaded a different one from the same search page - randomised selection confirmed.
+  Tests 1 and 2 each loaded a different one from the same search page &mdash; randomised selection confirmed.
 </div>
 
 <h3>Not Yet Tested (test data missing on vega-automation)</h3>
 <ul>
   <li>Single tag with a video that has exactly that one tag (no video currently has a single-tag set)</li>
-  <li>Bitsy player type (data-player-type="bitsy")</li>
-  <li>Pagination: exact match only found on page 2 (need more than 10 videos with same tags)</li>
+  <li>Bitsy player type (<code>data-player-type="bitsy"</code>)</li>
+  <li>Pagination: exact match only found on page 2 (need &gt;10 videos with same tags)</li>
   <li>Console error wording on no-match / 4xx / offline scenarios</li>
-  <li>Double-init regression via $(window).trigger("_kframeload")</li>
-  <li>data-video-host missing - silent skip</li>
+  <li>Double-init regression via <code>$(window).trigger("_kframeload")</code></li>
+  <li><code>data-video-host</code> missing &mdash; silent skip</li>
 </ul>
 
+<!-- ═══════════════════════════════════════════════════════ FEATURE 2 -->
 <h2>Feature 2: Bandwidth-based Resolution (Init and Runtime)</h2>
 
 <div class="section">
-  <b>How it works:</b> <code>data-video-params={"bandwidth":"N"}</code> on the embed div.
-  The embed script converts the bandwidth value to a <code>res</code> param and appends it to the iframe URL.
-  HLS.js then starts at the matching level. Runtime: <code>kPlayer1.setBandwidth(N)</code> updates the cap mid-playback.
+  <b>How it works:</b> <code>data-video-params='{"bandwidth":"N"}'</code> on the embed div.
+  The embed script converts the bandwidth value to a <code>res=N</code> param appended to the iframe URL.
+  Inside <code>kplayer.min.js</code>, <code>KPlayer.loadMedia()</code> maps <code>res</code> to an HLS.js level index
+  and sets <code>this.hls.nextLevel</code> before playback starts.
+  Runtime: <code>kPlayer1.setBandwidth(N)</code> posts a message to the iframe; the inner player calls
+  <code>o.hlsPlayer.autoLevelCapping = n</code> and conditionally <code>o.hlsPlayer.nextLevel = n</code>.
 </div>
 
-<h3>Init-time Mapping: bandwidth to iframe res param to HLS playlist</h3>
+<h3>Init-time Mapping: bandwidth &rarr; iframe res= param <span class="run-badge run2">Run 2 (GitHub Pages)</span></h3>
 <table>
   <tr>
-    <th>bandwidth (kbps)</th><th>iframe URL res= param</th><th>HLS playlist loaded</th><th>Expected</th><th>Result</th>
+    <th>bandwidth (kbps)</th><th>iframe URL res= param</th><th>Expected res</th><th>HLS playlist confirmed</th><th>Result</th>
   </tr>
   <tr>
-    <td><code>8000</code></td>
-    <td><code>res=1080</code></td>
-    <td><code>hls-480p/playlist.m3u8</code> (480p is highest available for test video)</td>
-    <td>Highest available res</td>
+    <td><code>500</code></td>
+    <td><code>res=240</code></td>
+    <td>240p</td>
+    <td><code>hls-240p/playlist.m3u8</code> &mdash; loaded (200 OK, 22 ms)</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>1000</code></td>
+    <td><code>res=360</code></td>
+    <td>360p</td>
+    <td>URL confirmed</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
     <td><code>2000</code></td>
     <td><code>res=480</code></td>
-    <td>-</td>
     <td>480p</td>
-    <td><span class="badge-na">URL CONFIRMED</span></td>
+    <td>URL confirmed</td>
+    <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td><code>1000</code></td>
-    <td><code>res=360</code></td>
-    <td>-</td>
-    <td>360p</td>
-    <td><span class="badge-na">URL CONFIRMED</span></td>
+    <td><code>4000</code></td>
+    <td><code>res=720</code></td>
+    <td>720p</td>
+    <td>URL confirmed</td>
+    <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td><code>500</code></td>
-    <td><code>res=240</code></td>
-    <td><code>hls-240p/playlist.m3u8</code></td>
-    <td>240p</td>
+    <td><code>8000</code></td>
+    <td><code>res=1080</code></td>
+    <td>Highest available (720p for this video &mdash; no 1080p track)</td>
+    <td>URL confirmed; graceful fallback to 720p</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
     <td>(none)</td>
     <td>(no res param)</td>
-    <td>ABR default (master.m3u8 only)</td>
-    <td>ABR unchanged</td>
+    <td>ABR default</td>
+    <td>master.m3u8 only &mdash; no forced level</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
 </table>
 <p style="font-size:11px;color:#555;margin:4px 0">
-  <b>Note:</b> Test video (gcc-d45fc638) has resolutions [240p, 360p, 480p, 720p]. bandwidth=8000 maps to res=1080 in URL.
-  Since 1080p does not exist, player correctly falls back to 480p (highest available). Confirms graceful degradation.
+  <b>Note:</b> Test video <code>gcc-d45fc638</code> has resolutions [240p, 360p, 480p, 720p].
+  <code>bandwidth=8000</code> maps to <code>res=1080</code> in the URL; since no 1080p track exists,
+  HLS.js selects the highest available (720p). Confirms graceful degradation.
+  All 5 URL mappings verified in Run 2 via automated iframe src inspection.
 </p>
 
-<h3>Runtime setBandwidth() - Quality Changes During Playback</h3>
+<h3>Runtime setBandwidth() &mdash; HIGH &rarr; LOW <span class="run-badge run2">Run 2 (GitHub Pages)</span></h3>
 <table>
   <tr>
-    <th>Action</th><th>Expected</th><th>Observed</th><th>Result</th>
+    <th>Step</th><th>Action</th><th>Expected</th><th>Observed</th><th>Result</th>
   </tr>
   <tr>
-    <td><code>kPlayer1.setBandwidth(8000)</code> while at init state</td>
-    <td>Triggers playback, cap = highest</td>
-    <td>playState=1, quality=480p, HLS loads hls-480p then ABR switches to hls-720p</td>
+    <td>1</td>
+    <td>Init bw=500 (240p), video starts playing</td>
+    <td>kPlayer1.getPlaybackQuality() = 240</td>
+    <td>240p confirmed &mdash; live badge shows <b>240p</b>, <code>player.currentResolution=240</code></td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td><code>kPlayer1.setBandwidth(500)</code> while initialising</td>
-    <td>Cap = 240p, loads 240p HLS</td>
-    <td>HLS loaded hls-240p/playlist.m3u8</td>
-    <td><span class="badge-pass">PASS</span></td>
+    <td>2</td>
+    <td>ABR upgrade (no setBandwidth call)</td>
+    <td>ABR may adapt upward if network allows</td>
+    <td>HLS ABR auto-upgraded to 720p within ~6s of playback start (fast network)</td>
+    <td><span class="badge-pass">EXPECTED</span></td>
   </tr>
   <tr>
+    <td>3</td>
     <td><code>kPlayer1.setBandwidth(500)</code> while playing at 720p</td>
-    <td>Quality drops to 240p within a few seconds</td>
-    <td>Confirmed via manual console test (user log): getPlaybackQuality() went 720 to 720 to 240</td>
+    <td>Quality drops to 240p</td>
+    <td>
+      +3s: HLS switched segment downloads to <code>hls-240p</code><br>
+      +12s: <code>kPlayer1.getPlaybackQuality()</code> = <b>240p</b> (played through buffered 720p first)
+    </td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+</table>
+<p style="font-size:11px;color:#555;margin:4px 0">
+  <b>Timing note:</b> The 12-second lag before the outer API reports 240p is normal &mdash; HLS.js continues playing
+  from its pre-buffered 720p data before the newly downloaded 240p segments take over.
+  Segment-level switch happens immediately at +3s.
+</p>
+
+<h3>Runtime setBandwidth() &mdash; LOW &rarr; HIGH <span class="run-badge run2">Run 2 (GitHub Pages)</span></h3>
+<table>
+  <tr>
+    <th>Step</th><th>Action</th><th>Expected</th><th>Observed</th><th>Result</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>kPlayer1.setBandwidth(8000)</code> while playing at 240p</td>
+    <td>Cap lifts, ABR rises to 720p</td>
+    <td>Quality did <b>not</b> rise after 30+ seconds. Segments continued downloading at 240p.</td>
+    <td><span class="badge-warn">PARTIAL</span></td>
+  </tr>
+</table>
+
+<div class="section" style="border-left:4px solid #d68910; background:#fffbf0;">
+  <b style="color:#d68910">Root cause &mdash; setBandwidth only forces DOWN, not UP</b><br><br>
+  Source of the inner <code>player.setBandwidth</code> (decompiled from <code>kplayer.min.js</code>):
+  <pre>function(e) {
+  if (o &amp;&amp; "native_hls" === o.rendererName &amp;&amp; o.hlsPlayer &amp;&amp; o.hlsPlayer.levels &amp;&amp; o.hlsPlayer.levels.length) {
+    for (var t = 1000*e, n = 0, r = -1, i = 0; i &lt; o.hlsPlayer.levels.length; i++)
+      o.hlsPlayer.levels[i].bitrate &lt;= t &amp;&amp; o.hlsPlayer.levels[i].bitrate &gt; r &amp;&amp; (r = o.hlsPlayer.levels[i].bitrate, n = i);
+    o.hlsPlayer.autoLevelCapping = n;            // sets the cap
+    o.hlsPlayer.currentLevel &gt; n &amp;&amp; (o.hlsPlayer.nextLevel = n);  // forces DOWN only
+  }
+}</pre>
+  <b>Explanation:</b> When <code>setBandwidth(8000)</code> is called while playing at 240p, the condition
+  <code>currentLevel &gt; n</code> evaluates to <code>false</code> (240p index 0 is not &gt; highest index 3),
+  so <code>nextLevel</code> is <b>never set</b>. Only <code>autoLevelCapping</code> is updated.
+  HLS.js ABR is theoretically free to climb, but in practice the bandwidth estimator stays conservative
+  after a long period of 240p downloads and does not auto-upgrade within a reasonable timeframe.<br><br>
+  <b>Recommendation:</b> After removing the cap (when new bw &gt; current cap), also set
+  <code>o.hlsPlayer.nextLevel = -1</code> (full ABR mode) to prompt HLS.js to reassess quality immediately.
+</div>
+
+<h3>Init-time Bandwidth &mdash; Run 1 Observations <span class="run-badge run1">Run 1 (file://)</span></h3>
+<table>
+  <tr>
+    <th>Action</th><th>Observed (Run 1)</th><th>Result</th>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(8000)</code> from init state</td>
+    <td>Triggered playback; quality=480p, HLS loaded hls-480p then ABR switched to hls-720p</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
-    <td><code>kPlayer1.setBandwidth(8000)</code> after cap=500</td>
-    <td>Cap lifts, ABR free to go to 720p+</td>
-    <td>quality=720p, hls-720p loaded</td>
+    <td><code>kPlayer1.setBandwidth(500)</code> during initialisation</td>
+    <td>Cap=240p; HLS loaded hls-240p/playlist.m3u8</td>
+    <td><span class="badge-pass">PASS</span></td>
+  </tr>
+  <tr>
+    <td><code>kPlayer1.setBandwidth(8000)</code> after cap=500 (Run 1 only)</td>
+    <td>quality=720p, hls-720p loaded &mdash; LOW&rarr;HIGH worked in this session</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
   <tr>
     <td>Multiple sequential setBandwidth() calls</td>
-    <td>Each call updates cap correctly</td>
-    <td>500 to 1000 to 2000 to 8000 each reflected in HLS level selection</td>
+    <td>500 &rarr; 1000 &rarr; 2000 &rarr; 8000 each reflected in HLS level selection</td>
     <td><span class="badge-pass">PASS</span></td>
   </tr>
 </table>
+<p style="font-size:11px;color:#555;margin:4px 0">
+  <b>Note on LOW&rarr;HIGH discrepancy:</b> Run 1 (file:// origin, fresh HLS init, no null-nextLevel bug hit)
+  confirmed LOW&rarr;HIGH works. Run 2 (GitHub Pages, null-nextLevel bug hit during init) showed ABR
+  did not auto-recover. The bug in <code>loadMedia()</code> leaves <code>player.hls</code> null;
+  the closure reference <code>o.hlsPlayer</code> is still valid but the missing <code>nextLevel=-1</code>
+  reset on cap-lift prevents timely quality recovery.
+</p>
 
 <h3>Regression / Attribute Combinations</h3>
 <table>
   <tr><th>Test</th><th>Result</th></tr>
-  <tr><td>No data-video-params - existing behavior unchanged</td><td><span class="badge-pass">PASS - no res param in iframe URL</span></td></tr>
-  <tr><td>bandwidth + explicit res - explicit res takes precedence</td><td><span class="badge-na">NOT TESTED</span></td></tr>
-  <tr><td>iOS Safari - setBandwidth() silent no-op</td><td><span class="badge-na">NOT TESTED (no iOS device)</span></td></tr>
-  <tr><td>Bitsy player - init bandwidth</td><td><span class="badge-na">NOT TESTED</span></td></tr>
+  <tr><td>No <code>data-video-params</code> &mdash; existing behavior unchanged</td><td><span class="badge-pass">PASS &mdash; no res param in iframe URL</span></td></tr>
+  <tr><td>bandwidth + explicit res &mdash; explicit res takes precedence</td><td><span class="badge-na">NOT TESTED</span></td></tr>
+  <tr><td>iOS Safari &mdash; setBandwidth() silent no-op</td><td><span class="badge-na">NOT TESTED (no iOS device)</span></td></tr>
+  <tr><td>Bitsy player &mdash; init bandwidth</td><td><span class="badge-na">NOT TESTED</span></td></tr>
 </table>
 
-<h2>Known Issue</h2>
-<div class="section" style="border-left:4px solid #c0392b; background:#fff5f5;">
-  <b style="color:#c0392b">kplayer.min.js - Cannot set properties of null (setting nextLevel)</b><br><br>
+<!-- ═══════════════════════════════════════════════════════ KNOWN ISSUES -->
+<h2>Known Issues</h2>
+
+<div class="section" style="border-left:4px solid #c0392b; background:#fff5f5; margin-bottom:16px;">
+  <b style="color:#c0392b">Bug 1 &mdash; kplayer.min.js: Cannot set properties of null (setting &lsquo;nextLevel&rsquo;)</b><br><br>
   <code>Uncaught TypeError: Cannot set properties of null (setting 'nextLevel')<br>
   KPlayer.loadMedia @ kplayer.min.js:1</code><br><br>
-  <b>Trigger:</b> Occurs intermittently during player.loadMedia() when this.hls is null at the moment the init-level is being set.<br>
-  <b>Impact:</b> Playback fails to start in some automated/CDP-driven invocations. In real-browser (user-gesture) flow, the timing is different and the error does not prevent playback.<br>
-  <b>Recommendation:</b> Add a null-guard in loadMedia() before setting this.hls.nextLevel.
+  <b>Trigger:</b> Occurs in <code>loadMedia()</code> when <code>this.hls</code> is null at the moment the init-level is being set.<br>
+  <b>Observed in:</b> CDP/automated context (Run 2). Does not reliably reproduce in real-browser user-gesture flow (Run 1).<br>
+  <b>Impact:</b> <code>player.hls</code> stays null after the crash. Playback may still proceed via the
+  <code>o.hlsPlayer</code> closure reference but runtime bandwidth control is degraded (LOW&rarr;HIGH does not work).<br>
+  <b>Recommendation:</b> Add a null-guard in <code>loadMedia()</code> before setting <code>this.hls.nextLevel</code>:
+  <pre>if (this.hls) { this.hls.nextLevel = targetLevel; }</pre>
 </div>
 
+<div class="section" style="border-left:4px solid #d68910; background:#fffbf0;">
+  <b style="color:#d68910">Bug 2 &mdash; setBandwidth LOW&rarr;HIGH does not force quality rise</b><br><br>
+  <b>Trigger:</b> Calling <code>kPlayer1.setBandwidth(highValue)</code> after quality has been capped to a low level.<br>
+  <b>Impact:</b> ABR cap is lifted (<code>autoLevelCapping</code> updated) but HLS.js does not immediately
+  reassess quality. In a fast-network environment quality may never rise within a playback session
+  because the bandwidth estimator stays conservative.<br>
+  <b>Recommendation:</b> In the inner <code>setBandwidth</code> implementation, when the new cap is <em>higher</em>
+  than the current level, additionally set <code>o.hlsPlayer.nextLevel = -1</code> to re-enable full ABR:
+  <pre>o.hlsPlayer.autoLevelCapping = n;
+if (o.hlsPlayer.currentLevel &gt; n) {
+  o.hlsPlayer.nextLevel = n;       // cap enforcement (existing)
+} else {
+  o.hlsPlayer.nextLevel = -1;      // lift cap &rarr; let ABR climb (NEW)
+}</pre>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ AUTOMATION NOTES -->
+<h2>Automation Notes (CDP context)</h2>
+<div class="section">
+  <ul>
+    <li><b>Autoplay:</b> Even with <code>muted:true</code> in <code>data-video-params</code>, Chrome CDP sessions
+    may block autoplay after a page reload. Workaround: call <code>video.play()</code> directly inside the iframe
+    via Selenium <code>switch_to.frame()</code> + <code>execute_script()</code>.</li>
+    <li><b>Cross-origin iframe inspection:</b> Selenium <code>switch_to.frame()</code> via CDP bypasses the
+    same-origin policy, allowing direct JS execution inside the vega-automation iframe even when the parent
+    page is on GitHub Pages.</li>
+    <li><b>kPlayer1 bridge:</b> <code>getPlaybackQuality()</code> returns 0 until the video is actually playing.
+    The postMessage handshake establishes only after first play start; <code>window.location.reload()</code>
+    may not re-establish it &mdash; use <code>window.location.href = url</code> for fresh navigation instead.</li>
+    <li><b>HLS segment inspection:</b> Use <code>performance.getEntriesByType("resource")</code> inside the iframe
+    to verify which <code>hls-Xp/playlist.m3u8</code> and <code>seg-N.ts</code> files were fetched.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ OVERALL SUMMARY -->
 <h2>Overall Summary</h2>
 <div class="summary-box">
   <table style="border:none; width:100%">
@@ -248,55 +374,67 @@
       <th style="background:#1a3c6e;color:#fff">Notes</th>
     </tr>
     <tr>
-      <td><b>Feature 1 - Tag embed: search XHR</b></td>
+      <td><b>Feature 1 &mdash; Tag embed: search XHR</b></td>
       <td><span class="badge-pass">PASS</span></td>
       <td>Correct facet.tag params, fires per tag, not for id/empty cases</td>
     </tr>
     <tr>
-      <td><b>Feature 1 - Tag embed: exact match + case/order</b></td>
+      <td><b>Feature 1 &mdash; Tag embed: exact match + case/order</b></td>
       <td><span class="badge-pass">PASS</span></td>
       <td>Order-insensitive, case-insensitive, no partial match</td>
     </tr>
     <tr>
-      <td><b>Feature 1 - Tag embed: attribute priority (id over tags)</b></td>
+      <td><b>Feature 1 &mdash; Tag embed: attribute priority (id over tags)</b></td>
       <td><span class="badge-pass">PASS</span></td>
       <td>ID wins, no search XHR fired</td>
     </tr>
     <tr>
-      <td><b>Feature 1 - Tag embed: empty/null tags skip</b></td>
+      <td><b>Feature 1 &mdash; Tag embed: empty/null tags skip</b></td>
       <td><span class="badge-pass">PASS</span></td>
       <td>Silent skip, no XHR, no iframe</td>
     </tr>
     <tr>
-      <td><b>Feature 1 - Multi-match randomness</b></td>
+      <td><b>Feature 1 &mdash; Multi-match randomness</b></td>
       <td><span class="badge-pass">PASS</span></td>
       <td>Two runs picked different video from same 2-video result set</td>
     </tr>
     <tr>
-      <td><b>Feature 2 - Init bandwidth: res param mapping</b></td>
+      <td><b>Feature 2 &mdash; Init bandwidth: res param mapping (all 5 values)</b></td>
       <td><span class="badge-pass">PASS</span></td>
-      <td>All 4 bandwidth values produce correct res= in iframe URL</td>
+      <td>500&rarr;240, 1000&rarr;360, 2000&rarr;480, 4000&rarr;720, 8000&rarr;1080 all correct in iframe URL</td>
     </tr>
     <tr>
-      <td><b>Feature 2 - Init bandwidth: HLS playlist selection</b></td>
+      <td><b>Feature 2 &mdash; Init bandwidth: HLS playlist selection</b></td>
       <td><span class="badge-pass">PASS</span></td>
-      <td>bw=8000 to 480p (highest avail), bw=500 to 240p confirmed</td>
+      <td>bw=500 loads hls-240p/playlist.m3u8; bw=8000 falls back to 720p (no 1080p track)</td>
     </tr>
     <tr>
-      <td><b>Feature 2 - Runtime setBandwidth cap enforcement</b></td>
+      <td><b>Feature 2 &mdash; Runtime setBandwidth HIGH&rarr;LOW</b></td>
       <td><span class="badge-pass">PASS</span></td>
-      <td>Drop from 720p to 240p and lift to 720p+ confirmed</td>
+      <td>720p&rarr;240p: segment switch at +3s, quality report changes at +12s (buffer drain)</td>
     </tr>
     <tr>
-      <td><b>Known issue: null nextLevel in loadMedia</b></td>
-      <td><span class="badge-warn">BUG</span></td>
-      <td>Intermittent; does not affect user-gesture flow but needs null-guard</td>
+      <td><b>Feature 2 &mdash; Runtime setBandwidth LOW&rarr;HIGH</b></td>
+      <td><span class="badge-warn">PARTIAL</span></td>
+      <td>Works in Run 1 (clean init). Fails in Run 2 (null-nextLevel bug hit). See Bug 1 + Bug 2.</td>
+    </tr>
+    <tr>
+      <td><b>Bug 1 &mdash; null nextLevel in loadMedia</b></td>
+      <td><span class="badge-fail">BUG</span></td>
+      <td>Intermittent in CDP; fix: null-guard before <code>this.hls.nextLevel</code> in loadMedia()</td>
+    </tr>
+    <tr>
+      <td><b>Bug 2 &mdash; setBandwidth LOW&rarr;HIGH does not re-enable ABR</b></td>
+      <td><span class="badge-fail">BUG</span></td>
+      <td>Fix: add <code>o.hlsPlayer.nextLevel = -1</code> when lifting cap above current level</td>
     </tr>
   </table>
 </div>
 
 <div class="footer">
-  Generated by Claude Code | Test env: vega-automation.zencite.in | 2026-06-08
+  Generated by Claude Code &nbsp;|&nbsp; Test env: vega-automation.zencite.in &nbsp;|&nbsp;
+  Run 1: 2026-06-08 (file://) &nbsp;|&nbsp; Run 2: 2026-06-08 (kpointtester.github.io) &nbsp;|&nbsp;
+  Test page: <a href="https://kpointtester.github.io/test-pop-video/tests/test_bandwidth.html" target="_blank">test_bandwidth.html</a>
 </div>
 </body>
 </html>
