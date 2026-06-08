@@ -3,83 +3,138 @@
 <head>
 <title>Bandwidth Test</title>
 <style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  h2 { margin: 20px 0 6px; }
-  hr { margin: 24px 0; }
+  body { font-family: Arial, sans-serif; margin: 30px; max-width: 780px; }
+  h1 { font-size: 20px; color: #1a3c6e; border-bottom: 2px solid #1a3c6e; padding-bottom: 8px; }
+  .config-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: #eef3fb; border-radius: 6px; margin-bottom: 20px;
+  }
+  .config-bar label { font-weight: bold; font-size: 14px; }
+  .config-bar select {
+    padding: 6px 10px; font-size: 14px; border: 1px solid #aaa;
+    border-radius: 4px; cursor: pointer;
+  }
+  .config-bar button {
+    padding: 7px 18px; background: #1a3c6e; color: #fff;
+    border: none; border-radius: 4px; font-size: 14px; cursor: pointer;
+  }
+  .config-bar button:hover { background: #2a5cb8; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 13px; font-weight: bold; }
+  .tag-blue { background: #1a3c6e; color: #fff; }
+  .tag-green { background: #1a8c2e; color: #fff; }
+  .tag-grey { background: #888; color: #fff; }
+  #player-wrap { min-height: 420px; }
+
   .controls { margin-top: 24px; padding: 14px; background: #f0f0f0; border-radius: 6px; }
-  .controls h3 { margin: 0 0 10px; }
+  .controls h3 { margin: 0 0 6px; font-size: 15px; }
+  .controls p { margin: 0 0 10px; font-size: 12px; color: #555; }
   .bw-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
   .bw-btn {
     padding: 7px 14px; border: none; border-radius: 4px;
     background: #1a3c6e; color: #fff; cursor: pointer; font-size: 13px;
   }
   .bw-btn:hover { background: #2a5cb8; }
-  .bw-btn.check { background: #555; }
-  .bw-btn.clear { background: #888; font-size: 12px; }
+  .bw-btn.sec { background: #555; }
+  .bw-btn.clr { background: #999; font-size: 12px; }
   #results {
     font-family: monospace; font-size: 12px;
     background: #fff; border: 1px solid #ccc; border-radius: 4px;
-    padding: 8px; max-height: 260px; overflow-y: auto;
-    margin-top: 10px; min-height: 40px;
+    padding: 8px; max-height: 220px; overflow-y: auto; min-height: 36px;
   }
-  .live-quality {
-    display: inline-block; padding: 4px 12px;
-    background: #1a8c2e; color: #fff; border-radius: 4px;
-    font-weight: bold; font-size: 14px; margin-left: 10px; min-width: 60px;
+  .live-q {
+    display: inline-block; padding: 3px 12px; border-radius: 4px;
+    font-weight: bold; font-size: 14px; margin-left: 10px; min-width: 56px; text-align: center;
   }
-  .q-zero { background: #888; }
 </style>
 </head>
 <body>
 
-<h2>Test 1: bandwidth=8000 → init at highest res (480p for this video, no 1080p available)</h2>
-<div id="embed1"
-  data-video-host="vega-automation.zencite.in"
-  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
-  data-player-type="silk"
-  data-video-params='{"bandwidth": "8000", "autoplay": true, "muted": true}'
-  style="width:700px">
+<h1>kPoint Player — Init Bandwidth Test</h1>
+
+<div class="config-bar">
+  <label>Init bandwidth:</label>
+  <select id="bwSelect">
+    <option value="">— none (ABR default) —</option>
+    <option value="500">500 kbps → 240p</option>
+    <option value="1000">1000 kbps → 360p</option>
+    <option value="2000">2000 kbps → 480p</option>
+    <option value="4000">4000 kbps → 720p</option>
+    <option value="8000">8000 kbps → highest</option>
+  </select>
+  <button onclick="loadPlayer()">Load Player</button>
+  <span id="activeBadge"></span>
 </div>
-<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
 
-<hr>
-<h2>Test 2: bandwidth=500 → init at 240p</h2>
-<div id="embed2"
-  data-video-host="vega-automation.zencite.in"
-  data-kvideo-id="gcc-d45fc638-ca82-4801-8378-20c3d94e4f20"
-  data-player-type="silk"
-  data-video-params='{"bandwidth": "500"}'
-  style="width:700px; margin-top: 6px">
-</div>
-<script type="text/javascript" src="https://assets.zencite.in/orca/media/embed/player-silk.js"></script>
+<div id="player-wrap"></div>
 
-<hr>
-
-<div class="controls">
+<div class="controls" id="runtime-controls" style="display:none">
   <h3>
-    Runtime setBandwidth test — kPlayer1
-    <span id="liveQ" class="live-quality q-zero">— p</span>
+    Runtime setBandwidth
+    <span id="liveQ" class="live-q tag tag-grey">— p</span>
   </h3>
-  <p style="margin:0 0 10px;font-size:12px;color:#555">
-    Video 1 autoplays (muted). Set a bandwidth cap and the HLS quality will change within ~4 s.
-  </p>
-
+  <p>Player is autoplaying (muted). Set a new bandwidth cap — quality changes within ~4 s.</p>
   <div class="bw-buttons">
-    <button class="bw-btn check" onclick="checkQ()">Check Quality Now</button>
-    <button class="bw-btn" onclick="setBW(500)">setBandwidth(500) → 240p</button>
-    <button class="bw-btn" onclick="setBW(1000)">setBandwidth(1000) → 360p</button>
-    <button class="bw-btn" onclick="setBW(2000)">setBandwidth(2000) → 480p</button>
-    <button class="bw-btn" onclick="setBW(4000)">setBandwidth(4000) → 720p</button>
-    <button class="bw-btn" onclick="setBW(8000)">setBandwidth(8000) → highest</button>
-    <button class="bw-btn clear" onclick="clearLog()">Clear log</button>
+    <button class="bw-btn sec" onclick="checkQ()">Check Quality Now</button>
+    <button class="bw-btn" onclick="setBW(500)">500 → 240p</button>
+    <button class="bw-btn" onclick="setBW(1000)">1000 → 360p</button>
+    <button class="bw-btn" onclick="setBW(2000)">2000 → 480p</button>
+    <button class="bw-btn" onclick="setBW(4000)">4000 → 720p</button>
+    <button class="bw-btn" onclick="setBW(8000)">8000 → highest</button>
+    <button class="bw-btn clr" onclick="clearLog()">Clear log</button>
   </div>
-
   <div id="results"></div>
 </div>
 
 <script>
-var pollTimer = null;
+// ── URL param helpers ──────────────────────────────────────────────
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
 
+function loadPlayer() {
+  var bw = document.getElementById('bwSelect').value;
+  var url = window.location.pathname + (bw ? '?bw=' + bw : '');
+  window.location.href = url;
+}
+
+// ── On page load: read ?bw= and inject the embed ──────────────────
+var initBW = getParam('bw');
+
+// Sync dropdown to current URL param
+if (initBW) {
+  document.getElementById('bwSelect').value = initBW;
+  document.getElementById('activeBadge').innerHTML =
+    '<span class="tag tag-blue">bw=' + initBW + '</span>';
+} else {
+  document.getElementById('activeBadge').innerHTML =
+    '<span class="tag tag-grey">ABR default</span>';
+}
+
+// Build video-params JSON
+var videoParams = { autoplay: true, muted: true };
+if (initBW) videoParams.bandwidth = initBW;
+
+// Inject embed div
+var wrap = document.getElementById('player-wrap');
+var embedDiv = document.createElement('div');
+embedDiv.setAttribute('data-video-host', 'vega-automation.zencite.in');
+embedDiv.setAttribute('data-kvideo-id', 'gcc-d45fc638-ca82-4801-8378-20c3d94e4f20');
+embedDiv.setAttribute('data-player-type', 'silk');
+embedDiv.setAttribute('data-video-params', JSON.stringify(videoParams));
+embedDiv.style.width = '100%';
+wrap.appendChild(embedDiv);
+
+// Load silk.js dynamically
+var s = document.createElement('script');
+s.type = 'text/javascript';
+s.src = 'https://assets.zencite.in/orca/media/embed/player-silk.js';
+s.onload = function() {
+  document.getElementById('runtime-controls').style.display = 'block';
+  startPoller();
+};
+wrap.appendChild(s);
+
+// ── Runtime controls ──────────────────────────────────────────────
 function log(msg) {
   var r = document.getElementById('results');
   r.innerHTML += '[' + new Date().toLocaleTimeString() + '] ' + msg + '<br>';
@@ -90,60 +145,51 @@ function updateLiveQ(q) {
   var el = document.getElementById('liveQ');
   if (q > 0) {
     el.textContent = q + 'p';
-    el.className = 'live-quality';
+    el.className = 'live-q tag tag-green';
   } else {
     el.textContent = '— p';
-    el.className = 'live-quality q-zero';
+    el.className = 'live-q tag tag-grey';
   }
 }
 
 function checkQ() {
   try {
     var q = kPlayer1.getPlaybackQuality();
-    log('quality = <b>' + (q > 0 ? q + 'p' : '0 (not playing yet)') + '</b>');
+    log('quality = <b>' + (q > 0 ? q + 'p' : '0 (buffering / not playing yet)') + '</b>');
     updateLiveQ(q);
-  } catch(e) {
-    log('Error: ' + e.message);
-  }
+  } catch(e) { log('Error: ' + e.message); }
 }
 
 function setBW(bw) {
   try {
     kPlayer1.setBandwidth(bw);
-    log('setBandwidth(' + bw + ') called — waiting for quality change...');
-    // Poll every second for 8 s to catch the quality switch
+    log('setBandwidth(<b>' + bw + '</b>) called — watching for quality change...');
     var checks = 0;
-    var interval = setInterval(function() {
+    var prev = kPlayer1.getPlaybackQuality();
+    var iv = setInterval(function() {
       checks++;
       try {
         var q = kPlayer1.getPlaybackQuality();
         updateLiveQ(q);
-        log('quality = ' + (q > 0 ? '<b>' + q + 'p</b>' : '0'));
+        if (q !== prev) {
+          log('quality changed: <b>' + (prev||'?') + 'p → ' + q + 'p</b>');
+          prev = q;
+        } else {
+          log('quality = ' + (q > 0 ? q + 'p' : '0'));
+        }
       } catch(e) {}
-      if (checks >= 8) clearInterval(interval);
+      if (checks >= 8) clearInterval(iv);
     }, 1000);
-  } catch(e) {
-    log('setBandwidth error: ' + e.message);
-  }
+  } catch(e) { log('setBandwidth error: ' + e.message); }
 }
 
-function clearLog() {
-  document.getElementById('results').innerHTML = '';
-}
+function clearLog() { document.getElementById('results').innerHTML = ''; }
 
-// Live quality poller — updates the badge every 2 s once playing
 function startPoller() {
-  if (pollTimer) return;
-  pollTimer = setInterval(function() {
-    try {
-      var q = kPlayer1.getPlaybackQuality();
-      updateLiveQ(q);
-    } catch(e) {}
+  setInterval(function() {
+    try { updateLiveQ(kPlayer1.getPlaybackQuality()); } catch(e) {}
   }, 2000);
 }
-
-// Start polling after 3 s (give silk.js time to inject the player)
-setTimeout(startPoller, 3000);
 </script>
 
 </body>
