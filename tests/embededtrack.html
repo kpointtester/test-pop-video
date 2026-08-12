@@ -3,35 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>kp-track embed harness</title>
+<title>kp-track embed harness v2</title>
 <style>
   :root {
-    --bg: #14161a;
-    --panel: #1c1f26;
-    --line: #2c313b;
-    --fg: #e4e7ec;
-    --muted: #8b93a1;
-    --ok: #5fd68a;
-    --warn: #e8b04b;
-    --err: #f0736a;
-    --link: #6fb6f0;
+    --bg: #14161a; --panel: #1c1f26; --line: #2c313b;
+    --fg: #e4e7ec; --muted: #8b93a1; --ok: #5fd68a;
+    --warn: #e8b04b; --link: #6fb6f0;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    padding: 24px;
-    background: var(--bg);
-    color: var(--fg);
+    margin: 0; padding: 24px; background: var(--bg); color: var(--fg);
     font: 14px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
-  h1 { font-size: 15px; font-weight: 600; margin: 0 0 4px; letter-spacing: .02em; }
+  h1 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
   .sub { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
   .panel {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 16px;
-    margin-bottom: 16px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 16px; margin-bottom: 16px;
   }
   .panel h2 {
     font-size: 11px; text-transform: uppercase; letter-spacing: .09em;
@@ -43,7 +31,6 @@
     border: 1px solid var(--line); border-radius: 4px;
     padding: 8px 10px; font: inherit; font-size: 12px;
   }
-  input:focus, textarea:focus { outline: 2px solid var(--link); outline-offset: -1px; }
   textarea { resize: vertical; min-height: 74px; word-break: break-all; }
   button {
     background: var(--link); color: #0b1016; border: 0; border-radius: 4px;
@@ -51,38 +38,68 @@
     cursor: pointer; margin: 14px 8px 0 0;
   }
   button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
-  button:hover { filter: brightness(1.1); }
-  .params { margin: 0; }
   .params div { display: flex; gap: 10px; padding: 3px 0; font-size: 12px; }
   .params dt { color: var(--muted); min-width: 60px; }
   .params dd { margin: 0; word-break: break-all; }
-  .tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: 1px; }
+  .tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
   .tag.url { background: rgba(95,214,138,.15); color: var(--ok); }
   .tag.def { background: rgba(232,176,75,.15); color: var(--warn); }
-  #genlink {
-    display: block; margin-top: 12px; color: var(--link);
-    font-size: 11px; word-break: break-all; text-decoration: none;
-  }
-  #status { font-size: 12px; color: var(--muted); }
-  #status b.ok { color: var(--ok); } #status b.err { color: var(--err); }
+  #genlink { display: block; margin-top: 12px; color: var(--link); font-size: 11px; word-break: break-all; }
   .note { color: var(--muted); font-size: 11px; margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
   code { color: var(--warn); }
 </style>
 </head>
 <body>
 
-<h1>kp-track embed harness</h1>
-<div class="sub">Pass <code>id</code>, <code>token</code>, <code>kcid</code>, <code>host</code> as query params. Anything omitted uses the default below.</div>
+<h1>kp-track embed harness v2</h1>
+<div class="sub">Markup is static and parser-inserted &mdash; attributes are patched before the embed script loads.</div>
+
+<!-- ===================== EMBED: keep this block intact ===================== -->
+<div id="kp-track-embed-wrapper" class="kp-track-embed-wrapper">
+  <div id="kp-track-embed-container"
+       data-ktrack-host="showcase-qa.zencite.in"
+       data-ktrack-id="frestrac15324703"
+       data-ktrack-kcid="cidd7725419b66461ab862fbd9cfc0621c"
+       data-ktrack-token="3zlhw9IeV7tj1qmW3Foi2PK3zadj/cgg1nNZJjLAB/ouL0REgFEYkeDmcn2Ig3feywGwNzO87iKcuZUkQ0yWYZy3sT7+mLh2GAsDEV9DKwIQM7CsjQu5YXR8nHwwewB2q6CQLObB8Y13GOM9khZdgo8KGdTebp+ARb/6d/ixHvcsgOXfxVHDD7pGf57Jm44iUlRK6zkwk6BgN30hOEoRDVvbdVLAuSr8EEJ8QumTOyTW+5hds6ez5NtkaUGoxyOGAgzsjDqQC+yBWUVQvZiQuK1dRH3D3YaCsjlefqDn2+YRggrF0/zArSfucrzRkhR/iIfZquY2FAeGe0rFm3XW5zsyrNN7Kh5l4lGnZhcr9Xx1q4H7x7W0vse+aDyfY0LGHCTL6g23cXPCdKBS01z0HvGVHTJPfDiqKCpOg1y6m1rDYyhrtweVoyjGOgJRsQ0QPhBF9mIR2euL4mZWyt/">
+  </div>
+
+  <!-- patch attributes from the query string, then emit the embed script inline -->
+  <script>
+  (function () {
+    var el = document.getElementById('kp-track-embed-container');
+    var map = { host: 'data-ktrack-host', id: 'data-ktrack-id',
+                kcid: 'data-ktrack-kcid', token: 'data-ktrack-token' };
+
+    // manual parse so a literal "+" in the base64 token is not turned into a space
+    var qs = {};
+    window.location.search.slice(1).split('&').forEach(function (p) {
+      if (!p) return;
+      var i = p.indexOf('=');
+      var k = i < 0 ? p : p.slice(0, i), v = i < 0 ? '' : p.slice(i + 1);
+      try { qs[decodeURIComponent(k)] = decodeURIComponent(v); } catch (e) { qs[k] = v; }
+    });
+
+    window.__kpHarness = { fromUrl: {}, active: {} };
+    Object.keys(map).forEach(function (k) {
+      var has = qs[k] !== undefined && qs[k] !== '';
+      if (has) el.setAttribute(map[k], qs[k]);
+      window.__kpHarness.fromUrl[k] = has;
+      window.__kpHarness.active[k] = el.getAttribute(map[k]);
+    });
+
+    // document.write keeps this parser-inserted and synchronous, exactly like a
+    // hardcoded <script src>. A dynamically appended script would be async and
+    // could miss DOMContentLoaded, which breaks the embed's click handler.
+    document.write('<scr' + 'ipt src="https://' + window.__kpHarness.active.host +
+                   '/assets/orca/media/embed/kp-track-embed.js"><\/scr' + 'ipt>');
+  })();
+  </script>
+</div>
+<!-- =================== END EMBED: keep this block intact =================== -->
 
 <div class="panel">
   <h2>Active parameters</h2>
   <dl class="params" id="active"></dl>
-  <div id="status"></div>
-</div>
-
-<div class="panel">
-  <h2>Embed</h2>
-  <div id="kp-track-embed-wrapper" class="kp-track-embed-wrapper"></div>
 </div>
 
 <div class="panel">
@@ -93,107 +110,48 @@
   <input id="f-id">
   <label for="f-kcid">ktrack-kcid</label>
   <input id="f-kcid">
-  <label for="f-token">ktrack-token (paste raw, encoding is handled)</label>
+  <label for="f-token">ktrack-token (paste raw, encoding handled)</label>
   <textarea id="f-token"></textarea>
   <button id="go">Load this embed</button>
   <button id="copy" class="ghost">Copy link</button>
   <a id="genlink" href="#"></a>
   <div class="note">
-    The token is base64 and contains <code>+</code> and <code>/</code>. A raw <code>+</code> in a URL decodes to a space and the embed will fail auth &mdash; always percent-encode it. This builder does that for you.
+    The token is base64 and contains <code>+</code> and <code>/</code>. A raw <code>+</code> in a URL decodes to a space and auth fails &mdash; this builder percent-encodes it for you.
   </div>
 </div>
 
 <script>
 (function () {
-  // ---- defaults: edit these to change the fallback embed -------------------
-  var DEFAULTS = {
-    host:  'showcase-qa.zencite.in',
-    id:    'frestrac15324703',
-    kcid:  'cidd7725419b66461ab862fbd9cfc0621c',
-    token: '3zlhw9IeV7tj1qmW3Foi2PK3zadj/cgg1nNZJjLAB/ouL0REgFEYkeDmcn2Ig3feywGwNzO87iKcuZUkQ0yWYZy3sT7+mLh2GAsDEV9DKwIQM7CsjQu5YXR8nHwwewB2q6CQLObB8Y13GOM9khZdgo8KGdTebp+ARb/6d/ixHvcsgOXfxVHDD7pGf57Jm44iUlRK6zkwk6BgN30hOEoRDVvbdVLAuSr8EEJ8QumTOyTW+5hds6ez5NtkaUGoxyOGAgzsjDqQC+yBWUVQvZiQuK1dRH3D3YaCsjlefqDn2+YRggrF0/zArSfucrzRkhR/iIfZquY2FAeGe0rFm3XW5zsyrNN7Kh5l4lGnZhcr9Xx1q4H7x7W0vse+aDyfY0LGHCTL6g23cXPCdKBS01z0HvGVHTJPfDiqKCpOg1y6m1rDYyhrtweVoyjGOgJRsQ0QPhBF9mIR2euL4mZWyt/'
-  };
-  // -------------------------------------------------------------------------
+  var H = window.__kpHarness;
+  var keys = ['host', 'id', 'kcid', 'token'];
 
-  var raw = window.location.search.slice(1);
-  var qs = {};
-  raw.split('&').forEach(function (pair) {
-    if (!pair) return;
-    var i = pair.indexOf('=');
-    var k = i < 0 ? pair : pair.slice(0, i);
-    var v = i < 0 ? '' : pair.slice(i + 1);
-    // decode manually so a literal "+" in the token is preserved, not turned into a space
-    try { qs[decodeURIComponent(k)] = decodeURIComponent(v); }
-    catch (e) { qs[k] = v; }
-  });
-
-  var cfg = {}, fromUrl = {};
-  ['host', 'id', 'kcid', 'token'].forEach(function (k) {
-    var has = qs[k] !== undefined && qs[k] !== '';
-    cfg[k] = has ? qs[k] : DEFAULTS[k];
-    fromUrl[k] = has;
-  });
-
-  // render the active parameter list
   var dl = document.getElementById('active');
-  ['host', 'id', 'kcid', 'token'].forEach(function (k) {
-    var val = cfg[k];
-    var shown = k === 'token' && val.length > 60
-      ? val.slice(0, 40) + '\u2026' + val.slice(-12) + '  (' + val.length + ' chars)'
-      : val;
+  keys.forEach(function (k) {
+    var v = H.active[k] || '';
+    var shown = (k === 'token' && v.length > 60)
+      ? v.slice(0, 40) + '\u2026' + v.slice(-12) + '  (' + v.length + ' chars)' : v;
     var row = document.createElement('div');
     row.innerHTML = '<dt>' + k + '</dt><dd>' + shown +
-      '<span class="tag ' + (fromUrl[k] ? 'url">from URL' : 'def">default') + '</span></dd>';
+      '<span class="tag ' + (H.fromUrl[k] ? 'url">from URL' : 'def">default') + '</span></dd>';
     dl.appendChild(row);
   });
 
-  // build the embed: container first, then the script, so the script finds the DOM node
-  var wrapper = document.getElementById('kp-track-embed-wrapper');
-  var container = document.createElement('div');
-  container.id = 'kp-track-embed-container';
-  container.setAttribute('data-ktrack-host', cfg.host);
-  container.setAttribute('data-ktrack-id', cfg.id);
-  container.setAttribute('data-ktrack-kcid', cfg.kcid);
-  container.setAttribute('data-ktrack-token', cfg.token);
-  wrapper.appendChild(container);
-
-  var status = document.getElementById('status');
-  var src = 'https://' + cfg.host + '/assets/orca/media/embed/kp-track-embed.js';
-  status.innerHTML = 'Loading <span style="color:var(--link)">' + src + '</span>';
-
-  var s = document.createElement('script');
-  s.src = src;
-  s.async = true;
-  s.onload  = function () { status.innerHTML = 'Embed script loaded <b class="ok">OK</b>'; };
-  s.onerror = function () { status.innerHTML = 'Embed script <b class="err">FAILED</b> to load &mdash; check host, CORS, and the network tab'; };
-  wrapper.appendChild(s);
-
-  // link builder
-  var f = {
-    host:  document.getElementById('f-host'),
-    id:    document.getElementById('f-id'),
-    kcid:  document.getElementById('f-kcid'),
-    token: document.getElementById('f-token')
-  };
-  Object.keys(f).forEach(function (k) { f[k].value = cfg[k]; });
+  var f = {};
+  keys.forEach(function (k) { f[k] = document.getElementById('f-' + k); f[k].value = H.active[k] || ''; });
 
   function buildUrl() {
-    var base = window.location.origin === 'null'
-      ? window.location.href.split('?')[0]
-      : window.location.origin + window.location.pathname;
-    return base + '?host=' + encodeURIComponent(f.host.value.trim()) +
-                  '&id='   + encodeURIComponent(f.id.value.trim()) +
-                  '&kcid=' + encodeURIComponent(f.kcid.value.trim()) +
-                  '&token=' + encodeURIComponent(f.token.value.trim());
+    var base = window.location.origin + window.location.pathname;
+    return base + '?' + keys.map(function (k) {
+      return k + '=' + encodeURIComponent(f[k].value.trim());
+    }).join('&');
   }
 
   var link = document.getElementById('genlink');
   function refresh() { var u = buildUrl(); link.href = u; link.textContent = u; }
-  Object.keys(f).forEach(function (k) { f[k].addEventListener('input', refresh); });
+  keys.forEach(function (k) { f[k].addEventListener('input', refresh); });
   refresh();
 
-  document.getElementById('go').addEventListener('click', function () {
-    window.location.href = buildUrl();
-  });
+  document.getElementById('go').addEventListener('click', function () { window.location.href = buildUrl(); });
   document.getElementById('copy').addEventListener('click', function (e) {
     navigator.clipboard.writeText(buildUrl()).then(function () {
       e.target.textContent = 'Copied';
@@ -205,5 +163,3 @@
 
 </body>
 </html>
-
-
