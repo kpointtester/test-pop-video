@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPoint Player Showcase</title>
+
+<!-- Needed for data-vx-* button embeds (VX Clubbed Buttons section) -->
+<script async src="https://t3-cms.zencite.in/orca/media/embed/play-inline-vx.js"></script>
+
+<style>
+  :root {
+    --bg: #f4f6fa;
+    --card-bg: #ffffff;
+    --border: #e3e7ee;
+    --text: #1c2230;
+    --text-muted: #6b7280;
+    --accent: #6d28d9;
+    --accent-2: #0d9488;
+    --code-bg: #0f172a;
+    --code-text: #e2e8f0;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  header.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  header.top-nav .brand {
+    font-weight: 700;
+    font-size: 18px;
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+
+  header.top-nav nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  header.top-nav nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  header.top-nav nav a:hover {
+    background: #ede9fe;
+    color: var(--accent);
+  }
+
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  section.demo {
+    scroll-margin-top: 76px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  }
+
+  section.demo h2 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  section.demo .desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0 0 18px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+
+  .badge-silk   { background: #ede9fe; color: #6d28d9; }
+  .badge-bitsy  { background: #dbeafe; color: #1d4ed8; }
+  .badge-vx     { background: #d1fae5; color: #047857; }
+  .badge-dyn    { background: #fef3c7; color: #b45309; }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .player-slot {
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    background: #fafbfc;
+  }
+
+  .player-slot .slot-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .kp-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    background: var(--accent);
+    transition: filter 0.15s ease, transform 0.1s ease;
+  }
+
+  .kp-btn:hover { filter: brightness(1.08); }
+  .kp-btn:active { transform: translateY(1px); }
+  .kp-btn.secondary { background: var(--accent-2); }
+  .kp-btn.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  details.code-view {
+    margin-top: 14px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  details.code-view summary {
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    outline: none;
+  }
+
+  .code-box {
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .code-box pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-size: 11px;
+    padding: 4px 9px;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover { background: rgba(255, 255, 255, 0.22); }
+
+  .note {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    background: #f8fafc;
+    border-left: 3px solid var(--accent-2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+  }
+
+  .reel-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 220px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #312e81, #6d28d9);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+
+  .reel-card:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+
+  .reel-card-play {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    padding-left: 3px;
+  }
+
+  .reel-card-text {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header class="top-nav">
+  <span class="brand">KPoint Player Showcase</span>
+  <nav>
+    <a href="#reels-inline">Reels · In-page</a>
+    <a href="#reels-popup">Reels · Popup</a>
+    <a href="#reels-compare">Reels · Compare</a>
+    <a href="#bitsy">Bitsy (Horizontal)</a>
+    <a href="#silk">Silk</a>
+    <a href="#floating">Floating</a>
+    <a href="#clubbed">VX Clubbed</a>
+    <a href="#dynamic">Dynamic Embed</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============================================================ -->
+  <!-- REELS: LIGHTWEIGHT PLAYER — IN PAGE                            -->
+  <!-- ============================================================ -->
+  <section class="demo" id="reels-inline">
+    <h2>Reels — Lightweight Player <span class="badge badge-vx">VX</span></h2>
+    <p class="desc">Reels rendered directly in the page flow (<code>mode: "page"</code>) with <code>lightWeightPlayer: true</code>.</p>
+
+    <div class="player-slot">
+      <div class="slot-label">#vxplayer-reels-page</div>
+      <div id="vxplayer-reels-page" style="--vx-primary-color: #6d28d9;">
+        <div class="reel-card" id="reels-page-card">
+          <div class="reel-card-play">&#9654;</div>
+          <div class="reel-card-text">Tap to load Reels (in page)</div>
+        </div>
+      </div>
+    </div>
+
+    <details class="code-view">
+      <summary>View embed code</summary>
+      <div class="code-box">
+        <button class="copy-btn" data-copy-target="code-reels-page">Copy</button>
+        <pre id="code-reels-page">&lt;div id="vxplayer-reels-page"&gt;&lt;/div&gt;
+&lt;script src="https://t3-cms.zencite.in/orca/media/embed/player-vx.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.VXPlayer(document.querySelector("#vxplayer-reels-page"), {
+    hostname: "showcase-qa.zencite.in",
+    type: "reels",
+    mode: "page",
+    videoIds: [
+      "gcc-9c8393a9-f6c8-4d7f-98c0-03b8e60bfda7",
+      "gcc-1d264a76-8fb7-4d63-bbe1-7646833029a0",
+      "gcc-800e5504-848a-4571-bdb0-6b988f154b9f"
+    ],
+    autoScroll: true,
+    loop: true,
+    fullscreen: true,
+    lightWeightPlayer: true
+  }, { fab: { close: true } });
+&lt;/script&gt;</pre>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- REELS: LIGHTWEIGHT PLAYER — POPUP                              -->
+  <!-- ============================================================ -->
+  <section class="demo" id="reels-popup">
+    <h2>Reels — Lightweight Player <span class="badge badge-vx">VX</span> <span class="badge badge-vx">Popup</span></h2>
+    <p class="desc">Same reel feed opened as a popup (<code>mode: "popup"</code>) with <code>lightWeightPlayer: true</code>.</p>
+
+    <div id="vxplayer-reels-popup">
+      <div class="reel-card" id="reels-popup-card">
+        <div class="reel-card-play">&#9654;</div>
+        <div class="reel-card-text">Tap to open Reels popup</div>
+      </div>
+    </div>
+
+    <details class="code-view">
+      <summary>View embed code</summary>
+      <div class="code-box">
+        <button class="copy-btn" data-copy-target="code-reels-popup">Copy</button>
+        <pre id="code-reels-popup">&lt;div id="vxplayer-reels-popup"&gt;&lt;/div&gt;
+&lt;script src="https://t3-cms.zencite.in/orca/media/embed/player-vx.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.VXPlayer(document.querySelector("#vxplayer-reels-popup"), {
+    hostname: "showcase-qa.zencite.in",
+    type: "reels",
+    mode: "popup",
+    videoIds: [
+      "gcc-9c8393a9-f6c8-4d7f-98c0-03b8e60bfda7",
+      "gcc-1d264a76-8fb7-4d63-bbe1-7646833029a0",
+      "gcc-800e5504-848a-4571-bdb0-6b988f154b9f"
+    ],
+    autoScroll: true,
+    loop: true,
+    fullscreen: true,
+    lightWeightPlayer: true
+  }, { fab: { close: true } });
+&lt;/script&gt;</pre>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- REELS: COMPARE lightWeightPlayer true vs false (legacy demo)   -->
+  <!-- ============================================================ -->
+  <section class="demo" id="reels-compare">
+    <h2>Reels — Lightweight vs Full Player <span class="badge badge-vx">VX</span></h2>
+    <p class="desc">Original comparison demo, kept for reference: toggles <code>lightWeightPlayer</code> true/false on the same feed.</p>
+
+    <div class="btn-row">
+      <button class="kp-btn" id="reels-lwp-true">lightWeightPlayer: true</button>
+      <button class="kp-btn secondary" id="reels-lwp-false">lightWeightPlayer: false</button>
+    </div>
+    <div id="vxplayer-reels-compare" style="--vx-primary-color: red"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BITSY: HORIZONTAL VIDEO                                        -->
+  <!-- ============================================================ -->
+  <section class="demo" id="bitsy">
+    <h2>Bitsy Player <span class="badge badge-bitsy">Bitsy</span> — Horizontal Video</h2>
+    <p class="desc">Client-side player, no iframe, via <code>data-player-type="bitsy"</code>.</p>
+
+    <div class="demo-grid">
+      <div class="player-slot">
+        <div class="slot-label">Normal embedding</div>
+        <div data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+             data-samesite="true"
+             data-player-type="bitsy"
+             style="width:100%"></div>
+      </div>
+      <div class="player-slot">
+        <div class="slot-label">Inline embedding</div>
+        <div id="bitsy-inline-video"
+             data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-4a8756f5-6369-4988-8200-15148a1e8c99"
+             data-samesite="true"
+             data-player-type="bitsy"
+             data-video-params='{"simulated_fullscreen": true}'
+             style="width:100%"></div>
+      </div>
+    </div>
+
+    <details class="code-view">
+      <summary>View embed code</summary>
+      <div class="code-box">
+        <button class="copy-btn" data-copy-target="code-bitsy">Copy</button>
+        <pre id="code-bitsy">&lt;div data-video-host="showcase-qa.zencite.in"
+     data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+     data-samesite="true"
+     data-player-type="bitsy"
+     style="width:100%"&gt;&lt;/div&gt;
+&lt;script src="https://t3-cms.zencite.in/orca/media/embed/player-silk.js"&gt;&lt;/script&gt;</pre>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SILK PLAYER                                                    -->
+  <!-- ============================================================ -->
+  <section class="demo" id="silk">
+    <h2>Silk Player <span class="badge badge-silk">Silk</span></h2>
+    <p class="desc">Iframe-based player via <code>player-silk.js</code> (default, no <code>data-player-type</code>).</p>
+
+    <div class="demo-grid">
+      <div class="player-slot">
+        <div class="slot-label">Normal embedding</div>
+        <div data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+             data-samesite="true"
+             style="width:100%"></div>
+      </div>
+      <div class="player-slot">
+        <div class="slot-label">Inline embedding</div>
+        <div id="silk-inline-video"
+             data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-4a8756f5-6369-4988-8200-15148a1e8c99"
+             data-samesite="true"
+             data-video-params='{"simulated_fullscreen": true}'
+             style="width:100%"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Single load covers every div-based Silk/Bitsy embed above -->
+  <script type="text/javascript" src="https://t3-cms.zencite.in/orca/media/embed/player-silk.js"></script>
+
+  <!-- ============================================================ -->
+  <!-- FLOATING PLAYER                                                -->
+  <!-- ============================================================ -->
+  <section class="demo" id="floating">
+    <h2>Floating Player <span class="badge badge-silk">Silk</span> <span class="badge badge-bitsy">Bitsy</span></h2>
+    <p class="desc">Picture-in-picture style floating player, anchored relative to a scroll container.</p>
+
+    <div id="kp-search-results-container" class="demo-grid">
+      <div class="player-slot">
+        <div class="slot-label">Silk</div>
+        <div class="float-host" data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+             data-div-container="#kp-search-results-container"
+             data-video-params='{"playerSkinType":"sleek", "disableKeyboardEvents":"true", "showPlayIconOnMobile":"false", "floatingPip":"true", "color":"#355E3B", "simulated_fullscreen": true }'
+             style="width:100%" data-player="float-player-silk"></div>
+      </div>
+      <div class="player-slot">
+        <div class="slot-label">Bitsy</div>
+        <div class="float-host" data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+             data-div-container="#kp-search-results-container"
+             data-video-params='{"playerSkinType":"sleek", "disableKeyboardEvents":"true", "showPlayIconOnMobile":"false", "floatingPip":"true", "color":"#355E3B", "simulated_fullscreen": true }'
+             data-player-type="bitsy" style="width:100%" data-player="float-player-bitsy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VX CLUBBED / INLINE BUTTONS                                    -->
+  <!-- ============================================================ -->
+  <section class="demo" id="clubbed">
+    <h2>VX Clubbed Buttons <span class="badge badge-vx">VX</span></h2>
+    <p class="desc">Button-triggered embeds via <code>data-vx-*</code> attributes (needs <code>play-inline-vx.js</code>, loaded in <code>&lt;head&gt;</code>).</p>
+
+    <div class="btn-row">
+      <button class="kp-btn preload-none"
+              data-vx-host="showcase-qa.zencite.in"
+              data-vx-videoid="gcc-b39889cf-6b9c-47d2-aab5-a84df372e0ec"
+              data-vx-offset="5000"
+              data-vx-params='{"resume":true,"search":true,"like":true,"muted":false,"add-widgets":"utils,kpw_text,fontloader","autoplay":true,"trk_package_id":"abc"}'
+              data-vx-packageid="181boyxhcfgdo"
+              data-vx-widgetsconfig='{"kpw_text":{"list":[{"style":{"top":30,"color":"#FFFFFF","font-size":"clamp(10px,calc(3*var(--pw)),32px)","background-color":"#009C9A","width":"auto","font-family":"Rubik","padding":"calc(0.2*var(--pw))calc(1*var(--pw))","z-index":5},"animation":{"type":"fadein","delay":1,"duration":2},"track":{"id":"Text1","name":"byembedcode","group":"","score":10},"id":"Text1","text":"byembedcode","start_time":0,"end_time":20}]},"fontloader":{"list":[{"name":"Rubik","google":{"styles":["500"]}}]}}'
+              data-vx-samesite="true"
+              data-vx-playerref="kpointPlayer1">Clubbed (Silk)</button>
+
+      <button class="kp-btn secondary preload-none"
+              data-vx-playersize="70%"
+              data-vx-inlinecss='{"closeBgContainer":"#313639","modalBgContainer":"black"}'
+              data-vx-packageid="181boyxhcfgdo"
+              data-player-type="bitsy"
+              data-vx-host="showcase-qa.zencite.in"
+              data-vx-videoid="gcc-b39889cf-6b9c-47d2-aab5-a84df372e0ec"
+              data-vx-params='{ "simulated_fullscreen": true , "showPlayIconOnMobile": true, "audiocontrols": "show", "search":"false","toc":"false","offset":"20000" ,"add-widgets":"utils,kpw_shoppable,kpw_text,kpw_actionbutton"}'
+              data-vx-samesite="true"
+              data-vx-playerref="kpointPlayer3">Package ID only (Bitsy)</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DYNAMIC EMBED (data-init-dynamic)                              -->
+  <!-- ============================================================ -->
+  <section class="demo" id="dynamic">
+    <h2>Dynamic Embed <span class="badge badge-dyn">Dynamic</span></h2>
+    <p class="desc">Vega thin-wrapper embed via <code>data-init-dynamic</code> + <code>videofront-vega.js</code>.</p>
+
+    <div class="demo-grid">
+      <div class="player-slot">
+        <div class="slot-label">Prism chat + title widgets</div>
+        <div data-init-dynamic data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-8336f061-709c-41ee-9be8-e1fb72005365"
+             data-video-params='{"add-widgets": "title,prismchat", "playercontrols": {"hide":"fullscreen"}, "search":"false","toc":"false","like":"false","prism_chat":true}'
+             style="width:100%;"
+             data-state="PUBLISHED"></div>
+      </div>
+
+      <div class="player-slot">
+        <div class="slot-label">Default controls</div>
+        <div data-init-dynamic data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-90587797-7478-43e0-8083-c8e5c0427610"
+             data-video-params='{"add-widgets": "title", "search":"false","toc":"false","like":"true"}'
+             style="width:100%;"
+             data-state="PUBLISHED"></div>
+      </div>
+
+      <div class="player-slot">
+        <div class="slot-label">Bitsy player type</div>
+        <div data-init-dynamic data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-4a8756f5-6369-4988-8200-15148a1e8c99"
+             data-player-type="bitsy"
+             data-video-params='{"add-widgets": "title"}'
+             style="width:100%;"
+             data-state="PUBLISHED"></div>
+      </div>
+
+      <div class="player-slot">
+        <div class="slot-label">Shoppable widget</div>
+        <div data-init-dynamic data-video-host="showcase-qa.zencite.in"
+             data-kvideo-id="gcc-b39889cf-6b9c-47d2-aab5-a84df372e0ec"
+             data-video-params='{"add-widgets": "title,kpw_shoppable", "search":"false","toc":"false"}'
+             style="width:100%;"
+             data-state="PUBLISHED"></div>
+      </div>
+    </div>
+
+    <details class="code-view">
+      <summary>View embed code</summary>
+      <div class="code-box">
+        <button class="copy-btn" data-copy-target="code-dynamic">Copy</button>
+        <pre id="code-dynamic">&lt;div data-init-dynamic data-video-host="showcase-qa.zencite.in"
+     data-kvideo-id="gcc-8336f061-709c-41ee-9be8-e1fb72005365"
+     data-video-params='{"add-widgets": "title,prismchat", "playercontrols": {"hide":"fullscreen"}, "search":"false","toc":"false","like":"false","prism_chat":true}'
+     style="width:100%;"
+     data-state="PUBLISHED"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="https://t3-cms.zencite.in/assets/orca/media/embed/videofront-vega.js"&gt;&lt;/script&gt;</pre>
+      </div>
+    </details>
+  </section>
+
+  <!-- Single load covers the Floating Player section and every Dynamic Embed div above -->
+  <script async src="https://t3-cms.zencite.in/orca/media/embed/videofront-vega.js"></script>
+
+  <!-- Loads VXPlayer() for the Reels sections -->
+  <script src="https://t3-cms.zencite.in/orca/media/embed/player-vx.js"></script>
+
+  <script>
+    function initReelsPage() {
+      const container = document.querySelector("#vxplayer-reels-page");
+      container.innerHTML = "";
+      window.VXPlayer(container, {
+        hostname: "showcase-qa.zencite.in",
+        type: "reels",
+        mode: "page",
+        videoIds: [
+          "gcc-9c8393a9-f6c8-4d7f-98c0-03b8e60bfda7",
+          "gcc-1d264a76-8fb7-4d63-bbe1-7646833029a0",
+          "gcc-800e5504-848a-4571-bdb0-6b988f154b9f"
+        ],
+        autoScroll: true,
+        loop: true,
+        fullscreen: true,
+        lightWeightPlayer: true
+      }, { fab: { close: true } });
+    }
+
+    function initReelsPopup() {
+      const container = document.querySelector("#vxplayer-reels-popup");
+      container.innerHTML = "";
+      const videoIds = [
+        "gcc-9c8393a9-f6c8-4d7f-98c0-03b8e60bfda7",
+        "gcc-1d264a76-8fb7-4d63-bbe1-7646833029a0",
+        "gcc-800e5504-848a-4571-bdb0-6b988f154b9f"
+      ];
+      const player = window.VXPlayer(container, {
+        hostname: "showcase-qa.zencite.in",
+        type: "reels",
+        mode: "popup",
+        videoIds: videoIds,
+        autoScroll: true,
+        loop: true,
+        fullscreen: true,
+        lightWeightPlayer: true
+      }, { fab: { close: true } });
+      // mode: "popup" starts disabled/off-screen until told which video to show
+      player.jumpTo(videoIds[0]);
+    }
+
+    function initCompareReels(lightWeightPlayer) {
+      window.VXPlayer(document.querySelector("#vxplayer-reels-compare"), {
+        hostname: "showcase-qa.zencite.in",
+        type: "reels",
+        mode: "popup",
+        videoIds: [
+          "gcc-9c8393a9-f6c8-4d7f-98c0-03b8e60bfda7",
+          "gcc-1d264a76-8fb7-4d63-bbe1-7646833029a0",
+          "gcc-800e5504-848a-4571-bdb0-6b988f154b9f"
+        ],
+        fullscreen: true,
+        autoScroll: true,
+        loop: true,
+        comment: false,
+        like: false,
+        share: false,
+        noOfVideosToPreload: 10,
+        lightWeightPlayer: lightWeightPlayer
+      });
+    }
+
+    function setupButtons() {
+      document.getElementById("reels-page-card").addEventListener("click", initReelsPage);
+      document.getElementById("reels-popup-card").addEventListener("click", initReelsPopup);
+      document.getElementById("reels-lwp-true").addEventListener("click", function () { initCompareReels(true); });
+      document.getElementById("reels-lwp-false").addEventListener("click", function () { initCompareReels(false); });
+    }
+
+    if (window.VXPlayer) {
+      setupButtons();
+    } else {
+      document.addEventListener("vxplayerready", setupButtons);
+    }
+
+    document.addEventListener("kpw-onclick-button", function (event) {
+      console.log(event.detail);
+    });
+
+    document.querySelectorAll(".copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var target = document.getElementById(btn.getAttribute("data-copy-target"));
+        navigator.clipboard.writeText(target.textContent).then(function () {
+          var original = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(function () { btn.textContent = original; }, 1500);
+        });
+      });
+    });
+  </script>
+
+  <footer>KPoint Player Showcase &middot; QA host: showcase-qa.zencite.in</footer>
+
+</main>
+</body>
+</html>
