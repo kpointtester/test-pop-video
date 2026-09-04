@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VXPlayer Reels — Tag-Based Test Page</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #222; }
+
+        /* Config banner */
+        .config-bar {
+            background: #1a1a2e; color: #eee; padding: 14px 20px;
+            display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+            font-size: 13px; position: sticky; top: 0; z-index: 100;
+        }
+        .config-bar label { color: #aaa; margin-right: 4px; }
+        .config-bar input, .config-bar select {
+            background: #16213e; border: 1px solid #444; color: #fff;
+            padding: 5px 8px; border-radius: 4px; font-size: 13px;
+        }
+        .config-bar input:focus { outline: 1px solid #4cc9f0; }
+        .config-bar button {
+            background: #4cc9f0; color: #111; border: none; padding: 6px 14px;
+            border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px;
+        }
+        .config-bar button:hover { background: #3aa8d8; }
+
+        /* Sections */
+        .test-section {
+            max-width: 1100px; margin: 30px auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow: hidden;
+        }
+        .section-header {
+            background: #1a1a2e; color: #fff; padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .section-header h2 { font-size: 15px; font-weight: 600; }
+        .section-header .badge {
+            font-size: 11px; padding: 3px 8px; border-radius: 10px;
+            font-weight: 600;
+        }
+        .badge-part1 { background: #4cc9f0; color: #111; }
+        .badge-part2 { background: #f72585; color: #fff; }
+        .section-body { padding: 20px; }
+
+        /* Log console */
+        .log-console {
+            background: #111; color: #0f0; font-family: 'Courier New', monospace;
+            font-size: 12px; padding: 12px; border-radius: 4px;
+            max-height: 200px; overflow-y: auto; margin-top: 12px;
+            line-height: 1.6;
+        }
+        .log-console .log-info { color: #4cc9f0; }
+        .log-console .log-ok { color: #2ecc71; }
+        .log-console .log-warn { color: #f1c40f; }
+        .log-console .log-err { color: #e74c3c; }
+        .log-console .log-time { color: #888; }
+
+        /* Thumbnail rail */
+        .thumb-rail {
+            display: flex; gap: 12px; overflow-x: auto; padding: 10px 0;
+            scroll-snap-type: x mandatory;
+        }
+        .thumb-card {
+            flex: 0 0 140px; cursor: pointer; border-radius: 8px;
+            overflow: hidden; position: relative; scroll-snap-align: start;
+            transition: transform 0.15s;
+        }
+        .thumb-card:hover { transform: scale(1.04); }
+        .thumb-card img { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; }
+        .thumb-card .thumb-title {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,.8));
+            color: #fff; font-size: 11px; padding: 20px 8px 8px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .thumb-card.active { outline: 3px solid #4cc9f0; }
+
+        /* Section cards */
+        .section-cards {
+            display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 0;
+        }
+        .tag-card {
+            flex: 0 0 160px; height: 90px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 15px; color: #fff; cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-transform: capitalize;
+        }
+        .tag-card:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+        .tag-card.active { outline: 3px solid #fff; box-shadow: 0 0 0 5px #4cc9f0; }
+
+        /* Status indicators */
+        .status-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .status-chip {
+            font-size: 11px; padding: 3px 10px; border-radius: 12px;
+            background: #eee; color: #555;
+        }
+        .status-chip.pass { background: #d4edda; color: #155724; }
+        .status-chip.fail { background: #f8d7da; color: #721c24; }
+        .status-chip.pending { background: #fff3cd; color: #856404; }
+
+        /* Player container */
+        #vxplayer-container { margin-top: 16px; min-height: 60px; }
+
+        /* Info text */
+        .info-text { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 10px; }
+        .mono { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- Config Bar -->
+    <div class="config-bar">
+        <label>Hostname:</label>
+        <input type="text" id="cfg-hostname" value="showcase-qa.zencite.in" style="width:220px">
+        <label>Tags (comma):</label>
+        <input type="text" id="cfg-tags" value="loans,insurance,credit-card" style="width:220px">
+        <button onclick="runAllTests()">▶ Run All Tests</button>
+        <button onclick="clearLogs()" style="background:#555;color:#fff;">Clear Logs</button>
+    </div>
+
+    <!-- PART 1: Thumbnail Rail with getVideosByTags -->
+    <div class="test-section">
+        <div class="section-header">
+            <h2>Part 1 — Thumbnail Rail (getVideosByTags)</h2>
+            <span class="badge badge-part1">getVideosByTags → jumpTo</span>
+        </div>
+        <div class="section-body">
+            <p class="info-text">
+                Tests <span class="mono">getVideosByTags()</span> with the first tag, renders thumbnails, then tests <span class="mono">jumpTo(videoId)</span> on click.
+            </p>
+            <div class="status-row" id="part1-status"></div>
+            <div class="thumb-rail" id="thumb-rail">
+                <div style="color:#999;font-size:13px;padding:20px;">Click "Run All Tests" to load thumbnails...</div>
+            </div>
+            <div class="log-console" id="log-part1"></div>
+        </div>
+    </div>
+
+    <!-- PART 2: Section Cards with jumpToTag -->
+    <div class="test-section">
+        <div class="section-header">
+            <h2>Part 2 — Section Cards (jumpToTag)</h2>
+            <span class="badge badge-part2">content.tags → jumpToTag</span>
+        </div>
+        <div class="section-body">
+            <p class="info-text">
+                Initializes VXPlayer with <span class="mono">content.tags</span>, renders section cards, then tests <span class="mono">jumpToTag(tag)</span> on click.
+            </p>
+            <div class="status-row" id="part2-status"></div>
+            <div class="section-cards" id="section-cards">
+                <div style="color:#999;font-size:13px;padding:20px;">Click "Run All Tests" to load section cards...</div>
+            </div>
+            <div class="log-console" id="log-part2"></div>
+        </div>
+    </div>
+
+    <!-- VXPlayer Container (shared) -->
+    <div class="test-section">
+        <div class="section-header">
+            <h2>VXPlayer Instance</h2>
+            <span class="badge" style="background:#555;color:#fff;">Popup Mode</span>
+        </div>
+        <div class="section-body">
+            <p class="info-text">Player renders here. Click any thumbnail (Part 1) or section card (Part 2) to open popup.</p>
+            <div id="vxplayer-container"></div>
+            <div class="log-console" id="log-player"></div>
+        </div>
+    </div>
+
+    <!-- VXPlayer Script -->
+    <script src="https://assets.kpoint.com/orca/media/embed/player-vx.js"></script>
+
+    <script>
+        // ========== LOGGING ==========
+        function log(targetId, msg, level = 'info') {
+            const el = document.getElementById(targetId);
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const cls = { info: 'log-info', ok: 'log-ok', warn: 'log-warn', err: 'log-err' }[level] || 'log-info';
+            el.innerHTML += `<span class="log-time">[${time}]</span> <span class="${cls}">${msg}</span>\n`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        function clearLogs() {
+            ['log-part1', 'log-part2', 'log-player'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            document.getElementById('part1-status').innerHTML = '';
+            document.getElementById('part2-status').innerHTML = '';
+        }
+
+        function addStatus(targetId, label, status) {
+            const el = document.getElementById(targetId);
+            el.innerHTML += `<span class="status-chip ${status}">${label}</span>`;
+        }
+
+        // ========== CONFIG ==========
+        function getConfig() {
+            return {
+                hostname: document.getElementById('cfg-hostname').value.trim(),
+                tags: document.getElementById('cfg-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+            };
+        }
+
+        // ========== CARD COLORS ==========
+        const cardColors = ['#e63946', '#457b9d', '#2a9d8f', '#e9c46a', '#f4a261', '#264653', '#6a4c93', '#1982c4'];
+
+        // ========== PART 1: getVideosByTags ==========
+        async function testPart1() {
+            const cfg = getConfig();
+            const rail = document.getElementById('thumb-rail');
+            const statusEl = 'part1-status';
+            const logEl = 'log-part1';
+
+            rail.innerHTML = '';
+
+            // Test 1: Check VXPlayerAPI exists
+            log(logEl, 'Test 1: Checking window.VXPlayerAPI exists...');
+            if (window.VXPlayerAPI && typeof window.VXPlayerAPI.getVideosByTags === 'function') {
+                log(logEl, '✓ VXPlayerAPI.getVideosByTags is available', 'ok');
+                addStatus(statusEl, 'API exists ✓', 'pass');
+            } else {
+                log(logEl, '✗ VXPlayerAPI.getVideosByTags NOT found', 'err');
+                addStatus(statusEl, 'API missing ✗', 'fail');
+                return [];
+            }
+
+            // Test 2: Error handling — missing hostname
+            log(logEl, 'Test 2: Calling getVideosByTags without hostname (should throw TypeError)...');
+            try {
+                await window.VXPlayerAPI.getVideosByTags({ tags: ['test'] });
+                log(logEl, '✗ Did NOT throw — doc says it should TypeError on missing hostname', 'err');
+                addStatus(statusEl, 'Missing hostname check ✗', 'fail');
+            } catch (e) {
+                if (e instanceof TypeError) {
+                    log(logEl, `✓ Threw TypeError as expected: "${e.message}"`, 'ok');
+                    addStatus(statusEl, 'Missing hostname check ✓', 'pass');
+                } else {
+                    log(logEl, `⚠ Threw ${e.constructor.name} instead of TypeError: "${e.message}"`, 'warn');
+                    addStatus(statusEl, 'Missing hostname check ⚠', 'pending');
+                }
+            }
+
+            // Test 3: Error handling — no tags AND no qtext
+            log(logEl, 'Test 3: Calling getVideosByTags without tags or qtext (should throw TypeError)...');
+            try {
+                await window.VXPlayerAPI.getVideosByTags({ hostname: cfg.hostname });
+                log(logEl, '✗ Did NOT throw — doc says it should TypeError on missing tags+qtext', 'err');
+                addStatus(statusEl, 'Missing tags check ✗', 'fail');
+            } catch (e) {
+                if (e instanceof TypeError) {
+                    log(logEl, `✓ Threw TypeError as expected: "${e.message}"`, 'ok');
+                    addStatus(statusEl, 'Missing tags check ✓', 'pass');
+                } else {
+                    log(logEl, `⚠ Threw ${e.constructor.name}: "${e.message}"`, 'warn');
+                    addStatus(statusEl, 'Missing tags check ⚠', 'pending');
+                }
+            }
+
+            // Test 4: Fetch videos for first tag
+            const firstTag = cfg.tags[0] || 'loans';
+            log(logEl, `Test 4: Fetching videos for tag "${firstTag}"...`);
+            try {
+                const videos = await window.VXPlayerAPI.getVideosByTags({
+                    hostname: cfg.hostname,
+                    tags: [firstTag],
+                });
+
+                log(logEl, `✓ Got ${videos.length} video(s)`, videos.length > 0 ? 'ok' : 'warn');
+                addStatus(statusEl, `Fetch: ${videos.length} videos`, videos.length > 0 ? 'pass' : 'pending');
+
+                // Test 5: Check return object shape
+                if (videos.length > 0) {
+                    const v = videos[0];
+                    const hasId = 'id' in v;
+                    const hasTitle = 'title' in v;
+                    const hasThumb = 'thumbnailFull' in v;
+                    log(logEl, `Test 5: Return shape check — id:${hasId}, title:${hasTitle}, thumbnailFull:${hasThumb}`);
+                    if (hasId && hasTitle && hasThumb) {
+                        log(logEl, '✓ All expected fields present', 'ok');
+                        addStatus(statusEl, 'Return shape ✓', 'pass');
+                    } else {
+                        log(logEl, `✗ Missing fields! Keys: ${Object.keys(v).join(', ')}`, 'err');
+                        addStatus(statusEl, 'Return shape ✗', 'fail');
+                    }
+
+                    // Test 6: Check 25-item cap
+                    log(logEl, `Test 6: Doc says max 25 per request — got ${videos.length} (${videos.length <= 25 ? 'within limit' : 'EXCEEDS limit!'})`);
+                    addStatus(statusEl, `Max 25: ${videos.length <= 25 ? '✓' : '✗'}`, videos.length <= 25 ? 'pass' : 'fail');
+
+                    // Render thumbnails
+                    videos.forEach(video => {
+                        const card = document.createElement('div');
+                        card.className = 'thumb-card';
+                        card.setAttribute('data-video-id', video.id);
+                        card.innerHTML = `
+                            <img src="${video.thumbnailFull || ''}" alt="" onerror="this.style.background='#333'">
+                            <div class="thumb-title">${(video.title || 'Untitled').replace(/</g, '&lt;')}</div>
+                        `;
+                        card.addEventListener('click', function () {
+                            const videoId = this.getAttribute('data-video-id');
+                            log(logEl, `Clicked thumbnail: ${videoId}`);
+                            document.querySelectorAll('.thumb-card').forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                            if (window.vxplayer && typeof window.vxplayer.jumpTo === 'function') {
+                                window.vxplayer.jumpTo(videoId);
+                                log('log-player', `jumpTo("${videoId}") called`, 'info');
+                            } else {
+                                log('log-player', 'Player not initialized yet — init via Part 1 first', 'warn');
+                            }
+                        });
+                        rail.appendChild(card);
+                    });
+                    log(logEl, `✓ Rendered ${videos.length} thumbnail cards`, 'ok');
+
+                    return videos.map(v => v.id);
+                }
+                return [];
+            } catch (e) {
+                log(logEl, `✗ Fetch failed: ${e.message}`, 'err');
+                addStatus(statusEl, 'Fetch ✗', 'fail');
+                return [];
+            }
+        }
+
+        // ========== PART 2: jumpToTag ==========
+        function testPart2() {
+            const cfg = getConfig();
+            const cardsEl = document.getElementById('section-cards');
+            const statusEl = 'part2-status';
+            const logEl = 'log-part2';
+
+            cardsEl.innerHTML = '';
+
+            // Render section cards
+            cfg.tags.forEach((tag, i) => {
+                const card = document.createElement('div');
+                card.className = 'tag-card';
+                card.style.background = cardColors[i % cardColors.length];
+                card.setAttribute('data-tag', tag);
+                card.textContent = tag;
+                card.addEventListener('click', async function () {
+                    const clickedTag = this.getAttribute('data-tag');
+                    log(logEl, `Clicked section card: "${clickedTag}"`);
+                    document.querySelectorAll('.tag-card').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+
+                    if (!window.vxplayer || typeof window.vxplayer.jumpToTag !== 'function') {
+                        log(logEl, '✗ Player not initialized or jumpToTag not available', 'err');
+                        addStatus(statusEl, 'jumpToTag missing ✗', 'fail');
+                        return;
+                    }
+
+                    try {
+                        log(logEl, `Calling jumpToTag("${clickedTag}")...`);
+                        const result = await window.vxplayer.jumpToTag(clickedTag);
+                        if (result && result.success) {
+                            log(logEl, `✓ jumpToTag success — tag:"${result.tag}", count:${result.count}`, 'ok');
+                            log('log-player', `jumpToTag("${clickedTag}") → ${result.count} videos`, 'ok');
+                            addStatus(statusEl, `${clickedTag}: ${result.count} videos ✓`, 'pass');
+                        } else {
+                            log(logEl, `⚠ jumpToTag returned not-success — error: ${result?.error || 'unknown'}`, 'warn');
+                            log('log-player', `jumpToTag("${clickedTag}") → no videos`, 'warn');
+                            addStatus(statusEl, `${clickedTag}: empty ⚠`, 'pending');
+                        }
+                    } catch (e) {
+                        log(logEl, `✗ jumpToTag threw: ${e.message}`, 'err');
+                        addStatus(statusEl, `${clickedTag} ✗`, 'fail');
+                    }
+                });
+                cardsEl.appendChild(card);
+            });
+            log(logEl, `✓ Rendered ${cfg.tags.length} section cards`, 'ok');
+            addStatus(statusEl, `${cfg.tags.length} cards rendered ✓`, 'pass');
+
+            // Test: jumpToTag with empty string
+            log(logEl, 'Test: jumpToTag("") should return { success: false } per docs');
+            addStatus(statusEl, 'Empty tag: click to test', 'pending');
+        }
+
+        // ========== INIT PLAYER ==========
+        async function initPlayer(videoIds, tags) {
+            const cfg = getConfig();
+            const container = document.getElementById('vxplayer-container');
+            const logEl = 'log-player';
+
+            // Destroy existing
+            if (window.vxplayer) {
+                try { window.vxplayer.destroy && window.vxplayer.destroy(); } catch (e) { /* ignore */ }
+                window.vxplayer = null;
+            }
+
+            if (videoIds && videoIds.length > 0) {
+                // Part 1 mode: init with videoIds
+                log(logEl, `Initializing VXPlayer with ${videoIds.length} videoIds (Part 1 mode)...`);
+                window.vxplayer = new VXPlayer(container, {
+                    hostname: cfg.hostname,
+                    type: 'reels',
+                    videoIds: videoIds,
+                    mode: 'popup',
+                });
+                log(logEl, '✓ VXPlayer initialized with videoIds', 'ok');
+            } else if (tags && tags.length > 0) {
+                // Part 2 mode: init with content.tags
+                log(logEl, `Initializing VXPlayer with content.tags: [${tags.join(', ')}] (Part 2 mode)...`);
+                window.vxplayer = new VXPlayer(container, {
+                    hostname: cfg.hostname,
+                    type: 'reels',
+                    content: { tags: tags },
+                    mode: 'popup',
+                });
+                log(logEl, '✓ VXPlayer initialized with content.tags', 'ok');
+            } else {
+                log(logEl, '⚠ No videoIds or tags to initialize with', 'warn');
+            }
+        }
+
+        // ========== RUN ALL ==========
+        async function runAllTests() {
+            clearLogs();
+            const cfg = getConfig();
+            log('log-player', `Config: hostname=${cfg.hostname}, tags=[${cfg.tags.join(', ')}]`);
+
+            // Part 1
+            const videoIds = await testPart1();
+
+            // Init player with Part 1 results for thumbnail clicks
+            await initPlayer(videoIds, cfg.tags);
+
+            // Part 2
+            testPart2();
+
+            log('log-player', '── All tests complete. Click thumbnails (Part 1) or section cards (Part 2) to test player interaction. ──', 'ok');
+        }
+
+        // ========== AUTO-INIT ==========
+        if (window.VXPlayer) {
+            log('log-player', '✓ VXPlayer SDK already loaded', 'ok');
+        } else {
+            document.addEventListener('vxplayerready', () => {
+                log('log-player', '✓ vxplayerready event fired — SDK ready', 'ok');
+            });
+        }
+    </script>
+</body>
+</html>
