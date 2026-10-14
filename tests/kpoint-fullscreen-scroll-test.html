@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KPOINT — fullscreen scroll position test</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #16181d; --muted: #5c6370;
+    --line: #e3e6ea; --card: #f7f8fa;
+    --ok: #0f7b4f; --okbg: #e6f5ee;
+    --bad: #b3261e; --badbg: #fdecea;
+    --idle: #46505f; --idlebg: #eef1f5;
+    --accent: #FF6700;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {}
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a; --fg: #e8eaed; --muted: #9aa3af;
+      --line: #2a2e35; --card: #1b1e24;
+      --ok: #6ee7a8; --okbg: #11291f;
+      --bad: #ff8a80; --badbg: #2d1715;
+      --idle: #c2c9d4; --idlebg: #222730;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161a; --fg: #e8eaed; --muted: #9aa3af;
+    --line: #2a2e35; --card: #1b1e24;
+    --ok: #6ee7a8; --okbg: #11291f;
+    --bad: #ff8a80; --badbg: #2d1715;
+    --idle: #c2c9d4; --idlebg: #222730;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    padding-block: 0;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---- live readout, pinned ---- */
+  #hud {
+    position: fixed; left: 0; right: 0; top: 0; z-index: 2147483000;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    padding: 8px 12px; font: 600 13px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  #hud .row { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+  #hud .k { color: var(--muted); font-weight: 500; }
+  #verdict {
+    display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 999px;
+    background: var(--idlebg); color: var(--idle); font-size: 12px;
+  }
+  #verdict.pass { background: var(--okbg); color: var(--ok); }
+  #verdict.fail { background: var(--badbg); color: var(--bad); }
+  #spacer-for-hud { height: 86px; }
+
+  h1 { font-size: 22px; margin: 20px 0 6px; letter-spacing: -0.01em; }
+  h2 { font-size: 17px; margin: 36px 0 8px; letter-spacing: -0.01em; }
+  p  { margin: 8px 0; }
+  .muted { color: var(--muted); font-size: 14px; }
+
+  ol.steps { padding-left: 20px; margin: 10px 0; }
+  ol.steps li { margin: 5px 0; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px; margin: 14px 0;
+  }
+
+  .filler {
+    height: 900px; margin: 18px 0; border-radius: 10px;
+    border: 1px dashed var(--line); background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font: 500 14px/1 ui-monospace, Menlo, monospace;
+  }
+
+  /* ---- popup trigger, styled like a thumbnail ---- */
+  .trigger {
+    cursor: pointer; border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; background: #000; position: relative;
+    aspect-ratio: 16 / 9; max-width: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .trigger .play {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--accent); display: flex; align-items: center; justify-content: center;
+  }
+  .trigger .play::after {
+    content: ""; width: 0; height: 0; margin-left: 4px;
+    border-left: 17px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent;
+  }
+  .trigger .label {
+    position: absolute; left: 10px; bottom: 8px; color: #fff;
+    font: 600 13px/1.3 system-ui, sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  }
+
+  button.mark {
+    appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+    border-radius: 8px; padding: 9px 14px; font: 600 14px/1 inherit; cursor: pointer;
+  }
+  button.mark:active { transform: translateY(1px); }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div id="hud">
+  <div class="row">
+    <span><span class="k">scrollY</span> <span id="y">0</span></span>
+    <span><span class="k">marked</span> <span id="mark">—</span></span>
+    <span><span class="k">page height</span> <span id="dh">0</span></span>
+    <span><span class="k">body</span> <span id="bp">static</span></span>
+    <span><span class="k">testing</span> <span id="target">—</span></span>
+  </div>
+  <div id="verdict">Waiting — open a video or press “Mark this spot”.</div>
+</div>
+<div id="spacer-for-hud"></div>
+
+<div class="wrap">
+
+  <h1>KPOINT — fullscreen scroll position test</h1>
+  <p class="muted">
+    Checks that the host page returns to the same scroll position after a video goes fullscreen
+    and comes back. Best tested on a real iPhone (Safari) and a real Android (Chrome).
+  </p>
+
+  <div class="card">
+    <strong>Where to put this file</strong>
+    <p class="muted" style="margin-top:6px">
+      The videos below belong to Bajaj and only play on domains their account allows, so
+      host this file on the same QA domain their video pages use. Dropping it on an
+      unrelated domain gives a “video not available” error and nothing can be tested.
+    </p>
+    <p class="muted">
+      To test with a different account instead, add its details to the address:
+      <code>?host=videos.example.com&amp;video=gcc-xxxx</code>.
+      Add <code>&amp;type=silk</code> to force the other player.
+    </p>
+  </div>
+
+  <div class="card">
+    <strong>How to read the bar at the top</strong>
+    <ol class="steps">
+      <li><code>scrollY</code> is how far the page is scrolled right now.</li>
+      <li><code>marked</code> is the position we are expected to come back to.</li>
+      <li>For a popup, the spot is marked automatically when the popup opens.</li>
+      <li>For an inline video, press <strong>Mark this spot</strong> before going fullscreen.</li>
+      <li>The bar turns green when we land back on the marked value, red when we do not.</li>
+    </ol>
+    <p class="muted">
+      It is normal for <code>scrollY</code> to read 0 and the page height to shrink <em>while</em>
+      fullscreen is open. Only the value after coming back matters.
+    </p>
+  </div>
+
+  <div class="filler">scroll down — the videos are further down the page</div>
+
+  <h2>1 · Popup video (opens in an overlay)</h2>
+  <p class="muted">
+    Tap the thumbnail to open the popup, play it, go fullscreen, come out of fullscreen,
+    then close the popup. The page should be exactly where you left it.
+  </p>
+
+  <div class="trigger preload-none"
+       data-vx-playertype="bitsy"
+       data-vx-host="videos.bajajfinserv.in"
+       data-vx-videoid="gcc-f30cc72e-93f7-473f-aaa3-bb34e819a2a4"
+       data-vx-playerref="kpointPopup1"
+       data-vx-playersize="small"
+       data-vx-backdrop="true"
+       data-vx-samesite="false"
+       data-vx-params='{"playerSkinType":"sleek","hide":"search","color":"#FF6700","enableNavigation":true,"like":true,"autoplay":true,"playercontrols":{"hide":""}}'>
+    <span class="play"></span>
+    <span class="label">Popup 1 — Bitsy</span>
+  </div>
+
+  <div class="filler">more page — keeps the scroll distance realistic</div>
+
+  <h2>2 · Second popup video</h2>
+  <p class="muted">Same check, further down the page, so the scroll distance is larger.</p>
+
+  <div class="trigger preload-none"
+       data-vx-playertype="bitsy"
+       data-vx-host="videos.bajajfinserv.in"
+       data-vx-videoid="gcc-908d3b19-e603-4c79-a988-13260b9f2cc7"
+       data-vx-playerref="kpointPopup2"
+       data-vx-playersize="small"
+       data-vx-backdrop="true"
+       data-vx-samesite="false"
+       data-vx-params='{"playerSkinType":"sleek","hide":"search","color":"#FF6700","enableNavigation":true,"like":true,"autoplay":true,"playercontrols":{"hide":""}}'>
+    <span class="play"></span>
+    <span class="label">Popup 2 — Bitsy</span>
+  </div>
+
+  <div class="filler">more page</div>
+
+  <h2>3 · Inline video (no popup)</h2>
+  <p class="muted">
+    The same problem affected ordinary in-page videos, so this one must be checked too.
+    Press <strong>Mark this spot</strong>, play the video, go fullscreen, come back out.
+  </p>
+
+  <p><button class="mark" id="markBtn">Mark this spot</button></p>
+
+  <div class="kpoint-video-player"
+       data-video-host="videos.bajajfinserv.in"
+       data-kvideo-id="gcc-f30cc72e-93f7-473f-aaa3-bb34e819a2a4"
+       data-player-type="bitsy"
+       data-video-params='{"playerSkinType":"sleek","hide":"search","color":"#FF6700","autoplay":false,"playercontrols":{"hide":""}}'
+       style="width:100%"></div>
+
+  <div class="filler">more page</div>
+
+  <h2>4 · Repeat checks</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>Open a popup, go in and out of fullscreen <strong>two or three times</strong>, then close it.</li>
+      <li>Leave fullscreen with the <strong>device back gesture / back button</strong> instead of the control.</li>
+      <li>Close a popup by tapping the <strong>dark area outside</strong> it instead of the close button.</li>
+      <li>Rotate the phone while fullscreen, rotate back, then exit.</li>
+    </ol>
+    <p class="muted">The bar must end green every time.</p>
+  </div>
+
+  <div class="filler">end of page</div>
+  <p class="muted" style="padding-bottom:40px">
+    Build in use is shown by the player assets this page loads from
+    <code>assets.zencite.in</code>.
+  </p>
+</div>
+
+<!-- Applies ?host= / ?video= / ?video2= / ?type= before the player scripts scan the page. -->
+<script>
+(function () {
+  var q = new URLSearchParams(window.location.search);
+  var host = q.get("host");
+  var video = q.get("video");
+  var video2 = q.get("video2");
+  var type = q.get("type");
+
+  var triggers = document.querySelectorAll("[data-vx-videoid]");
+  var inline = document.querySelector("[data-kvideo-id]");
+
+  if (host) {
+    for (var i = 0; i < triggers.length; i++) { triggers[i].setAttribute("data-vx-host", host); }
+    if (inline) { inline.setAttribute("data-video-host", host); }
+  }
+  if (video) {
+    if (triggers[0]) { triggers[0].setAttribute("data-vx-videoid", video); }
+    if (inline) { inline.setAttribute("data-kvideo-id", video); }
+  }
+  if (video2 && triggers[1]) { triggers[1].setAttribute("data-vx-videoid", video2); }
+  if (type) {
+    for (var j = 0; j < triggers.length; j++) { triggers[j].setAttribute("data-vx-playertype", type); }
+    if (inline) { inline.setAttribute("data-player-type", type); }
+  }
+
+  window.__kpTestTarget =
+    (inline ? inline.getAttribute("data-video-host") : "?") +
+    " · " + (inline ? inline.getAttribute("data-kvideo-id") : "?").slice(0, 12) +
+    "… · " + (inline ? inline.getAttribute("data-player-type") : "?");
+})();
+</script>
+
+<script src="https://assets.zencite.in/assets/orca/media/embed/play-inline-vx.js" async></script>
+<script src="https://assets.zencite.in/orca/media/embed/videofront-vega.js" async></script>
+
+<script>
+(function () {
+  var elY = document.getElementById("y");
+  var elMark = document.getElementById("mark");
+  var elDh = document.getElementById("dh");
+  var elBp = document.getElementById("bp");
+  var elVerdict = document.getElementById("verdict");
+  var marked = null;
+
+  function now() {
+    return Math.round(window.pageYOffset || document.documentElement.scrollTop || 0);
+  }
+
+  function paint() {
+    elY.textContent = now();
+    elMark.textContent = marked === null ? "—" : marked;
+    elDh.textContent = document.documentElement.scrollHeight;
+    elBp.textContent = getComputedStyle(document.body).position;
+  }
+
+  function setVerdict(state, text) {
+    elVerdict.className = state;
+    elVerdict.textContent = text;
+  }
+
+  function mark(why) {
+    marked = now();
+    setVerdict("", "Marked at " + marked + " (" + why + "). Go fullscreen, then come back.");
+    paint();
+  }
+
+  function check(why) {
+    if (marked === null) { return; }
+    var y = now();
+    var delta = y - marked;
+    if (delta === 0) {
+      setVerdict("pass", "PASS — back at " + marked + " after " + why + ".");
+    } else {
+      setVerdict("fail", "FAIL — expected " + marked + ", got " + y + " (off by " + delta + ") after " + why + ".");
+    }
+    paint();
+  }
+
+  document.getElementById("markBtn").addEventListener("click", function () {
+    mark("marked by hand");
+  });
+
+  // play-inline-vx.js fires this on the document when a popup opens or closes.
+  document.addEventListener("on-video-popup-state-change", function (e) {
+    var state = e && e.detail && e.detail.state;
+    if (state === "open") {
+      // The popup is already on screen; the page behind it has not moved yet.
+      mark("popup opened");
+    } else if (state === "close") {
+      setTimeout(function () { check("popup closed"); }, 350);
+    }
+  });
+
+  // Fullscreen exit on the inline video: re-check shortly after the page settles.
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(function (ev) {
+    document.addEventListener(ev, function () {
+      var inFs = document.fullscreenElement || document.webkitFullscreenElement;
+      if (!inFs) { setTimeout(function () { check("leaving fullscreen"); }, 400); }
+    });
+  });
+
+  // Simulated fullscreen (iOS) does not fire fullscreenchange, so watch the
+  // symptom instead: <body> is pinned while it is open and released on exit.
+  var wasPinned = false;
+  setInterval(function () {
+    paint();
+    var pinned = getComputedStyle(document.body).position === "fixed";
+    if (wasPinned && !pinned) {
+      setTimeout(function () { check("leaving fullscreen"); }, 400);
+    }
+    wasPinned = pinned;
+  }, 250);
+
+  document.getElementById("target").textContent = window.__kpTestTarget || "—";
+  window.addEventListener("scroll", paint, { passive: true });
+  paint();
+})();
+</script>
+</body>
+</html>
